@@ -16,6 +16,9 @@ public class Pet {
     @JoinColumn(name = "PetTypeID", referencedColumnName = "PetTypeID")
     private PetType PetTypeID;
     private String Description;
+    @ManyToOne
+    @JoinColumn(name = "PetOwnerID", referencedColumnName = "PetOwnerID")
+    private PetOwner PetOwnerID;
     @OneToMany(mappedBy = "Appointments")
     private List<Appointment> Appointments;
 
@@ -48,5 +51,17 @@ public class Pet {
     }
     public void setDescription(String description) {
         Description = description;
+    }
+    public PetOwner getPetOwnerID() {
+        return PetOwnerID;
+    }
+    public void setPetOwnerID(PetOwner petOwnerID) {
+        PetOwnerID = petOwnerID;
+    }
+    public List<Appointment> getAppointments() {
+        return Appointments;
+    }
+    public void setAppointments(List<Appointment> appointments) {
+        Appointments = appointments;
     }
 }
