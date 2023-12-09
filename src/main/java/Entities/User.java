@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "User")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserID;
     private String Name;
     private String Surname;
@@ -14,9 +15,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "UserTypeID", referencedColumnName = "UserTypeID")
     private UserType UserTypeID;
-    @OneToOne(mappedBy = "Veterinarian", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "Veterinarian")
     private Veterinarian Vet;
-    @OneToOne(mappedBy = "PetOwner", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "PetOwner")
     private PetOwner Owner;
 
     public int getUserID() {
@@ -25,9 +26,11 @@ public class User {
     public void setUserID(int userID) {
         UserID = userID;
     }
+
     public String getName() {
         return Name;
     }
+
     public void setName(String name) {
         Name = name;
     }

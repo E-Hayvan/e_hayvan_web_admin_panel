@@ -7,16 +7,18 @@ import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 @Table(name="Appointment")
 public class Appointment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int AppointmentID;
     @ManyToOne
-    @JoinColumn(name="PetOwnerID",referencedColumnName = "PetOwnerID")
+    @JoinColumn(name = "PetOwnerID", referencedColumnName = "PetOwnerID")
     private PetOwner PetOwnerID;
-
     @ManyToOne
-    @JoinColumn(name="VetID",referencedColumnName = "VetID")
+    @JoinColumn(name = "VetID", referencedColumnName = "VetID")
     private Veterinarian VetID;
     private DateTimeLiteralExpression.DateTime AppointmentDate;
-    private int PetID;
+    @ManyToOne
+    @JoinColumn(name = "PetID", referencedColumnName = "PetID")
+    private Pet PetID;
     public int getAppointmentID() {
         return AppointmentID;
     }
@@ -48,16 +50,10 @@ public class Appointment {
     public void setAppointmentDate(DateTimeLiteralExpression.DateTime appointmentDate) {
         AppointmentDate = appointmentDate;
     }
-
-    public int getPetID() {
+    public Pet getPetID() {
         return PetID;
     }
-
-    public void setPetID(int petID) {
+    public void setPetID(Pet petID) {
         PetID = petID;
     }
-
-
-
-
 }
