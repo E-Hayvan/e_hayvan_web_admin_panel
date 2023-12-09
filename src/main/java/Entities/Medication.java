@@ -1,4 +1,4 @@
-package database;
+package Entities;
 
 import jakarta.persistence.*;
 

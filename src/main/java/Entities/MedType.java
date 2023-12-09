@@ -1,4 +1,4 @@
-package database;
+package Entities;
 
 import jakarta.persistence.*;
 
@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 @Table(name="MedType")
 public class MedType{
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int MedTypeID;

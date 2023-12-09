@@ -1,4 +1,4 @@
-package database;
+package Entities;
 
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
@@ -49,8 +49,4 @@ public class Schedule {
     public void setDoseCount(int doseCount) {
         this.doseCount = doseCount;
     }
-
-
-    
-
 }
