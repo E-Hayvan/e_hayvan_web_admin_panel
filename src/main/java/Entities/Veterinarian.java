@@ -13,6 +13,9 @@ public class Veterinarian{
     @OneToMany(mappedBy = "PetOwner")
     private List<PetOwner> PetOwners;
     private String Clinic;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "UserID", referencedColumnName = "UserID")
+    private User User;
     @OneToMany(mappedBy = "Appointment")
     private List<Appointment> Appointments;
 

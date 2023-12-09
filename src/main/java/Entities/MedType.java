@@ -9,27 +9,28 @@ import java.util.List;
 public class MedType{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int MedTypeID;
-    String MedType;
-    @OneToMany(mappedBy = "Medication",cascade = CascadeType.REMOVE)
-    List<Medication> medications;
+    private int MedTypeID;
+    @Column(nullable = false)
+    private String MedType;
+    @OneToMany(mappedBy = "Medication")
+    private List<Medication> medications;
 
     public int getMedTypeID() {
         return MedTypeID;
     }
-
     public void setMedTypeID(int medTypeID) {
         MedTypeID = medTypeID;
     }
-
     public String getMedType() {
         return MedType;
     }
-
     public void setMedType(String medType) {
         MedType = medType;
     }
-
-
-
+    public List<Medication> getMedications() {
+        return medications;
+    }
+    public void setMedications(List<Medication> medications) {
+        this.medications = medications;
+    }
 }

@@ -11,7 +11,7 @@ public class UserType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserTypeID;
     private String Type;
-    @OneToMany(mappedBy = "UserType")
+    @OneToMany(mappedBy = "User")
     private List<User> Users;
 
     public int getUserTypeID() {

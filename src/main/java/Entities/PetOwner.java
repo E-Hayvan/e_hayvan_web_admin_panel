@@ -20,4 +20,35 @@ public class PetOwner{
     private Veterinarian Vet;
     @OneToMany(mappedBy = "Appointment")
     private List<Appointment> Appointments;
+
+    public int getPetOwnerID() {
+        return PetOwnerID;
+    }
+    public void setPetOwnerID(int petOwnerID) {
+        PetOwnerID = petOwnerID;
+    }
+    public Entities.User getUser() {
+        return User;
+    }
+    public void setUser(Entities.User user) {
+        User = user;
+    }
+    public List<Pet> getPets() {
+        return Pets;
+    }
+    public void setPets(List<Pet> pets) {
+        Pets = pets;
+    }
+    public Veterinarian getVet() {
+        return Vet;
+    }
+    public void setVet(Veterinarian vet) {
+        Vet = vet;
+    }
+    public List<Appointment> getAppointments() {
+        return Appointments;
+    }
+    public void setAppointments(List<Appointment> appointments) {
+        Appointments = appointments;
+    }
 }

@@ -9,17 +9,16 @@ public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int medicationID;
+    @Column(nullable = false)
     private String medicationName;
     @ManyToOne
-    @JoinColumn(name="MedTypeID",referencedColumnName = "MedTypeID")
+    @JoinColumn(name="MedTypeID", referencedColumnName = "MedTypeID")
     private MedType MedTypeID;
-
     @ManyToOne
-    @JoinColumn(name="ScheduleID",referencedColumnName = "ScheduleID")
+    @JoinColumn(name="ScheduleID", referencedColumnName = "ScheduleID")
     private Schedule ScheduleID;
-
     @ManyToOne
-    @JoinColumn(name="PetID",referencedColumnName = "PetID")
+    @JoinColumn(name="PetID", referencedColumnName = "PetID")
     private Pet PetID;
 
     public Pet getPetID() {

@@ -11,9 +11,9 @@ import java.util.List;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int ScheduleID;
-    @OneToMany(mappedBy = "Medication",cascade = CascadeType.REMOVE)
-    List<Medication> medicationList;
+    private int ScheduleID;
+    @OneToMany(mappedBy = "Medication")
+    private List<Medication> medications;
     private DateTimeLiteralExpression.DateTime beginningDate;
     private int doseFrequency;
     private int doseCount;
@@ -21,32 +21,31 @@ public class Schedule {
     public int getScheduleID() {
         return ScheduleID;
     }
-
     public void setScheduleID(int scheduleID) {
         ScheduleID = scheduleID;
     }
-
     public DateTimeLiteralExpression.DateTime getBeginningDate() {
         return beginningDate;
     }
-
     public void setBeginningDate(DateTimeLiteralExpression.DateTime beginningDate) {
         this.beginningDate = beginningDate;
     }
-
     public int getDoseFrequency() {
         return doseFrequency;
     }
-
     public void setDoseFrequency(int doseFrequency) {
         this.doseFrequency = doseFrequency;
     }
-
     public int getDoseCount() {
         return doseCount;
     }
-
     public void setDoseCount(int doseCount) {
         this.doseCount = doseCount;
+    }
+    public List<Medication> getMedications() {
+        return medications;
+    }
+    public void setMedications(List<Medication> medications) {
+        this.medications = medications;
     }
 }

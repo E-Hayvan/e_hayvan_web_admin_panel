@@ -10,6 +10,7 @@ public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int PetID;
+    @Column(nullable = false)
     private String PetName;
     private int Age;
     @ManyToOne
@@ -19,8 +20,10 @@ public class Pet {
     @ManyToOne
     @JoinColumn(name = "PetOwnerID", referencedColumnName = "PetOwnerID")
     private PetOwner PetOwnerID;
-    @OneToMany(mappedBy = "Appointments")
+    @OneToMany(mappedBy = "Appointment")
     private List<Appointment> Appointments;
+    @OneToMany(mappedBy = "Medication")
+    private List<Medication> Medications;
 
     public int getPetID() {
         return PetID;
@@ -63,5 +66,13 @@ public class Pet {
     }
     public void setAppointments(List<Appointment> appointments) {
         Appointments = appointments;
+    }
+
+    public List<Medication> getMedications() {
+        return Medications;
+    }
+
+    public void setMedications(List<Medication> medications) {
+        Medications = medications;
     }
 }

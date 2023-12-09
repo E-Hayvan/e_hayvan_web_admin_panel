@@ -15,6 +15,7 @@ public class Appointment {
     @ManyToOne
     @JoinColumn(name = "VetID", referencedColumnName = "VetID")
     private Veterinarian VetID;
+    @Column(nullable = false)
     private DateTimeLiteralExpression.DateTime AppointmentDate;
     @ManyToOne
     @JoinColumn(name = "PetID", referencedColumnName = "PetID")

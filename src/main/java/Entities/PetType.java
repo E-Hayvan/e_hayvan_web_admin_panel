@@ -11,8 +11,6 @@ public class PetType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int PetTypeID;
     private String Type;
-
-
     @OneToMany(mappedBy = "Pet")
     private List<Pet> pets;
 
@@ -27,5 +25,11 @@ public class PetType {
     }
     public void setType(String type) {
         Type = type;
+    }
+    public List<Pet> getPets() {
+        return pets;
+    }
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
     }
 }
