@@ -12,7 +12,7 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ScheduleID;
-    @OneToMany(mappedBy = "Medication")
+    @OneToMany(mappedBy = "ScheduleID")
     private List<Medication> medications;
     @Column(nullable = false)
     private DateTimeLiteralExpression.DateTime beginningDate;

@@ -12,7 +12,7 @@ public class PetType {
     private int PetTypeID;
     @Column(nullable = false)
     private String Type;
-    @OneToMany(mappedBy = "Pet")
+    @OneToMany(mappedBy = "PetTypeID")
     private List<Pet> pets;
 
     public int getPetTypeID() {

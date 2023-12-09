@@ -12,7 +12,7 @@ public class UserType {
     private int UserTypeID;
     @Column(nullable = false)
     private String Type;
-    @OneToMany(mappedBy = "User")
+    @OneToMany(mappedBy = "UserTypeID")
     private List<User> Users;
 
     public int getUserTypeID() {

@@ -10,14 +10,14 @@ public class Veterinarian{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int VetID;
-    @OneToMany(mappedBy = "PetOwner")
+    @OneToMany(mappedBy = "VetID")
     private List<PetOwner> PetOwners;
     @Column(nullable = false)
     private String Clinic;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
     private User User;
-    @OneToMany(mappedBy = "Appointment")
+    @OneToMany(mappedBy = "Veterinarian")
     private List<Appointment> Appointments;
 
     public String getClinic() {
