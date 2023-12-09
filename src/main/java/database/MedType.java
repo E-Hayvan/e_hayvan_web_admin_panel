@@ -1,15 +1,19 @@
 package database;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name="MedType")
 public class MedType{
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     int MedTypeID;
     String MedType;
+    @OneToMany(mappedBy = "Medication")
+    List<Medication> medications;
 
     public int getMedTypeID() {
         return MedTypeID;
