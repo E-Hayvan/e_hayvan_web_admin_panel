@@ -1,4 +1,4 @@
-package Entities;
+package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 
@@ -19,9 +19,9 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "UserTypeID", referencedColumnName = "UserTypeID")
     private UserType UserTypeID;
-    @OneToOne(mappedBy = "Veterinarian")
+    @OneToOne(mappedBy = "User")
     private Veterinarian Vet;
-    @OneToOne(mappedBy = "PetOwner")
+    @OneToOne(mappedBy = "User")
     private PetOwner Owner;
 
     public int getUserID() {

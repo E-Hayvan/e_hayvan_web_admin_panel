@@ -1,4 +1,4 @@
-package Entities;
+package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 
@@ -16,8 +16,13 @@ public class Pet {
     @JoinColumn(name = "PetTypeID", referencedColumnName = "PetTypeID")
     private PetType PetTypeID;
     private String Description;
-    @OneToMany(mappedBy = "Appointments")
+    @ManyToOne
+    @JoinColumn(name = "PetOwnerID", referencedColumnName = "PetOwnerID")
+    private PetOwner PetOwnerID;
+    @OneToMany(mappedBy = "PetID")
     private List<Appointment> Appointments;
+    @OneToMany(mappedBy = "PetID")
+    private List<Medication> Medications;
 
     public int getPetID() {
         return PetID;

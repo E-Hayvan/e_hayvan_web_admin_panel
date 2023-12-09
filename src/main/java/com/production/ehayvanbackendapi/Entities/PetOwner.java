@@ -1,4 +1,4 @@
-package Entities;
+package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 
@@ -27,10 +27,10 @@ public class PetOwner{
     public void setPetOwnerID(int petOwnerID) {
         PetOwnerID = petOwnerID;
     }
-    public Entities.User getUser() {
+    public com.production.ehayvanbackendapi.Entities.User getUser() {
         return User;
     }
-    public void setUser(Entities.User user) {
+    public void setUser(com.production.ehayvanbackendapi.Entities.User user) {
         User = user;
     }
     public List<Pet> getPets() {

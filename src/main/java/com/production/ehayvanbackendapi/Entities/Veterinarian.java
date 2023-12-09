@@ -1,4 +1,4 @@
-package Entities;
+package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 
@@ -10,14 +10,14 @@ public class Veterinarian{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int VetID;
-    @OneToMany(mappedBy = "VetID")
+    @OneToMany(mappedBy = "Vet")
     private List<PetOwner> PetOwners;
     @Column(nullable = false)
     private String Clinic;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
     private User User;
-    @OneToMany(mappedBy = "Veterinarian")
+    @OneToMany(mappedBy = "VetID")
     private List<Appointment> Appointments;
 
     public String getClinic() {

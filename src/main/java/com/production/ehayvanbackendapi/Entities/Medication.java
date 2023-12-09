@@ -1,10 +1,9 @@
-package Entities;
+package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name="Medication")
-
 public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

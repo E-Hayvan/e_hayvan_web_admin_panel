@@ -1,4 +1,4 @@
-package Entities;
+package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 
@@ -12,7 +12,7 @@ public class MedType{
     private int MedTypeID;
     @Column(nullable = false)
     private String MedType;
-    @OneToMany(mappedBy = "Medication")
+    @OneToMany(mappedBy = "MedTypeID")
     private List<Medication> medications;
 
     public int getMedTypeID() {
