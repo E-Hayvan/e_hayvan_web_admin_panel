@@ -1,13 +1,12 @@
 package Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "PetType")
 public class PetType {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int PetTypeID;
     private String Type;
 

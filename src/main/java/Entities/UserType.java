@@ -1,9 +1,6 @@
 package Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -11,6 +8,7 @@ import java.util.List;
 @Table(name = "UserType")
 public class UserType {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserTypeID;
     private String Type;
     @OneToMany(mappedBy = "UserType")

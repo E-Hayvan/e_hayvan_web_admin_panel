@@ -1,6 +1,5 @@
 package Entities;
 
-import database.Medication;
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
