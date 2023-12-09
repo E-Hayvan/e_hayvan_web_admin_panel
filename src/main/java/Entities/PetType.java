@@ -2,6 +2,8 @@ package Entities;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "PetType")
 public class PetType {
@@ -9,6 +11,10 @@ public class PetType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int PetTypeID;
     private String Type;
+
+
+    @OneToMany(mappedBy = "Pet")
+    private List<Pet> pets;
 
     public int getPetTypeID() {
         return PetTypeID;

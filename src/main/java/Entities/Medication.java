@@ -18,7 +18,22 @@ public class Medication {
     @JoinColumn(name="ScheduleID",referencedColumnName = "ScheduleID")
     private Schedule ScheduleID;
 
-    private int PetID;
+    @ManyToOne
+    @JoinColumn(name="PetID",referencedColumnName = "PetID")
+    private Pet PetID;
+
+    public Pet getPetID() {
+        return PetID;
+    }
+
+    public void setPetID(Pet petID) {
+        PetID = petID;
+    }
+
+
+
+
+
 
     public int getMedicationID() {
         return medicationID;
@@ -52,11 +67,5 @@ public class Medication {
         ScheduleID = scheduleID;
     }
 
-    public int getPetID() {
-        return PetID;
-    }
 
-    public void setPetID(int petID) {
-        PetID = petID;
-    }
 }
