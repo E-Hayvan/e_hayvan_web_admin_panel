@@ -14,8 +14,11 @@ public class Schedule {
     private int ScheduleID;
     @OneToMany(mappedBy = "Medication")
     private List<Medication> medications;
+    @Column(nullable = false)
     private DateTimeLiteralExpression.DateTime beginningDate;
+    @Column(nullable = false)
     private int doseFrequency;
+    @Column(nullable = false)
     private int doseCount;
 
     public int getScheduleID() {

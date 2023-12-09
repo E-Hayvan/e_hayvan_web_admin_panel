@@ -10,6 +10,7 @@ public class PetType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int PetTypeID;
+    @Column(nullable = false)
     private String Type;
     @OneToMany(mappedBy = "Pet")
     private List<Pet> pets;

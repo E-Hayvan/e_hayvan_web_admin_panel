@@ -8,9 +8,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserID;
+    @Column(nullable = false)
     private String Name;
+    @Column(nullable = false)
     private String Surname;
+    @Column(nullable = false)
     private String Email;
+    @Column(nullable = false)
     private String Password;
     @ManyToOne
     @JoinColumn(name = "UserTypeID", referencedColumnName = "UserTypeID")

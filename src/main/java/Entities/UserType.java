@@ -10,6 +10,7 @@ public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserTypeID;
+    @Column(nullable = false)
     private String Type;
     @OneToMany(mappedBy = "User")
     private List<User> Users;

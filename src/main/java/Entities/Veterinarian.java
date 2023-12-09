@@ -12,6 +12,7 @@ public class Veterinarian{
     private int VetID;
     @OneToMany(mappedBy = "PetOwner")
     private List<PetOwner> PetOwners;
+    @Column(nullable = false)
     private String Clinic;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")

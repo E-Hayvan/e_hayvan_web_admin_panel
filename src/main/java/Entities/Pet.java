@@ -12,10 +12,12 @@ public class Pet {
     private int PetID;
     @Column(nullable = false)
     private String PetName;
+    @Column(nullable = false)
     private int Age;
     @ManyToOne
     @JoinColumn(name = "PetTypeID", referencedColumnName = "PetTypeID")
     private PetType PetTypeID;
+    @Column(nullable = false)
     private String Description;
     @ManyToOne
     @JoinColumn(name = "PetOwnerID", referencedColumnName = "PetOwnerID")
