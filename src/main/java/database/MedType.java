@@ -12,7 +12,7 @@ public class MedType{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int MedTypeID;
     String MedType;
-    @OneToMany(mappedBy = "Medication")
+    @OneToMany(mappedBy = "Medication",cascade = CascadeType.REMOVE)
     List<Medication> medications;
 
     public int getMedTypeID() {
