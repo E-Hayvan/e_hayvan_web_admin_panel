@@ -3,8 +3,8 @@ package com.production.ehayvanbackendapi.Entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "User")
-public class User {
+@Table(name = "Customer")
+public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int UserID;

@@ -16,7 +16,7 @@ public class Veterinarian{
     private String Clinic;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
-    private User User;
+    private Customer User;
     @OneToMany(mappedBy = "VetID")
     private List<Appointment> Appointments;
 

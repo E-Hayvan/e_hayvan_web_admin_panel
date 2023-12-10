@@ -13,7 +13,7 @@ public class UserType {
     @Column(nullable = false)
     private String Type;
     @OneToMany(mappedBy = "UserTypeID")
-    private List<User> Users;
+    private List<Customer> Users;
 
     public int getUserTypeID() {
         return UserTypeID;

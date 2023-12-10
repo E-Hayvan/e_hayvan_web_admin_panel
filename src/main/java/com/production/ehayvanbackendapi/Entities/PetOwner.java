@@ -12,7 +12,7 @@ public class PetOwner{
     private int PetOwnerID;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
-    private User User;
+    private Customer User;
     @OneToMany(mappedBy = "PetOwnerID")
     private List<Pet> Pets;
     @ManyToOne
@@ -27,10 +27,10 @@ public class PetOwner{
     public void setPetOwnerID(int petOwnerID) {
         PetOwnerID = petOwnerID;
     }
-    public com.production.ehayvanbackendapi.Entities.User getUser() {
+    public com.production.ehayvanbackendapi.Entities.Customer getUser() {
         return User;
     }
-    public void setUser(com.production.ehayvanbackendapi.Entities.User user) {
+    public void setUser(com.production.ehayvanbackendapi.Entities.Customer user) {
         User = user;
     }
     public List<Pet> getPets() {
