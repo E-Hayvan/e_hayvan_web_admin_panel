@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Medication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int medicationID;
+    private Integer medicationID;
     @Column(nullable = false)
     private String medicationName;
     @ManyToOne
@@ -23,47 +23,31 @@ public class Medication {
     public Pet getPetID() {
         return PetID;
     }
-
     public void setPetID(Pet petID) {
         PetID = petID;
     }
-
-
-
-
-
-
     public int getMedicationID() {
         return medicationID;
     }
-
     public void setMedicationID(int medicationID) {
         this.medicationID = medicationID;
     }
-
     public String getMedicationName() {
         return medicationName;
     }
-
     public void setMedicationName(String medicationName) {
         this.medicationName = medicationName;
     }
-
     public MedType getMedTypeID() {
         return MedTypeID;
     }
-
     public void setMedTypeID(MedType medTypeID) {
         MedTypeID = medTypeID;
     }
-
     public Schedule getScheduleID() {
         return ScheduleID;
     }
-
     public void setScheduleID(Schedule scheduleID) {
         ScheduleID = scheduleID;
     }
-
-
 }

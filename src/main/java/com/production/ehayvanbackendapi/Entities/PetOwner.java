@@ -9,7 +9,7 @@ import java.util.List;
 public class PetOwner{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int PetOwnerID;
+    private Integer PetOwnerID;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserID", referencedColumnName = "UserID")
     private Customer User;

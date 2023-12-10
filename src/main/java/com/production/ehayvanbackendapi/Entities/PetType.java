@@ -9,7 +9,7 @@ import java.util.List;
 public class PetType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int PetTypeID;
+    private Integer PetTypeID;
     @Column(nullable = false)
     private String Type;
     @OneToMany(mappedBy = "PetTypeID")

@@ -8,7 +8,7 @@ import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int AppointmentID;
+    private Integer AppointmentID;
     @ManyToOne
     @JoinColumn(name = "PetOwnerID", referencedColumnName = "PetOwnerID")
     private PetOwner PetOwnerID;

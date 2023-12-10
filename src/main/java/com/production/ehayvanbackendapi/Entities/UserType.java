@@ -9,7 +9,7 @@ import java.util.List;
 public class UserType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int UserTypeID;
+    private Integer UserTypeID;
     @Column(nullable = false)
     private String Type;
     @OneToMany(mappedBy = "UserTypeID")

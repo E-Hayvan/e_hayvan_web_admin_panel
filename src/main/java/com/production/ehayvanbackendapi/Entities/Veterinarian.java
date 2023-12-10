@@ -9,7 +9,7 @@ import java.util.List;
 public class Veterinarian{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int VetID;
+    private Integer VetID;
     @OneToMany(mappedBy = "Vet")
     private List<PetOwner> PetOwners;
     @Column(nullable = false)

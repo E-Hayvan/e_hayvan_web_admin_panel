@@ -9,7 +9,7 @@ import java.util.List;
 public class Pet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int PetID;
+    private Integer PetID;
     private String PetName;
     private int Age;
     @ManyToOne

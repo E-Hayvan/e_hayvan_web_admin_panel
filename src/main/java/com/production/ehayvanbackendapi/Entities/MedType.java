@@ -9,7 +9,7 @@ import java.util.List;
 public class MedType{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int MedTypeID;
+    private Integer MedTypeID;
     @Column(nullable = false)
     private String MedType;
     @OneToMany(mappedBy = "MedTypeID")
