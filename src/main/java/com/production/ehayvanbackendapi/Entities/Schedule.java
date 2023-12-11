@@ -3,6 +3,7 @@ package com.production.ehayvanbackendapi.Entities;
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,7 @@ public class Schedule {
     @OneToMany(mappedBy = "ScheduleID")
     private List<Medication> medications;
     @Column(nullable = false)
-    private DateTimeLiteralExpression.DateTime beginningDate;
+    private Date beginningDate;
     @Column(nullable = false)
     private int doseFrequency;
     @Column(nullable = false)
@@ -27,10 +28,10 @@ public class Schedule {
     public void setScheduleID(int scheduleID) {
         ScheduleID = scheduleID;
     }
-    public DateTimeLiteralExpression.DateTime getBeginningDate() {
+    public Date getBeginningDate() {
         return beginningDate;
     }
-    public void setBeginningDate(DateTimeLiteralExpression.DateTime beginningDate) {
+    public void setBeginningDate(Date beginningDate) {
         this.beginningDate = beginningDate;
     }
     public int getDoseFrequency() {

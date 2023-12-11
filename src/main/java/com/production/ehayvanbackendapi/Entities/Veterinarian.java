@@ -38,4 +38,16 @@ public class Veterinarian{
     public void setPetOwners(List<PetOwner> petOwners) {
         PetOwners = petOwners;
     }
+    public Customer getUser() {
+        return User;
+    }
+    public void setUser(Customer user) {
+        User = user;
+    }
+    public List<Appointment> getAppointments() {
+        return Appointments;
+    }
+    public void setAppointments(List<Appointment> appointments) {
+        Appointments = appointments;
+    }
 }

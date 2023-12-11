@@ -54,4 +54,22 @@ public class Pet {
     public void setDescription(String description) {
         Description = description;
     }
+    public PetOwner getPetOwnerID() {
+        return PetOwnerID;
+    }
+    public void setPetOwnerID(PetOwner petOwnerID) {
+        PetOwnerID = petOwnerID;
+    }
+    public List<Appointment> getAppointments() {
+        return Appointments;
+    }
+    public void setAppointments(List<Appointment> appointments) {
+        Appointments = appointments;
+    }
+    public List<Medication> getMedications() {
+        return Medications;
+    }
+    public void setMedications(List<Medication> medications) {
+        Medications = medications;
+    }
 }

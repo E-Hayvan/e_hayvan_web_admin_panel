@@ -27,4 +27,10 @@ public class UserType {
     public void setType(String type) {
         Type = type;
     }
+    public List<Customer> getUsers() {
+        return Users;
+    }
+    public void setUsers(List<Customer> users) {
+        Users = users;
+    }
 }

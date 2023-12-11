@@ -56,4 +56,22 @@ public class Customer {
     public void setPassword(String password) {
         Password = password;
     }
+    public UserType getUserTypeID() {
+        return UserTypeID;
+    }
+    public void setUserTypeID(UserType userTypeID) {
+        UserTypeID = userTypeID;
+    }
+    public Veterinarian getVet() {
+        return Vet;
+    }
+    public void setVet(Veterinarian vet) {
+        Vet = vet;
+    }
+    public PetOwner getOwner() {
+        return Owner;
+    }
+    public void setOwner(PetOwner owner) {
+        Owner = owner;
+    }
 }
