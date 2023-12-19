@@ -7,10 +7,7 @@ import com.production.ehayvanbackendapi.Services.AppointmentService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +33,11 @@ public class AppointmentController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+        AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);
+        return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
+    }
 
     // Other controller methods for creating, updating, and deleting appointments
 }

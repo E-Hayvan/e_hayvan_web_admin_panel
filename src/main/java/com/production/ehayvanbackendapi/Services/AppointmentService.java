@@ -24,6 +24,12 @@ public class AppointmentService {
         Appointment appointment = appointmentRepository.findById(id).orElse(null);
         return appointment != null ? appointmentMapper.convertToDto(appointment) : null;
     }
+
+    public AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) {
+        Appointment appointment = appointmentMapper.convertToEntity(appointmentDTO);
+        Appointment savedAppointment = appointmentRepository.save(appointment);
+        return appointmentMapper.convertToDto(savedAppointment);
+    }
     // Other service methods for creating, updating, and deleting appointments
 }
 
