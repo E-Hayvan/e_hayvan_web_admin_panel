@@ -26,11 +26,11 @@ public class CustomerService {
         return customer != null ? customerMapper.convertToDto(customer) : null;
     }
 
-    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
-        Customer customer = customerMapper.convertToEntity(customerDTO);
-        Customer savedCustomer = customerRepository.save(customer);
-        return customerMapper.convertToDto(savedCustomer);
-    }
+//    public CustomerDTO createCustomer(CustomerDTO customerDTO) {
+//        Customer customer = customerMapper.convertToEntity(customerDTO);
+//        Customer savedCustomer = customerRepository.save(customer);
+//        return customerMapper.convertToDto(savedCustomer);
+//    }
 
     // Other service methods for creating, updating, and deleting customers
 }

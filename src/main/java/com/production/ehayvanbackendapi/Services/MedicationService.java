@@ -23,11 +23,11 @@ public class MedicationService {
         return medication != null ? medicationMapper.convertToDto(medication) : null;
     }
 
-    public MedicationDTO saveMedication(MedicationDTO medicationDTO) {
-        Medication medication = medicationMapper.convertToEntity(medicationDTO);
-        Medication savedMedication = medicationRepository.save(medication);
-        return medicationMapper.convertToDto(savedMedication);
-    }
+//    public MedicationDTO saveMedication(MedicationDTO medicationDTO) {
+//        Medication medication = medicationMapper.convertToEntity(medicationDTO);
+//        Medication savedMedication = medicationRepository.save(medication);
+//        return medicationMapper.convertToDto(savedMedication);
+//    }
 
     // Other service methods for updating, deleting medications, etc.
 }

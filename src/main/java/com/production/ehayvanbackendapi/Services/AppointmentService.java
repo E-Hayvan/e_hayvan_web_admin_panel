@@ -25,11 +25,11 @@ public class AppointmentService {
         return appointment != null ? appointmentMapper.convertToDto(appointment) : null;
     }
 
-    public AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) {
-        Appointment appointment = appointmentMapper.convertToEntity(appointmentDTO);
-        Appointment savedAppointment = appointmentRepository.save(appointment);
-        return appointmentMapper.convertToDto(savedAppointment);
-    }
+//    public AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) {
+//        Appointment appointment = appointmentMapper.convertToEntity(appointmentDTO);
+//        Appointment savedAppointment = appointmentRepository.save(appointment);
+//        return appointmentMapper.convertToDto(savedAppointment);
+//    }
     // Other service methods for creating, updating, and deleting appointments
 }
 
