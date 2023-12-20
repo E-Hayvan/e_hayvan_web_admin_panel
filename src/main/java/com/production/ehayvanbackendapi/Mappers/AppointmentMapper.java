@@ -1,7 +1,9 @@
 package com.production.ehayvanbackendapi.Mappers;
 
 import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
+import com.production.ehayvanbackendapi.DTO.CustomerDTO;
 import com.production.ehayvanbackendapi.Entities.Appointment;
+import com.production.ehayvanbackendapi.Entities.Customer;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -11,6 +13,14 @@ public class AppointmentMapper {
 
     public AppointmentMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.getConfiguration().setAmbiguityIgnored(true);
+        this.modelMapper.createTypeMap(Appointment.class, AppointmentDTO.class).addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getPetID().getPetID(), AppointmentDTO::setPetID);
+                    mapper.map(src -> src.getVetID().getVetID(), AppointmentDTO::setVetID);
+                    mapper.map(src -> src.getPetOwnerID().getPetOwnerID(), AppointmentDTO::setPetOwnerID);
+                }
+        );
     }
 
     public AppointmentDTO convertToDto(Appointment appointment) {

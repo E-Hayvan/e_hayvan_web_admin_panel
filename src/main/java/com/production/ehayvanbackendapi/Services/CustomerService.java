@@ -5,6 +5,7 @@ import com.production.ehayvanbackendapi.Entities.Customer;
 import com.production.ehayvanbackendapi.Mappers.CustomerMapper;
 import com.production.ehayvanbackendapi.Repositories.CustomerRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class CustomerService {
 //        return customerMapper.convertToDto(savedCustomer);
 //    }
 
+    public List<CustomerDTO> getAllCustomers(){
+        List<Customer> customerList = customerRepository.findAll();
+        List<CustomerDTO> customerDtoList = new ArrayList<>();
+        for(Customer cust: customerList){
+            customerDtoList.add(customerMapper.convertToDto(cust));
+        }
+        return customerDtoList;
+    }
     // Other service methods for creating, updating, and deleting customers
 }
 

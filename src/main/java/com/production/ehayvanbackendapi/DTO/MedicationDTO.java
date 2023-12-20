@@ -7,7 +7,9 @@ public class MedicationDTO {
     private Integer scheduleID;
     private Integer petID;
 
+    public MedicationDTO(){
 
+    }
     public MedicationDTO(Integer medicationID, String medicationName, Integer
             medTypeID, Integer scheduleID, Integer petID) {
         this.medicationID = medicationID;
@@ -55,11 +57,4 @@ public class MedicationDTO {
     public void setPetID(Integer petID) {
         this.petID = petID;
     }
-
-
-
-
-
-
-
 }

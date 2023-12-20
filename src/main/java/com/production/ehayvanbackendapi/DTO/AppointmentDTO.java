@@ -9,7 +9,9 @@ public class AppointmentDTO {
     private Integer petID;
     private Date appointmentDate;
 
+    public AppointmentDTO(){
 
+    }
     public AppointmentDTO(Integer appointmentID, Integer petOwnerID, Integer vetID, Integer petID, Date appointmentDate) {
         this.appointmentID = appointmentID;
         this.petOwnerID = petOwnerID;

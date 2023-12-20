@@ -10,7 +10,9 @@ public class CustomerDTO {
     private Integer vetID;
     private Integer ownerID;
 
+    public CustomerDTO(){
 
+    }
     public CustomerDTO(Integer userID, String name, String surname, String email,
                        String password, Integer userTypeID, Integer vetID, Integer ownerID) {
         this.userID = userID;

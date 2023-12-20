@@ -11,6 +11,13 @@ public class MedicationMapper {
 
     public MedicationMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(Medication.class, MedicationDTO.class).addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getPetID().getPetID(), MedicationDTO::setPetID);
+                    mapper.map(src -> src.getScheduleID().getScheduleID(), MedicationDTO::setScheduleID);
+                    mapper.map(src -> src.getMedTypeID().getMedTypeID(), MedicationDTO::setMedTypeID);
+                }
+        );
     }
 
     public MedicationDTO convertToDto(Medication medication) {

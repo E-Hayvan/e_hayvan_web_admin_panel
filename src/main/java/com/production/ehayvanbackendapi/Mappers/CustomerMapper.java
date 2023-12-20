@@ -10,10 +10,17 @@ public class CustomerMapper {
 
     public CustomerMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(Customer.class, CustomerDTO.class).addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getVet().getVetID(), CustomerDTO::setVetID);
+                    mapper.map(src -> src.getOwner().getPetOwnerID(), CustomerDTO::setOwnerID);
+                    mapper.map(src -> src.getUserTypeID().getUserTypeID(), CustomerDTO::setUserTypeID);
+                }
+        );
     }
 
     public CustomerDTO convertToDto(Customer customer) {
-        return modelMapper.map(customer, CustomerDTO.class);
+        return  modelMapper.map(customer, CustomerDTO.class);
     }
 
     public Customer convertToEntity(CustomerDTO customerDTO) {
