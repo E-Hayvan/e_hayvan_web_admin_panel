@@ -25,9 +25,9 @@ public class MedicationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping
-    public ResponseEntity<MedicationDTO> saveMedication(@RequestBody MedicationDTO medicationDTO) {
-        MedicationDTO savedMedication = medicationService.saveMedication(medicationDTO);
-        return new ResponseEntity<>(savedMedication, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<MedicationDTO> saveMedication(@RequestBody MedicationDTO medicationDTO) {
+//        MedicationDTO savedMedication = medicationService.saveMedication(medicationDTO);
+//        return new ResponseEntity<>(savedMedication, HttpStatus.CREATED);
+//    }
 }

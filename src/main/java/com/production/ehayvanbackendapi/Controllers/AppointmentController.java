@@ -33,11 +33,11 @@ public class AppointmentController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
-        AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);
-        return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
+//        AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);
+//        return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
+//    }
 
     // Other controller methods for creating, updating, and deleting appointments
 }

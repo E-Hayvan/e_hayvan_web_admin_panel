@@ -33,11 +33,11 @@ public class CustomerController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
-        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
-        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerDTO customerDTO) {
+//        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
+//        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
+//    }
 
     // Other controller methods for creating, updating, and deleting customers
 }
