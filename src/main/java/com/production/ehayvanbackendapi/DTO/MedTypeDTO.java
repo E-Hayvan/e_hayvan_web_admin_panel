@@ -1,44 +1,26 @@
 package com.production.ehayvanbackendapi.DTO;
-
-import java.util.List;
-
 public class MedTypeDTO {
     private Integer medTypeID;
-    private String medTypeName;
-    private List<MedicationDTO> medications;
+    private String medType;
+    public MedTypeDTO(){
 
-
-    public List<MedicationDTO> getMedications() {
-        return medications;
     }
-
-    public void setMedications(List<MedicationDTO> medications) {
-        this.medications = medications;
-    }
-
-
-    public MedTypeDTO(Integer medTypeID, String medTypeName, List<MedicationDTO> medications) {
+    public MedTypeDTO(Integer medTypeID, String medTypeName) {
         this.medTypeID = medTypeID;
-        this.medTypeName = medTypeName;
-        this.medications = medications;
+        this.medType = medTypeName;
     }
-
-
-
     public Integer getMedTypeID() {
         return medTypeID;
     }
-
-    public void setMedTypeID(Integer medTypeID) {
-        this.medTypeID = medTypeID;
+    public void setMedTypeID(int id){
+        this.medTypeID = id;
     }
-
     public String getMedTypeName() {
-        return medTypeName;
+        return medType;
     }
 
     public void setMedTypeName(String medTypeName) {
-        this.medTypeName = medTypeName;
+        this.medType = medTypeName;
     }
 
 }

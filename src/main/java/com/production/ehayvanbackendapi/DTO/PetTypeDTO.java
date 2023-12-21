@@ -6,7 +6,9 @@ public class PetTypeDTO {
     private Integer petTypeID;
     private String type;
     private List<PetDTO> pets;
+    public PetTypeDTO(){
 
+    }
     public PetTypeDTO(Integer petTypeID, String type, List<PetDTO> pets) {
         this.petTypeID = petTypeID;
         this.type = type;

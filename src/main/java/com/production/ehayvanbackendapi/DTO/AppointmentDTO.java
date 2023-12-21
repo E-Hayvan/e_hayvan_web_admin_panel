@@ -59,8 +59,4 @@ public class AppointmentDTO {
     public void setAppointmentDate(Date appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
-
-
-
-
 }

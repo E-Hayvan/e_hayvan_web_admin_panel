@@ -1,22 +1,33 @@
 package com.production.ehayvanbackendapi.DTO;
 
+import com.production.ehayvanbackendapi.Entities.Medication;
+
+import java.util.List;
+
 public class PetDTO {
     private Integer petID;
     private String petName;
     private int age;
     private Integer petTypeID;
+    private String description;
+    private Integer petOwnerID;
+    private List<AppointmentDTO> appointments;
+    private List<MedicationDTO> medications;
+    public PetDTO(){
 
+    }
     public PetDTO(Integer petID, String petName, int age, Integer petTypeID,
-                  String description, Integer petOwnerID) {
+                  String description, Integer petOwnerID, List<AppointmentDTO> appointments,
+                  List<MedicationDTO> medications) {
         this.petID = petID;
         this.petName = petName;
         this.age = age;
         this.petTypeID = petTypeID;
         this.description = description;
         this.petOwnerID = petOwnerID;
+        this.appointments = appointments;
+        this.medications = medications;
     }
-
-    private String description;
 
     public Integer getPetID() {
         return petID;
@@ -66,7 +77,19 @@ public class PetDTO {
         this.petOwnerID = petOwnerID;
     }
 
-    private Integer petOwnerID;
+    public List<AppointmentDTO> getAppointments() {
+        return appointments;
+    }
 
+    public void setAppointments(List<AppointmentDTO> appointments){
+        this.appointments = appointments;
+    }
 
+    public List<MedicationDTO> getMedications() {
+        return medications;
+    }
+
+    public void setMedications(List<MedicationDTO> medications) {
+        this.medications = medications;
+    }
 }

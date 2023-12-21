@@ -10,6 +10,12 @@ public class PetMapper {
 
     public PetMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+        this.modelMapper.createTypeMap(Pet.class, PetDTO.class).addMappings(
+                mapper -> {
+                    mapper.map(src -> src.getPetOwnerID().getPetOwnerID(), PetDTO::setPetOwnerID);
+                    mapper.map(src -> src.getPetTypeID().getPetTypeID(), PetDTO::setPetTypeID);
+                }
+        );
     }
 
     public PetDTO convertToDto(Pet pet) {

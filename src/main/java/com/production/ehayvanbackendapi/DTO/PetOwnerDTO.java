@@ -7,7 +7,10 @@ public class PetOwnerDTO {
     private CustomerDTO user;
     private List<PetDTO> pets;
     private VeterinarianDTO vet;
+    private List<AppointmentDTO> appointments;
+    public PetOwnerDTO(){
 
+    }
     public PetOwnerDTO(Integer petOwnerID, CustomerDTO user, List<PetDTO> pets,
                        VeterinarianDTO vet, List<AppointmentDTO> appointments) {
         this.petOwnerID = petOwnerID;
@@ -16,8 +19,6 @@ public class PetOwnerDTO {
         this.vet = vet;
         this.appointments = appointments;
     }
-
-    private List<AppointmentDTO> appointments;
 
 
     public Integer getPetOwnerID() {

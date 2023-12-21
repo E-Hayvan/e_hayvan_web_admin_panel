@@ -5,7 +5,9 @@ import java.util.List;
 public class UserTypeDTO {
     private Integer userTypeID;
     private String type;
+    public UserTypeDTO(){
 
+    }
     public UserTypeDTO(Integer userTypeID, String type, List<CustomerDTO> users) {
         this.userTypeID = userTypeID;
         this.type = type;

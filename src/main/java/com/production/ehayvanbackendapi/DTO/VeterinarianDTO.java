@@ -7,7 +7,9 @@ public class VeterinarianDTO {
     private List<PetOwnerDTO> petOwners;
     private String clinic;
     private CustomerDTO user;
+    public VeterinarianDTO(){
 
+    }
     public VeterinarianDTO(Integer vetID, List<PetOwnerDTO> petOwners, String clinic,
                            CustomerDTO user, List<AppointmentDTO> appointments) {
         this.vetID = vetID;
