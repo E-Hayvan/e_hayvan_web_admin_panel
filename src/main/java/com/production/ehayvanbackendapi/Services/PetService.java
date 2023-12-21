@@ -24,16 +24,11 @@ import java.util.Optional;
 public class PetService {
     private final PetRepository petRepository;
     private final PetMapper petMapper;
-    private final MedicationMapper medicationMapper;
-    private final AppointmentMapper appointmentMapper;
 
     @Autowired
-    public PetService(PetRepository petRepository, PetMapper petMapper,
-                      MedicationMapper medicationMapper, AppointmentMapper appointmentMapper) {
+    public PetService(PetRepository petRepository, PetMapper petMapper) {
         this.petRepository = petRepository;
         this.petMapper = petMapper;
-        this.medicationMapper = medicationMapper;
-        this.appointmentMapper = appointmentMapper;
     }
 
     public PetDTO getPetById(Integer id) {

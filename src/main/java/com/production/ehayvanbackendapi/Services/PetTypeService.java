@@ -14,7 +14,6 @@ public class PetTypeService {
     private final PetTypeRepository petTypeRepository;
     private final PetTypeMapper petTypeMapper;
 
-    @Autowired
     public PetTypeService(PetTypeRepository petTypeRepository, PetTypeMapper petTypeMapper) {
         this.petTypeRepository = petTypeRepository;
         this.petTypeMapper = petTypeMapper;

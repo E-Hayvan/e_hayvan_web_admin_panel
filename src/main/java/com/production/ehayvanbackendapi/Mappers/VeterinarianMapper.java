@@ -1,9 +1,13 @@
 package com.production.ehayvanbackendapi.Mappers;
 
+import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
+import com.production.ehayvanbackendapi.Entities.PetOwner;
 import com.production.ehayvanbackendapi.Entities.Veterinarian;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 public class VeterinarianMapper {
@@ -11,7 +15,6 @@ public class VeterinarianMapper {
 
     public VeterinarianMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-        //DO NOT FORGET
     }
 
     public VeterinarianDTO convertToDto(Veterinarian veterinarian) {

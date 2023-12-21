@@ -7,6 +7,7 @@ public class VeterinarianDTO {
     private List<PetOwnerDTO> petOwners;
     private String clinic;
     private CustomerDTO user;
+    private List<AppointmentDTO> appointments;
     public VeterinarianDTO(){
 
     }
@@ -18,8 +19,6 @@ public class VeterinarianDTO {
         this.user = user;
         this.appointments = appointments;
     }
-
-    private List<AppointmentDTO> appointments;
 
     public Integer getVetID() {
         return vetID;

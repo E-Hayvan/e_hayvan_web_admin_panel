@@ -22,16 +22,11 @@ import org.springframework.stereotype.Service;
 public class PetOwnerService {
     private final PetOwnerRepository petOwnerRepository;
     private final PetOwnerMapper petOwnerMapper;
-    private final PetMapper petMapper;
-    private final AppointmentMapper appointmentMapper;
 
     @Autowired
-    public PetOwnerService(PetOwnerRepository petOwnerRepository, PetOwnerMapper petOwnerMapper,
-                           PetMapper petMapper, AppointmentMapper appointmentMapper) {
+    public PetOwnerService(PetOwnerRepository petOwnerRepository, PetOwnerMapper petOwnerMapper) {
         this.petOwnerRepository = petOwnerRepository;
         this.petOwnerMapper = petOwnerMapper;
-        this.petMapper = petMapper;
-        this.appointmentMapper = appointmentMapper;
     }
 
     public PetOwnerDTO getPetOwnerById(Integer id) {

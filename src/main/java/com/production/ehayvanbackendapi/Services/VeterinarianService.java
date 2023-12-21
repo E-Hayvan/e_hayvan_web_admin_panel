@@ -15,7 +15,6 @@ public class VeterinarianService {
     private final VeterinarianRepository veterinarianRepository;
     private final VeterinarianMapper veterinarianMapper;
 
-    @Autowired
     public VeterinarianService(VeterinarianRepository veterinarianRepository, VeterinarianMapper veterinarianMapper) {
         this.veterinarianRepository = veterinarianRepository;
         this.veterinarianMapper = veterinarianMapper;
@@ -23,6 +22,7 @@ public class VeterinarianService {
 
     public VeterinarianDTO getVeterinarianById(Integer id) {
         Veterinarian veterinarian = veterinarianRepository.findById(id).orElse(null);
+        VeterinarianDTO vetDto = veterinarianMapper.convertToDto(veterinarian);
         return veterinarian != null ? veterinarianMapper.convertToDto(veterinarian) : null;
     }
 

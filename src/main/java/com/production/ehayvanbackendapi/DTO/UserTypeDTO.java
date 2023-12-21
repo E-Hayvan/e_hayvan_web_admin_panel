@@ -11,11 +11,7 @@ public class UserTypeDTO {
     public UserTypeDTO(Integer userTypeID, String type, List<CustomerDTO> users) {
         this.userTypeID = userTypeID;
         this.type = type;
-        this.users = users;
     }
-
-    private List<CustomerDTO> users;
-
 
     public Integer getUserTypeID() {
         return userTypeID;
@@ -32,15 +28,5 @@ public class UserTypeDTO {
     public void setType(String type) {
         this.type = type;
     }
-
-    public List<CustomerDTO> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<CustomerDTO> users) {
-        this.users = users;
-    }
-
-
 
 }

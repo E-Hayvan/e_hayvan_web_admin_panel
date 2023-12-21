@@ -15,8 +15,10 @@ public class PetOwnerMapper {
     public PetOwnerMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
         this.modelMapper.createTypeMap(PetOwner.class, PetOwnerDTO.class).addMappings(
-                mapper -> mapper.skip(src -> src.getVet().getPetOwners(), (dest, val) -> dest.getVet().setPetOwners(
-                        (List<PetOwnerDTO>) val))
+                mapper -> {
+                    mapper.map(src -> src.getVet().getUser().getName(), PetOwnerDTO::setVetName);
+                    mapper.map(src -> src.getVet().getVetID(), PetOwnerDTO::setVetID);
+                }
         );
     }
 
