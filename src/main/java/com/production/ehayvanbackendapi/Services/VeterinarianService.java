@@ -22,7 +22,6 @@ public class VeterinarianService {
 
     public VeterinarianDTO getVeterinarianById(Integer id) {
         Veterinarian veterinarian = veterinarianRepository.findById(id).orElse(null);
-        VeterinarianDTO vetDto = veterinarianMapper.convertToDto(veterinarian);
         return veterinarian != null ? veterinarianMapper.convertToDto(veterinarian) : null;
     }
 
