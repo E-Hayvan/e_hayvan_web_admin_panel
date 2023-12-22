@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Controllers;
 
 import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetOwnerDTO;
 import com.production.ehayvanbackendapi.Services.PetOwnerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,11 +27,11 @@ public class PetOwnerController {
         }
     }
 
-//    @PostMapping
-//    public ResponseEntity<PetOwnerDTO> savePetOwner(@RequestBody PetOwnerDTO petOwnerDTO) {
-//        PetOwnerDTO savedPetOwner = petOwnerService.savePetOwner(petOwnerDTO);
-//        return new ResponseEntity<>(savedPetOwner, HttpStatus.CREATED);
-//    }
+    @PostMapping
+    public ResponseEntity<PetOwnerDTO> savePetOwner(@RequestBody CreateOrUpdatePetOwnerDTO petOwnerDTO) {
+        PetOwnerDTO savedPetOwner = petOwnerService.postPetOwner(petOwnerDTO);
+        return new ResponseEntity<>(savedPetOwner, HttpStatus.CREATED);
+    }
 
     // Other controller methods for updating, deleting pet owners, etc.
 }
