@@ -27,7 +27,7 @@ public class PetOwnerController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/newowner")
     public ResponseEntity<PetOwnerDTO> savePetOwner(@RequestBody CreateOrUpdatePetOwnerDTO petOwnerDTO) {
         PetOwnerDTO savedPetOwner = petOwnerService.postPetOwner(petOwnerDTO);
         return new ResponseEntity<>(savedPetOwner, HttpStatus.CREATED);

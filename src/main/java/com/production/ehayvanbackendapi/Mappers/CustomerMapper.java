@@ -1,5 +1,6 @@
 package com.production.ehayvanbackendapi.Mappers;
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
 import com.production.ehayvanbackendapi.Entities.Customer;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,11 @@ public class CustomerMapper {
                     mapper.map(src -> src.getVet().getVetID(), CustomerDTO::setVetID);
                     mapper.map(src -> src.getOwner().getPetOwnerID(), CustomerDTO::setOwnerID);
                     mapper.map(src -> src.getUserTypeID().getUserTypeID(), CustomerDTO::setUserTypeID);
+                }
+        );
+        this.modelMapper.createTypeMap(CreateOrUpdateCustomerDTO.class, Customer.class).addMappings(
+                mapper -> {
+                    mapper.skip(Customer::setOwner);
                 }
         );
     }

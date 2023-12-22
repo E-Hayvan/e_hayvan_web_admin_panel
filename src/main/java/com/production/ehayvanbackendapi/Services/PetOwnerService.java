@@ -5,10 +5,7 @@ import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetOwnerDTO;
-import com.production.ehayvanbackendapi.Entities.Appointment;
-import com.production.ehayvanbackendapi.Entities.Pet;
-import com.production.ehayvanbackendapi.Entities.PetOwner;
-import com.production.ehayvanbackendapi.Entities.UserType;
+import com.production.ehayvanbackendapi.Entities.*;
 import com.production.ehayvanbackendapi.Mappers.AppointmentMapper;
 import com.production.ehayvanbackendapi.Mappers.PetMapper;
 import com.production.ehayvanbackendapi.Mappers.PetOwnerMapper;
@@ -44,8 +41,13 @@ public class PetOwnerService {
     // Other service methods for updating, deleting pet owners, etc.
 
     public PetOwnerDTO postPetOwner(CreateOrUpdatePetOwnerDTO petOwnerDTO){
+        // Düzenlenebilir
         PetOwner newOwner = petOwnerMapper.convertToEntity(petOwnerDTO);
         newOwner.getUser().setUserTypeID(new UserType(1));
+
+        Veterinarian targetVeterinarian = new Veterinarian();
+        targetVeterinarian.setVetID(petOwnerDTO.getVeterinarianID());
+        newOwner.setVet(targetVeterinarian);
         petOwnerRepository.save(newOwner);
 
         return petOwnerMapper.convertToDto(newOwner);

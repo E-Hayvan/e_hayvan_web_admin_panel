@@ -27,7 +27,7 @@ public class PetOwner{
     public void setPetOwnerID(int petOwnerID) {
         PetOwnerID = petOwnerID;
     }
-    public com.production.ehayvanbackendapi.Entities.Customer getUser() {
+    public Customer getUser() {
         return User;
     }
     public void setUser(com.production.ehayvanbackendapi.Entities.Customer user) {
