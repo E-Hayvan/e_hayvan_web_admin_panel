@@ -41,16 +41,33 @@ public class PetOwnerService {
     // Other service methods for updating, deleting pet owners, etc.
 
     public PetOwnerDTO postPetOwner(CreateOrUpdatePetOwnerDTO petOwnerDTO){
-        // Düzenlenebilir
         PetOwner newOwner = petOwnerMapper.convertToEntity(petOwnerDTO);
+
+        // Set User Type as 'Pet Owner'
         newOwner.getUser().setUserTypeID(new UserType(1));
 
+        // Attach the target veterinarian to the new pet owner if it exists.
         Veterinarian targetVeterinarian = new Veterinarian();
         targetVeterinarian.setVetID(petOwnerDTO.getVeterinarianID());
         newOwner.setVet(targetVeterinarian);
-        petOwnerRepository.save(newOwner);
 
-        return petOwnerMapper.convertToDto(newOwner);
+        try{
+            petOwnerRepository.save(newOwner);
+            return petOwnerMapper.convertToDto(newOwner);
+        }
+        catch (Exception e){
+            return null;
+        }
+    }
+
+    public PetOwnerDTO deletePetOwner(Integer id){
+        Optional<PetOwner> target = petOwnerRepository.findById(id);
+        if(target.isPresent()){
+            petOwnerRepository.delete(target.get());
+            PetOwnerDTO targetDto = petOwnerMapper.convertToDto(target.get());
+            return targetDto;
+        }
+        return null;
     }
 }
 

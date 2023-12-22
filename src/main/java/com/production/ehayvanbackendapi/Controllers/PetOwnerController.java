@@ -30,7 +30,23 @@ public class PetOwnerController {
     @PostMapping("/newowner")
     public ResponseEntity<PetOwnerDTO> savePetOwner(@RequestBody CreateOrUpdatePetOwnerDTO petOwnerDTO) {
         PetOwnerDTO savedPetOwner = petOwnerService.postPetOwner(petOwnerDTO);
-        return new ResponseEntity<>(savedPetOwner, HttpStatus.CREATED);
+
+        if (petOwnerDTO != null){
+            return new ResponseEntity<>(savedPetOwner, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PetOwnerDTO> deletePetOwner(@PathVariable Integer id){
+        PetOwnerDTO deletedPetOwner = petOwnerService.deletePetOwner(id);
+
+        if(deletedPetOwner != null){
+            return new ResponseEntity<>(deletedPetOwner, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Other controller methods for updating, deleting pet owners, etc.
