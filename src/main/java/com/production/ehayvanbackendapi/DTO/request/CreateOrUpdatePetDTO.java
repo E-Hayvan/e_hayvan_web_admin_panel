@@ -7,6 +7,14 @@ public class CreateOrUpdatePetDTO {
     private String description;
     private Integer petOwnerID;
 
+    public CreateOrUpdatePetDTO(String petName, Integer age, Integer petTypeID, String description, Integer petOwnerID) {
+        this.petName = petName;
+        this.age = age;
+        this.petTypeID = petTypeID;
+        this.description = description;
+        this.petOwnerID = petOwnerID;
+    }
+
     public String getPetName() {
         return petName;
     }

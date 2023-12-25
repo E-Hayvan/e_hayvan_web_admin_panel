@@ -104,22 +104,23 @@ public class PetOwnerControllerTest {
         verify(testPetOwnerService, times(1)).postPetOwner(any());
     }
 
-//    @Test
-//    @Transactional
-//    public void testDeletingByID() throws Exception {
-//        testPetOwnerDTO = testPetOwnerService.postPetOwner(testCreateOrUpdatePetOwnerDTO);
-//        testCreateOrUpdateCustomerDTO = new CreateOrUpdateCustomerDTO("Incir", "Caykowsky", "cay@gmail.com", "abrakadabra");
-//        // testPetOwnerDTO = testPetOwnerService.postPetOwner(testCreateOrUpdatePetOwnerDTO);
-//        // System.out.println(testPetOwnerDTO.getPetOwnerID());
-//        Integer testPetOwnerId = testPetOwnerDTO.getPetOwnerID();
-//
-//        when(testPetOwnerService.deletePetOwner(testPetOwnerId)).thenReturn(new PetOwnerDTO());
-//        this.mockMvc.perform(delete("/api/petowners/" + testPetOwnerId).with(httpBasic("test", "password")))
-//                .andDo(print())
-//                .andExpect(status().is2xxSuccessful())
-//                .andExpect(jsonPath("$.petOwnerID").value(testPetOwnerDTO.getPetOwnerID()));
-//
-//        // assert that called in PetOwnerController.Controller class by delete-requesting
-//        verify(testPetOwnerService, times(1)).deletePetOwner(testPetOwnerId);
-//    }
+    @Test
+    @Transactional
+    public void testDeletingByID() throws Exception {
+        // duck mockito
+        // when(testPetOwnerService.deletePetOwner(testPetOwnerId)).thenReturn(new PetOwnerDTO());
+
+        // firstly post data which is gotta delete later
+        testPetOwnerDTO = testPetOwnerService.postPetOwner(testCreateOrUpdatePetOwnerDTO);
+        testCreateOrUpdateCustomerDTO = new CreateOrUpdateCustomerDTO("Incir", "Caykowsky", "cay@gmail.com", "abrakadabra");
+        testPetOwnerDTO = testPetOwnerService.postPetOwner(testCreateOrUpdatePetOwnerDTO);
+
+        this.mockMvc.perform(delete("/api/petowners/" + testPetOwnerDTO.getPetOwnerID()).with(httpBasic("test", "password")))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.petOwnerID").value(testPetOwnerDTO.getPetOwnerID()));
+
+        // assert that called in PetOwnerController.Controller class by delete-requesting
+        verify(testPetOwnerService, times(1)).deletePetOwner(testPetOwnerDTO.getPetOwnerID());
+    }
 }
