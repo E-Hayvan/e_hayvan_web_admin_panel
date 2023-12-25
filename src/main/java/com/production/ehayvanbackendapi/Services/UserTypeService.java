@@ -26,11 +26,6 @@ public class UserTypeService {
         return userType != null ? userTypeMapper.convertToDto(userType) : null;
     }
 
-//    public UserTypeDTO saveUserType(UserTypeDTO userTypeDTO) {
-//        UserType userType = userTypeMapper.convertToEntity(userTypeDTO);
-//        UserType savedUserType = userTypeRepository.save(userType);
-//        return userTypeMapper.convertToDto(savedUserType);
-//    }
 
     // Other service methods for updating, deleting user types, etc.
 }

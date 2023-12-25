@@ -26,12 +26,6 @@ public class PetTypeController {
         }
     }
 
-//    @PostMapping
-//    public ResponseEntity<PetTypeDTO> savePetType(@RequestBody PetTypeDTO petTypeDTO) {
-//        PetTypeDTO savedPetType = petTypeService.savePetType(petTypeDTO);
-//        return new ResponseEntity<>(savedPetType, HttpStatus.CREATED);
-//    }
-
 
 }
 

@@ -5,10 +5,10 @@ import java.util.List;
 
 public class ScheduleDTO {
     private Integer scheduleID;
-        private List<MedicationDTO> medications;
-        private Date beginningDate;
-        private int doseFrequency;
-        private int doseCount;
+    private List<MedicationDTO> medications;
+    private Date beginningDate;
+    private int doseFrequency;
+    private int doseCount;
     public ScheduleDTO(){
 
     }

@@ -15,10 +15,10 @@ public class PetType {
     @OneToMany(mappedBy = "PetTypeID")
     private List<Pet> pets;
 
-    public int getPetTypeID() {
+    public Integer getPetTypeID() {
         return PetTypeID;
     }
-    public void setPetTypeID(int petTypeID) {
+    public void setPetTypeID(Integer petTypeID) {
         PetTypeID = petTypeID;
     }
     public String getType() {

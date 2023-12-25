@@ -40,17 +40,16 @@ public class PetOwnerService {
     }
     // Other service methods for updating, deleting pet owners, etc.
 
+    // TODO: getAllPetOwners() fonksiyonu oluşturulacak.
+
     public PetOwnerDTO postPetOwner(CreateOrUpdatePetOwnerDTO petOwnerDTO){
+        // Map the data transfer object data to real object.
         PetOwner newOwner = petOwnerMapper.convertToEntity(petOwnerDTO);
 
-        // Set User Type as 'Pet Owner'
+        // Set User Type as 'Pet Owner'.
         newOwner.getUser().setUserTypeID(new UserType(1));
 
-        // Attach the target veterinarian to the new pet owner if it exists.
-        Veterinarian targetVeterinarian = new Veterinarian();
-        targetVeterinarian.setVetID(petOwnerDTO.getVeterinarianID());
-        newOwner.setVet(targetVeterinarian);
-
+        // Try to save the data to the database.
         try{
             petOwnerRepository.save(newOwner);
             return petOwnerMapper.convertToDto(newOwner);
@@ -60,8 +59,26 @@ public class PetOwnerService {
         }
     }
 
-    public PetOwnerDTO deletePetOwner(Integer id){
+    public PetOwnerDTO updatePetOwner(Integer id, CreateOrUpdatePetOwnerDTO updatedDto){
+        // Find the target entity.
         Optional<PetOwner> target = petOwnerRepository.findById(id);
+
+        // Update and save the entity if it exists.
+        if(target.isPresent()){
+            PetOwner updatedTarget = petOwnerMapper.mapExistingEntity(updatedDto, target.get());
+            petOwnerRepository.save(updatedTarget);
+            return petOwnerMapper.convertToDto(updatedTarget);
+        }
+
+        // Return null if the entity doesn't exist.
+        return null;
+    }
+
+    public PetOwnerDTO deletePetOwner(Integer id){
+        // Find the pet owner.
+        Optional<PetOwner> target = petOwnerRepository.findById(id);
+
+        // Delete the pet owner if it exists.
         if(target.isPresent()){
             petOwnerRepository.delete(target.get());
             PetOwnerDTO targetDto = petOwnerMapper.convertToDto(target.get());

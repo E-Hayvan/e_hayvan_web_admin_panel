@@ -7,6 +7,7 @@ import com.production.ehayvanbackendapi.Repositories.CustomerRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,20 @@ public class CustomerService {
         }
         return customerDtoList;
     }
+
+    public CustomerDTO deleteCustomer(Integer id){
+        // Find the target customer to delete.
+        Optional<Customer> targetCustomer = customerRepository.findById(id);
+
+        // Delete customer and return dto if it exists.
+        if(targetCustomer.isPresent()){
+            customerRepository.delete(targetCustomer.get());
+            return customerMapper.convertToDto(targetCustomer.get());
+        }
+        // Return null if target entity does not exist.
+        return null;
+    }
+
     // Other service methods for creating, updating, and deleting customers
 }
 

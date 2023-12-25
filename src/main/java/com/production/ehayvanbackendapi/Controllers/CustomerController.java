@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Controllers;
 
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
+import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.Services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,16 @@ public class CustomerController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<CustomerDTO> deleteCustomer(@PathVariable Integer id){
+        CustomerDTO deletedCustomer = customerService.deleteCustomer(id);
+        if(deletedCustomer != null){
+            return new ResponseEntity<>(deletedCustomer, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }

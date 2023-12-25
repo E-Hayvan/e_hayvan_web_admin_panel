@@ -21,12 +21,6 @@ public class PetOwnerMapper {
                     mapper.map(src -> src.getVet().getVetID(), PetOwnerDTO::setVetID);
                 }
         );
-//        this.modelMapper.createTypeMap(CreateOrUpdatePetOwnerDTO.class, PetOwner.class).addMappings(
-//                mapper -> {
-//                    mapper.map(src -> src.getVeterinarianID(),
-//                            (dest, val) -> dest.getVet().setVetID((Integer) val));
-//                }
-//        );
     }
 
     public PetOwnerDTO convertToDto(PetOwner petOwner) {
@@ -35,6 +29,11 @@ public class PetOwnerMapper {
 
     public PetOwner convertToEntity(CreateOrUpdatePetOwnerDTO petOwnerDTO) {
         return modelMapper.map(petOwnerDTO, PetOwner.class);
+    }
+
+    public PetOwner mapExistingEntity(CreateOrUpdatePetOwnerDTO petOwnerDTO, PetOwner target){
+        modelMapper.map(petOwnerDTO, target);
+        return target;
     }
 }
 

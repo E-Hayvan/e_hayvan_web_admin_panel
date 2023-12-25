@@ -33,6 +33,17 @@ public class AppointmentController {
         }
     }
 
+    @DeleteMapping("/appointments/{id}")
+    public ResponseEntity<AppointmentDTO> deleteAppointment(@PathVariable Integer id) {
+        AppointmentDTO deletedAppointment = appointmentService.deleteAppointment(id);
+        if (deletedAppointment != null) {
+            return new ResponseEntity<>(deletedAppointment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 //    @PostMapping
 //    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 //        AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);

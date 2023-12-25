@@ -38,6 +38,18 @@ public class PetOwnerController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<PetOwnerDTO> updatePetOwner(@RequestBody CreateOrUpdatePetOwnerDTO petOwnerDTO,
+                                                      @PathVariable Integer id){
+        PetOwnerDTO updatedPetOwner = petOwnerService.updatePetOwner(id, petOwnerDTO);
+
+        if(updatedPetOwner != null){
+            return new ResponseEntity<>(updatedPetOwner, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<PetOwnerDTO> deletePetOwner(@PathVariable Integer id){
         PetOwnerDTO deletedPetOwner = petOwnerService.deletePetOwner(id);
