@@ -6,6 +6,14 @@ public class CreateOrUpdateCustomerDTO {
     private String Email;
     private String Password;
 
+    // added for testing at the moment
+    public CreateOrUpdateCustomerDTO(String Name, String Surname, String Email, String Password) {
+        this.Name = Name;
+        this.Surname = Surname;
+        this.Email = Email;
+        this.Password = Password;
+    }
+
     public String getName() {
         return Name;
     }
