@@ -40,6 +40,8 @@ public class PetOwnerService {
     }
     // Other service methods for updating, deleting pet owners, etc.
 
+    // TODO: getAllPetOwners() fonksiyonu oluşturulacak.
+
     public PetOwnerDTO postPetOwner(CreateOrUpdatePetOwnerDTO petOwnerDTO){
         // Map the data transfer object data to real object.
         PetOwner newOwner = petOwnerMapper.convertToEntity(petOwnerDTO);

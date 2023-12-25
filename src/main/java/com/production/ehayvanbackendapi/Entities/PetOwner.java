@@ -21,10 +21,10 @@ public class PetOwner{
     @OneToMany(mappedBy = "PetOwnerID")
     private List<Appointment> Appointments;
 
-    public int getPetOwnerID() {
+    public Integer getPetOwnerID() {
         return PetOwnerID;
     }
-    public void setPetOwnerID(int petOwnerID) {
+    public void setPetOwnerID(Integer petOwnerID) {
         PetOwnerID = petOwnerID;
     }
     public Customer getUser() {

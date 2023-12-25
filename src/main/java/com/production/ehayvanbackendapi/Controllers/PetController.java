@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Controllers;
 
 import com.production.ehayvanbackendapi.DTO.PetDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetDTO;
 import com.production.ehayvanbackendapi.Services.PetService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +35,35 @@ public class PetController {
 //        return new ResponseEntity<>(petDTOList, HttpStatus.OK);
 //    }
 //
-//    @PostMapping
-//    public ResponseEntity<PetDTO> savePet(@RequestBody PetDTO petDTO) {
-//        PetDTO savedPet = petService.savePet(petDTO);
-//        return new ResponseEntity<>(savedPet, HttpStatus.CREATED);
-//    }
+    @PostMapping
+    public ResponseEntity<PetDTO> savePet(@RequestBody CreateOrUpdatePetDTO petDTO) {
+        PetDTO savedPet = petService.postPet(petDTO);
+        if(savedPet != null){
+            return new ResponseEntity<>(savedPet, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<PetDTO> updatePet(@PathVariable Integer id, @RequestBody CreateOrUpdatePetDTO petDTO){
+        PetDTO updatedPet = petService.updatePet(id, petDTO);
+        if(updatedPet != null){
+            return new ResponseEntity<>(updatedPet, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PetDTO> deletePet(@PathVariable Integer id){
+        PetDTO deletedPet = petService.deletePet(id);
+        if(deletedPet != null){
+            return new ResponseEntity<>(deletedPet, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     // Other controller methods for updating, deleting pets, etc.
 }
