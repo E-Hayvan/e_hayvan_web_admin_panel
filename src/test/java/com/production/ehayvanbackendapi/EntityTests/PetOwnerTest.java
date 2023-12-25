@@ -1,13 +1,11 @@
-package com.production.ehayvanbackendapi.entity_tests;
+package com.production.ehayvanbackendapi.EntityTests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.production.ehayvanbackendapi.Entities.*;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.Date;
 import java.util.List;
 
 @SpringBootTest

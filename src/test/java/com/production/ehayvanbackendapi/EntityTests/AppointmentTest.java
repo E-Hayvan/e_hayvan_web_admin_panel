@@ -1,4 +1,4 @@
-package com.production.ehayvanbackendapi.entity_tests;
+package com.production.ehayvanbackendapi.EntityTests;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
