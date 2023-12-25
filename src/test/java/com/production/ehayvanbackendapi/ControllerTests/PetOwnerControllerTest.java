@@ -56,7 +56,7 @@ public class PetOwnerControllerTest {
     @BeforeEach
     public void onEachTestStart() {
         testCreateOrUpdateCustomerDTO = new CreateOrUpdateCustomerDTO("Portakal", "Caykowsky", "cay@gmail.com", "abrakadabra");
-        testCreateOrUpdatePetOwnerDTO = new CreateOrUpdatePetOwnerDTO(testCreateOrUpdateCustomerDTO, 1);
+        testCreateOrUpdatePetOwnerDTO = new CreateOrUpdatePetOwnerDTO(testCreateOrUpdateCustomerDTO);
     }
 
     @AfterEach

@@ -4,9 +4,8 @@ public class CreateOrUpdatePetOwnerDTO {
     private CreateOrUpdateCustomerDTO user;
 
     // added for testing at the moment
-    public CreateOrUpdatePetOwnerDTO(CreateOrUpdateCustomerDTO user, Integer veterinarianID) {
+    public CreateOrUpdatePetOwnerDTO(CreateOrUpdateCustomerDTO user) {
         this.user = user;
-        this.veterinarianID = veterinarianID;
     }
   
     public CreateOrUpdateCustomerDTO getUser() {
