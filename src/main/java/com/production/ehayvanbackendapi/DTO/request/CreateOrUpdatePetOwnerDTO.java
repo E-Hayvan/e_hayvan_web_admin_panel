@@ -4,6 +4,11 @@ public class CreateOrUpdatePetOwnerDTO {
     private CreateOrUpdateCustomerDTO user;
 
     // added for testing at the moment
+    public CreateOrUpdatePetOwnerDTO() {
+        this.user = null;
+    }
+
+    // added for testing at the moment
     public CreateOrUpdatePetOwnerDTO(CreateOrUpdateCustomerDTO user) {
         this.user = user;
     }
