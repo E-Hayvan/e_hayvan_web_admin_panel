@@ -44,7 +44,7 @@ public class CustomerService {
     }
 
     public CustomerDTO deleteCustomer(Integer id){
-        // Find the target pet to delete.
+        // Find the target customer to delete.
         Optional<Customer> targetCustomer = customerRepository.findById(id);
 
         // Delete customer and return dto if it exists.
