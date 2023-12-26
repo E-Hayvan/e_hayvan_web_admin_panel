@@ -45,3 +45,7 @@ jobs:
       run: mvn clean install -DskipTests
     - name: Run tests with Maven for Spring Boot Project
       run: mvn -B test --file pom.xml
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v3
+      env:
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
