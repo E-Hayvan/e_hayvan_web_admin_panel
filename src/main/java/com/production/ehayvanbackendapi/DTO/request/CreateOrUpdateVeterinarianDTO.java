@@ -4,6 +4,11 @@ public class CreateOrUpdateVeterinarianDTO {
     private CreateOrUpdateCustomerDTO user;
     private String clinic;
 
+    public CreateOrUpdateVeterinarianDTO(CreateOrUpdateCustomerDTO user, String clinic) {
+        this.user = user;
+        this.clinic = clinic;
+    }
+
     public CreateOrUpdateCustomerDTO getUser() {
         return user;
     }

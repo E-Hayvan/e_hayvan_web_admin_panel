@@ -32,7 +32,7 @@ public class VeterinarianController {
         VeterinarianDTO savedVeterinarian = veterinarianService.postVeterinarian(veterinarianDTO);
 
         if(savedVeterinarian != null){
-            return new ResponseEntity<>(savedVeterinarian, HttpStatus.OK);
+            return new ResponseEntity<>(savedVeterinarian, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
