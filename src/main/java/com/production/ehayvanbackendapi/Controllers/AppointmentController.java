@@ -33,7 +33,7 @@ public class AppointmentController {
         }
     }
 
-    @DeleteMapping("/appointments/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<AppointmentDTO> deleteAppointment(@PathVariable Integer id) {
         AppointmentDTO deletedAppointment = appointmentService.deleteAppointment(id);
         if (deletedAppointment != null) {

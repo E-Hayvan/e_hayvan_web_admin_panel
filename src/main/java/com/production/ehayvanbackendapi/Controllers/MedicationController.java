@@ -24,6 +24,16 @@ public class MedicationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MedicationDTO> deleteMedication(@PathVariable Integer id) {
+        MedicationDTO deletedMedication = medicationService.deleteMedication(id);
+        if (deletedMedication != null) {
+            return new ResponseEntity<>(deletedMedication, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 //    @PostMapping
 //    public ResponseEntity<MedicationDTO> saveMedication(@RequestBody MedicationDTO medicationDTO) {
 //        MedicationDTO savedMedication = medicationService.saveMedication(medicationDTO);
