@@ -74,6 +74,24 @@ public class PetOwnerService {
         return null;
     }
 
+    public PetOwnerDTO updateAssignedVeterinarian(Integer vetId, Integer petOwnerId){
+        // Find the pet owner to assign the veterinarian.
+        Optional<PetOwner> targetPetOwner = petOwnerRepository.findById(petOwnerId);
+
+        // If it exists, assign the veterinarian and convert to dto.
+        if(targetPetOwner.isPresent()){
+            Veterinarian assignedVeterinarian = new Veterinarian();
+            assignedVeterinarian.setVetID(vetId);
+            targetPetOwner.get().setVet(assignedVeterinarian);
+            petOwnerRepository.save(targetPetOwner.get());
+            return petOwnerMapper.convertToDto(targetPetOwner.get());
+        }
+
+        // If it doesn't exist, don't assign the vet and return null.
+        else
+            return null;
+    }
+
     public PetOwnerDTO deletePetOwner(Integer id){
         // Find the pet owner.
         Optional<PetOwner> target = petOwnerRepository.findById(id);

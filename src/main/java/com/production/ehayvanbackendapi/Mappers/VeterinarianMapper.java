@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.Mappers;
 
 import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateVeterinarianDTO;
 import com.production.ehayvanbackendapi.Entities.PetOwner;
 import com.production.ehayvanbackendapi.Entities.Veterinarian;
 import org.modelmapper.ModelMapper;
@@ -21,7 +22,7 @@ public class VeterinarianMapper {
         return modelMapper.map(veterinarian, VeterinarianDTO.class);
     }
 
-    public Veterinarian convertToEntity(VeterinarianDTO veterinarianDTO) {
+    public Veterinarian convertToEntity(CreateOrUpdateVeterinarianDTO veterinarianDTO) {
         return modelMapper.map(veterinarianDTO, Veterinarian.class);
     }
 }

@@ -50,6 +50,18 @@ public class PetOwnerController {
         }
     }
 
+    @PutMapping("/updateVet/{vetId}/{petOwnerId}")
+    public ResponseEntity<PetOwnerDTO> updateVeterinarianAssignment(@PathVariable Integer vetId,
+                                                                    @PathVariable Integer petOwnerId){
+        PetOwnerDTO updatedPetOwner = petOwnerService.updateAssignedVeterinarian(vetId, petOwnerId);
+
+        if(updatedPetOwner != null){
+            return new ResponseEntity<>(updatedPetOwner, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<PetOwnerDTO> deletePetOwner(@PathVariable Integer id){
         PetOwnerDTO deletedPetOwner = petOwnerService.deletePetOwner(id);
