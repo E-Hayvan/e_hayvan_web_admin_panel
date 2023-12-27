@@ -26,6 +26,15 @@ public class ScheduleController {
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ScheduleDTO> deleteSchedule(@PathVariable Integer id) {
+        ScheduleDTO deletedSchedule = scheduleService.deleteSchedule(id);
+        if (deletedSchedule != null) {
+            return new ResponseEntity<>(deletedSchedule, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 //    @PostMapping
 //    public ResponseEntity<ScheduleDTO> saveSchedule(@RequestBody ScheduleDTO scheduleDTO) {
 //        ScheduleDTO savedSchedule = scheduleService.saveSchedule(scheduleDTO);

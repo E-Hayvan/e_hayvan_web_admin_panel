@@ -25,6 +25,16 @@ public class MedTypeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<MedTypeDTO> deleteMedType(@PathVariable Integer id) {
+        MedTypeDTO deletedMedType = medTypeService.deleteMedType(id);
+        if (deletedMedType != null) {
+            return new ResponseEntity<>(deletedMedType, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
 
 

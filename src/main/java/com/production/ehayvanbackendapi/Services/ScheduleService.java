@@ -6,6 +6,7 @@ import com.production.ehayvanbackendapi.Mappers.ScheduleMapper;
 import com.production.ehayvanbackendapi.Repositories.ScheduleRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,19 @@ public class ScheduleService {
     public ScheduleDTO getScheduleById(Integer id) {
         Schedule schedule = scheduleRepository.findById(id).orElse(null);
         return schedule != null ? scheduleMapper.convertToDto(schedule) : null;
+    }
+
+    public ScheduleDTO deleteSchedule(Integer id) {
+        // Find the target Schedule to delete.
+        Optional<Schedule> targetSchedule = scheduleRepository.findById(id);
+
+        // Delete Schedule and return DTO if it exists.
+        if (targetSchedule.isPresent()) {
+            scheduleRepository.delete(targetSchedule.get());
+            return scheduleMapper.convertToDto(targetSchedule.get());
+        }
+        // Return null if the target entity does not exist.
+        return null;
     }
 
 //    public ScheduleDTO saveSchedule(ScheduleDTO scheduleDTO) {
