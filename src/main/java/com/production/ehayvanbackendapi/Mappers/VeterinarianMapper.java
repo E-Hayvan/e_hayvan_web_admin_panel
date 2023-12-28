@@ -25,5 +25,10 @@ public class VeterinarianMapper {
     public Veterinarian convertToEntity(CreateOrUpdateVeterinarianDTO veterinarianDTO) {
         return modelMapper.map(veterinarianDTO, Veterinarian.class);
     }
+
+    public Veterinarian mapExistingEntity(Veterinarian vet, CreateOrUpdateVeterinarianDTO updatedDto){
+        modelMapper.map(updatedDto, vet);
+        return vet;
+    }
 }
 

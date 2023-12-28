@@ -45,6 +45,23 @@ public class VeterinarianService {
         }
     }
 
+    public VeterinarianDTO updateVeterinarian(Integer id, CreateOrUpdateVeterinarianDTO updatedDto){
+        // Find the target veterinarian.
+        Optional<Veterinarian> target = veterinarianRepository.findById(id);
+
+        // If the entity exists, update the entity with the new dto.
+        if(target.isPresent()){
+            Veterinarian updatedVet = veterinarianMapper.mapExistingEntity(target.get(), updatedDto);
+            veterinarianRepository.save(updatedVet);
+            return veterinarianMapper.convertToDto(updatedVet);
+        }
+
+        // If it doesn't exist return null.
+        else{
+            return null;
+        }
+    }
+
     public VeterinarianDTO deleteVeterinarian(Integer id){
         // Find the entity to remove.
         Optional<Veterinarian> target = veterinarianRepository.findById(id);

@@ -38,6 +38,18 @@ public class VeterinarianController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<VeterinarianDTO> updateVeterinarian(@PathVariable Integer id,
+                                                              @RequestBody CreateOrUpdateVeterinarianDTO veterinarianDTO){
+        VeterinarianDTO updatedVeterinarian = veterinarianService.updateVeterinarian(id, veterinarianDTO);
+
+        if(updatedVeterinarian != null){
+            return new ResponseEntity<>(updatedVeterinarian, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<VeterinarianDTO> deleteVeterinarian(@PathVariable Integer id){
         VeterinarianDTO deletedVeterinarian = veterinarianService.deleteVeterinarian(id);
