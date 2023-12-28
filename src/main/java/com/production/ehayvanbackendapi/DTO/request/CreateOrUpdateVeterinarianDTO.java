@@ -1,5 +1,7 @@
 package com.production.ehayvanbackendapi.DTO.request;
 
+import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
+
 public class CreateOrUpdateVeterinarianDTO {
     private CreateOrUpdateCustomerDTO user;
     private String clinic;
@@ -7,6 +9,11 @@ public class CreateOrUpdateVeterinarianDTO {
     public CreateOrUpdateVeterinarianDTO(CreateOrUpdateCustomerDTO user, String clinic) {
         this.user = user;
         this.clinic = clinic;
+    }
+
+    public CreateOrUpdateVeterinarianDTO(VeterinarianDTO veterinarianDTO) {
+        this.user = new CreateOrUpdateCustomerDTO(veterinarianDTO.getUser());
+        this.clinic = veterinarianDTO.getClinic();
     }
 
     public CreateOrUpdateCustomerDTO getUser() {

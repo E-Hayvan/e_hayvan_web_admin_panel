@@ -26,7 +26,7 @@ public class Veterinarian{
     public void setClinic(String clinic) {
         Clinic = clinic;
     }
-    public int getVetID() {
+    public Integer getVetID() {
         return VetID;
     }
     public void setVetID(int vetID) {
