@@ -1,8 +1,6 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
-import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetOwnerDTO;
 import com.production.ehayvanbackendapi.Entities.Customer;
 import com.production.ehayvanbackendapi.Entities.PetOwner;
@@ -13,15 +11,11 @@ import com.production.ehayvanbackendapi.Repositories.PetOwnerRepository;
 import com.production.ehayvanbackendapi.Repositories.VeterinarianRepository;
 import com.production.ehayvanbackendapi.Services.PetOwnerService;
 import com.production.ehayvanbackendapi.TestUtils.DataSeed;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.*;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.security.core.parameters.P;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -32,8 +26,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class PetOwnerServiceTest {
-    @Autowired
-    private MockMvc mockMvc;
 
     @SpyBean
     @Autowired
@@ -51,8 +43,6 @@ public class PetOwnerServiceTest {
     DataSeed dataSeed;
 
     private PetOwner testPetOwner;
-
-    private PetOwnerDTO testPetOwnerDTO;
 
     private CreateOrUpdatePetOwnerDTO testCreateOrUpdatePetOwnerDTO;
 
