@@ -24,7 +24,7 @@ public class Customer {
     @OneToOne(mappedBy = "User")
     private PetOwner Owner;
 
-    public int getUserID() {
+    public Integer getUserID() {
         return UserID;
     }
     public void setUserID(int userID) {
