@@ -244,4 +244,38 @@ public class DataSeed {
         medTypeRepository.flush();
 
     }
+
+    // for debugging
+    public void printInfoOfDatabase() {
+        System.out.println("----------------------------");
+        System.out.println("medicationRepository");
+        System.out.println(medicationRepository.count());
+
+        System.out.println("appointmentRepository");
+        System.out.println(appointmentRepository.count());
+
+        System.out.println("petRepository");
+        System.out.println(petRepository.count());
+
+        System.out.println("petOwnerRepository");
+        System.out.println(petOwnerRepository.count());
+
+        System.out.println("veterinarianRepository");
+        System.out.println(veterinarianRepository.count());
+
+        System.out.println("scheduleRepository");
+        System.out.println(scheduleRepository.count());
+
+        System.out.println("petTypeRepository");
+        System.out.println(petTypeRepository.count());
+
+        System.out.println("userTypeRepository");
+        System.out.println(userTypeRepository.count());
+
+        System.out.println("medTypeRepository");
+        System.out.println(medTypeRepository.count());
+
+        System.out.println("----------------------------");
+
+    }
 }

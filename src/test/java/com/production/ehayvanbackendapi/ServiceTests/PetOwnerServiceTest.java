@@ -61,7 +61,7 @@ public class PetOwnerServiceTest {
 
     @BeforeAll
     public void setUp() {
-        // dataSeed.loadSeedToDatabase();
+        dataSeed.loadSeedToDatabase();
     }
 
     @BeforeEach
@@ -79,7 +79,7 @@ public class PetOwnerServiceTest {
     }
 
     @AfterEach
-    public void tearDown() {
+    public void onEachTestEnd() {
         testCreateOrUpdatePetOwnerDTO = null;
     }
 
