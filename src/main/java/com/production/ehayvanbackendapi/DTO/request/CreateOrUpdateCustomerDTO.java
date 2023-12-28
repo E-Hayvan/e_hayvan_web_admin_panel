@@ -1,5 +1,7 @@
 package com.production.ehayvanbackendapi.DTO.request;
 
+import com.production.ehayvanbackendapi.DTO.CustomerDTO;
+
 public class CreateOrUpdateCustomerDTO {
     private String Name;
     private String Surname;
@@ -12,6 +14,13 @@ public class CreateOrUpdateCustomerDTO {
         this.Surname = Surname;
         this.Email = Email;
         this.Password = Password;
+    }
+
+    public CreateOrUpdateCustomerDTO(CustomerDTO customerDTO) {
+        this.Name = customerDTO.getName();
+        this.Surname = customerDTO.getSurname();
+        this.Email = customerDTO.getEmail();
+        this.Password = customerDTO.getPassword();
     }
 
     public String getName() {

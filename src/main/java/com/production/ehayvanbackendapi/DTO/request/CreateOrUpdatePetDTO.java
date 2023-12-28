@@ -1,5 +1,7 @@
 package com.production.ehayvanbackendapi.DTO.request;
 
+import com.production.ehayvanbackendapi.DTO.PetDTO;
+
 public class CreateOrUpdatePetDTO {
     private String petName;
     private Integer age;
@@ -13,6 +15,14 @@ public class CreateOrUpdatePetDTO {
         this.petTypeID = petTypeID;
         this.description = description;
         this.petOwnerID = petOwnerID;
+    }
+
+    public CreateOrUpdatePetDTO(PetDTO petDTO) {
+        this.petName = petDTO.getPetName();
+        this.age = petDTO.getAge();
+        this.petTypeID = petDTO.getPetTypeID();
+        this.description = petDTO.getDescription();
+        this.petOwnerID = petDTO.getPetOwnerID();
     }
 
     public String getPetName() {

@@ -11,7 +11,7 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer PetID;
     private String PetName;
-    private int Age;
+    private Integer Age;
     @ManyToOne
     @JoinColumn(name = "PetTypeID", referencedColumnName = "PetTypeID")
     private PetType PetTypeID;
@@ -24,7 +24,7 @@ public class Pet {
     @OneToMany(mappedBy = "PetID")
     private List<Medication> Medications;
 
-    public int getPetID() {
+    public Integer getPetID() {
         return PetID;
     }
     public void setPetID(int petID) {
@@ -36,7 +36,7 @@ public class Pet {
     public void setPetName(String petName) {
         PetName = petName;
     }
-    public int getAge() {
+    public Integer getAge() {
         return Age;
     }
     public void setAge(int age) {
