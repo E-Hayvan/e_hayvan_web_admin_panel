@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.Mappers;
 
 import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateAppointmentDTO;
 import com.production.ehayvanbackendapi.Entities.Appointment;
 import com.production.ehayvanbackendapi.Entities.Customer;
 import org.modelmapper.ModelMapper;
@@ -27,7 +28,7 @@ public class AppointmentMapper {
         return modelMapper.map(appointment, AppointmentDTO.class);
     }
 
-    public Appointment convertToEntity(AppointmentDTO appointmentDTO) {
+    public Appointment convertToEntity(CreateOrUpdateAppointmentDTO appointmentDTO) {
         return modelMapper.map(appointmentDTO, Appointment.class);
     }
 }

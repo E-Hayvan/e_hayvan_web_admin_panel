@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Controllers;
 
 import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateAppointmentDTO;
 import com.production.ehayvanbackendapi.Entities.Appointment;
 import com.production.ehayvanbackendapi.Mappers.AppointmentMapper;
 import com.production.ehayvanbackendapi.Services.AppointmentService;
@@ -33,6 +34,16 @@ public class AppointmentController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody CreateOrUpdateAppointmentDTO appointmentDTO) {
+        AppointmentDTO createdAppointment = appointmentService.postAppointment(appointmentDTO);
+        if(createdAppointment != null){
+            return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
+        } else {
+            return null;
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<AppointmentDTO> deleteAppointment(@PathVariable Integer id) {
         AppointmentDTO deletedAppointment = appointmentService.deleteAppointment(id);
@@ -42,13 +53,6 @@ public class AppointmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
-//    @PostMapping
-//    public ResponseEntity<AppointmentDTO> createAppointment(@RequestBody AppointmentDTO appointmentDTO) {
-//        AppointmentDTO createdAppointment = appointmentService.createAppointment(appointmentDTO);
-//        return new ResponseEntity<>(createdAppointment, HttpStatus.CREATED);
-//    }
 
     // Other controller methods for creating, updating, and deleting appointments
 }

@@ -26,10 +26,10 @@ public class Veterinarian{
     public void setClinic(String clinic) {
         Clinic = clinic;
     }
-    public int getVetID() {
+    public Integer getVetID() {
         return VetID;
     }
-    public void setVetID(int vetID) {
+    public void setVetID(Integer vetID) {
         VetID = vetID;
     }
     public List<PetOwner> getPetOwners() {
