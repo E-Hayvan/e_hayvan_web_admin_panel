@@ -17,7 +17,6 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
-    @Autowired
     public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
@@ -26,6 +25,11 @@ public class CustomerService {
     public CustomerDTO getCustomerById(Integer id) {
         Customer customer = customerRepository.findById(id).orElse(null);
         return customer != null ? customerMapper.convertToDto(customer) : null;
+    }
+
+    public CustomerDTO customerLogin(String email, String password){
+        Optional<Customer> targetCustomer = customerRepository.findCustomerByEmailAndPassword(email, password);
+        return targetCustomer.map(customerMapper::convertToDto).orElse(null);
     }
 
 //    public CustomerDTO createCustomer(CustomerDTO customerDTO) {

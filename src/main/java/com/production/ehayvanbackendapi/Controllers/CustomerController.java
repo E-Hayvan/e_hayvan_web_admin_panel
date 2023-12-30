@@ -35,6 +35,7 @@ public class CustomerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<CustomerDTO>> getAllCustomers(){
         List<CustomerDTO> response = customerService.getAllCustomers();
@@ -43,6 +44,17 @@ public class CustomerController {
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
         else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/login/{email}/{password}")
+    public ResponseEntity<CustomerDTO> getCustomerLogin(@PathVariable String email,
+                                                        @PathVariable String password){
+        CustomerDTO response = customerService.customerLogin(email, password);
+        if(response != null){
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
