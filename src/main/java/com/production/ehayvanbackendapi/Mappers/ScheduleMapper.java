@@ -13,7 +13,11 @@ public class ScheduleMapper {
 
     public ScheduleMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
-        //buraya eklenecek
+        this.modelMapper.createTypeMap(Schedule.class, ScheduleDTO.class).addMappings(
+                mapper -> {
+                    mapper.skip(ScheduleDTO::setMedications);
+                }
+        );
     }
 
     public ScheduleDTO convertToDto(Schedule schedule) {

@@ -1,9 +1,13 @@
 package com.production.ehayvanbackendapi.Mappers;
 
 import com.production.ehayvanbackendapi.DTO.MedicationDTO;
+import com.production.ehayvanbackendapi.DTO.ScheduleDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateMedicationDTO;
 import com.production.ehayvanbackendapi.Entities.Medication;
+import com.production.ehayvanbackendapi.Entities.Schedule;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 @Component
 public class MedicationMapper {
@@ -14,8 +18,14 @@ public class MedicationMapper {
         this.modelMapper.createTypeMap(Medication.class, MedicationDTO.class).addMappings(
                 mapper -> {
                     mapper.map(src -> src.getPetID().getPetID(), MedicationDTO::setPetID);
-                    mapper.map(src -> src.getScheduleID().getScheduleID(), MedicationDTO::setScheduleID);
                     mapper.map(src -> src.getMedTypeID().getMedTypeID(), MedicationDTO::setMedTypeID);
+                }
+        );
+        this.modelMapper.createTypeMap(CreateOrUpdateMedicationDTO.class, Medication.class).addMappings(
+                mapper -> {
+                    mapper.skip(src -> src.getScheduleID(),
+                            (dest, v) -> dest.getScheduleID().setScheduleID((Integer) v));
+                    mapper.map(CreateOrUpdateMedicationDTO::getScheduleID, Medication::setScheduleID);
                 }
         );
     }
@@ -24,7 +34,7 @@ public class MedicationMapper {
         return modelMapper.map(medication, MedicationDTO.class);
     }
 
-    public Medication convertToEntity(MedicationDTO medicationDTO) {
+    public Medication convertToEntity(CreateOrUpdateMedicationDTO medicationDTO) {
         return modelMapper.map(medicationDTO, Medication.class);
     }
 }

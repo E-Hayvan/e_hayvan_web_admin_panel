@@ -7,13 +7,13 @@ public class ScheduleDTO {
     private Integer scheduleID;
     private List<MedicationDTO> medications;
     private Date beginningDate;
-    private int doseFrequency;
-    private int doseCount;
+    private Integer doseFrequency;
+    private Integer doseCount;
     public ScheduleDTO(){
 
     }
     public ScheduleDTO(Integer scheduleID, List<MedicationDTO> medications,
-                       Date beginningDate, int doseFrequency, int doseCount) {
+                       Date beginningDate, Integer doseFrequency, Integer doseCount) {
         this.scheduleID = scheduleID;
         this.medications = medications;
         this.beginningDate = beginningDate;
@@ -45,19 +45,19 @@ public class ScheduleDTO {
         this.beginningDate = beginningDate;
     }
 
-    public int getDoseFrequency() {
+    public Integer getDoseFrequency() {
         return doseFrequency;
     }
 
-    public void setDoseFrequency(int doseFrequency) {
+    public void setDoseFrequency(Integer doseFrequency) {
         this.doseFrequency = doseFrequency;
     }
 
-    public int getDoseCount() {
+    public Integer getDoseCount() {
         return doseCount;
     }
 
-    public void setDoseCount(int doseCount) {
+    public void setDoseCount(Integer doseCount) {
         this.doseCount = doseCount;
     }
 

@@ -1,21 +1,23 @@
 package com.production.ehayvanbackendapi.DTO;
 
+import com.production.ehayvanbackendapi.Entities.Schedule;
+
 public class MedicationDTO {
     private Integer medicationID;
     private String medicationName;
     private Integer medTypeID;
-    private Integer scheduleID;
+    private ScheduleDTO schedule;
     private Integer petID;
 
     public MedicationDTO(){
 
     }
     public MedicationDTO(Integer medicationID, String medicationName, Integer
-            medTypeID, Integer scheduleID, Integer petID) {
+            medTypeID, ScheduleDTO scheduleID, Integer petID) {
         this.medicationID = medicationID;
         this.medicationName = medicationName;
         this.medTypeID = medTypeID;
-        this.scheduleID = scheduleID;
+        this.schedule = scheduleID;
         this.petID = petID;
     }
     public Integer getMedicationID() {
@@ -42,12 +44,12 @@ public class MedicationDTO {
         this.medTypeID = medTypeID;
     }
 
-    public Integer getScheduleID() {
-        return scheduleID;
+    public ScheduleDTO getScheduleID() {
+        return schedule;
     }
 
-    public void setScheduleID(Integer scheduleID) {
-        this.scheduleID = scheduleID;
+    public void setScheduleID(ScheduleDTO schedule) {
+        this.schedule = schedule;
     }
 
     public Integer getPetID() {

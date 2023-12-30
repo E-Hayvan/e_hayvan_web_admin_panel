@@ -13,7 +13,7 @@ public class Medication {
     @ManyToOne
     @JoinColumn(name="MedTypeID", referencedColumnName = "MedTypeID")
     private MedType MedTypeID;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="ScheduleID", referencedColumnName = "ScheduleID")
     private Schedule ScheduleID;
     @ManyToOne

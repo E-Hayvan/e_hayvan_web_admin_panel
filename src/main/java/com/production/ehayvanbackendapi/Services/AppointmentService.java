@@ -70,7 +70,6 @@ public class AppointmentService {
         return null;
     }
 
-
 //    public AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) {
 //        Appointment appointment = appointmentMapper.convertToEntity(appointmentDTO);
 //        Appointment savedAppointment = appointmentRepository.save(appointment);

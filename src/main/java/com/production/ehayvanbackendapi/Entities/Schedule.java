@@ -12,20 +12,20 @@ import java.util.List;
 public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ScheduleID;
+    private Integer ScheduleID;
     @OneToMany(mappedBy = "ScheduleID")
     private List<Medication> medications;
     @Column(nullable = false)
     private Date beginningDate;
     @Column(nullable = false)
-    private int doseFrequency;
+    private Integer doseFrequency;
     @Column(nullable = false)
-    private int doseCount;
+    private Integer doseCount;
 
     public int getScheduleID() {
         return ScheduleID;
     }
-    public void setScheduleID(int scheduleID) {
+    public void setScheduleID(Integer scheduleID) {
         ScheduleID = scheduleID;
     }
     public Date getBeginningDate() {
@@ -34,16 +34,16 @@ public class Schedule {
     public void setBeginningDate(Date beginningDate) {
         this.beginningDate = beginningDate;
     }
-    public int getDoseFrequency() {
+    public Integer getDoseFrequency() {
         return doseFrequency;
     }
-    public void setDoseFrequency(int doseFrequency) {
+    public void setDoseFrequency(Integer doseFrequency) {
         this.doseFrequency = doseFrequency;
     }
-    public int getDoseCount() {
+    public Integer getDoseCount() {
         return doseCount;
     }
-    public void setDoseCount(int doseCount) {
+    public void setDoseCount(Integer doseCount) {
         this.doseCount = doseCount;
     }
     public List<Medication> getMedications() {

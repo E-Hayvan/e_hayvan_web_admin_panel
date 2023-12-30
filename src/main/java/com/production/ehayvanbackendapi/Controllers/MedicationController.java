@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Controllers;
 
 import com.production.ehayvanbackendapi.DTO.MedicationDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateMedicationDTO;
 import com.production.ehayvanbackendapi.Services.MedicationService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,17 @@ public class MedicationController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<MedicationDTO> postMedication(@RequestBody CreateOrUpdateMedicationDTO medicationDto){
+        MedicationDTO postedMedication = medicationService.postMedication(medicationDto);
+
+        if(postedMedication != null){
+            return new ResponseEntity<>(postedMedication, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<MedicationDTO> deleteMedication(@PathVariable Integer id) {
         MedicationDTO deletedMedication = medicationService.deleteMedication(id);
@@ -34,9 +46,4 @@ public class MedicationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-//    @PostMapping
-//    public ResponseEntity<MedicationDTO> saveMedication(@RequestBody MedicationDTO medicationDTO) {
-//        MedicationDTO savedMedication = medicationService.saveMedication(medicationDTO);
-//        return new ResponseEntity<>(savedMedication, HttpStatus.CREATED);
-//    }
 }
