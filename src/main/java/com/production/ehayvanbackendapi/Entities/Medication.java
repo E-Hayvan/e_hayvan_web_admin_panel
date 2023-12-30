@@ -13,7 +13,7 @@ public class Medication {
     @ManyToOne
     @JoinColumn(name="MedTypeID", referencedColumnName = "MedTypeID")
     private MedType MedTypeID;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="ScheduleID", referencedColumnName = "ScheduleID")
     private Schedule ScheduleID;
     @ManyToOne
@@ -26,10 +26,10 @@ public class Medication {
     public void setPetID(Pet petID) {
         PetID = petID;
     }
-    public int getMedicationID() {
+    public Integer getMedicationID() {
         return medicationID;
     }
-    public void setMedicationID(int medicationID) {
+    public void setMedicationID(Integer medicationID) {
         this.medicationID = medicationID;
     }
     public String getMedicationName() {
