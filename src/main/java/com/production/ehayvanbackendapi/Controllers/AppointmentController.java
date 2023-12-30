@@ -44,6 +44,17 @@ public class AppointmentController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<AppointmentDTO> updateAppointment(@PathVariable Integer id,
+                                                            @RequestBody CreateOrUpdateAppointmentDTO updatedDto){
+        AppointmentDTO updatedAppointment = appointmentService.updateAppointment(id, updatedDto);
+        if(updatedAppointment != null){
+            return new ResponseEntity<>(updatedAppointment, HttpStatus.OK);
+        } else {
+            return null;
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<AppointmentDTO> deleteAppointment(@PathVariable Integer id) {
         AppointmentDTO deletedAppointment = appointmentService.deleteAppointment(id);

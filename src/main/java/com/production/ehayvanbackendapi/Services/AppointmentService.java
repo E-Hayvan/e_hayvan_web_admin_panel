@@ -33,21 +33,7 @@ public class AppointmentService {
         // Map the appointment dto to appointment.
         Appointment newAppointment = appointmentMapper.convertToEntity(appointmentDto);
 
-//        // Attach the corresponding pet to appointment.
-//        Pet attachedPet = new Pet();
-//        attachedPet.setPetID(appointmentDto.getPetID());
-//        newAppointment.setPetID(attachedPet);
-//
-//        // Attach the corresponding pet owner to appointment.
-//        PetOwner attachedOwner = new PetOwner();
-//        attachedOwner.setPetOwnerID(appointmentDto.getPetOwnerID());
-//        newAppointment.setPetOwnerID(attachedOwner);
-//
-//        // Attach the corresponding veterinarian to appointment.
-//        Veterinarian attachedVeterinarian = new Veterinarian();
-//        attachedVeterinarian.setVetID(appointmentDto.getVetID());
-//        newAppointment.setVetID(attachedVeterinarian);
-
+        // Try saving the new appointment.
         try{
             appointmentRepository.save(newAppointment);
             return appointmentMapper.convertToDto(newAppointment);
@@ -55,6 +41,20 @@ public class AppointmentService {
         catch (Exception e){
             return null;
         }
+    }
+
+    public AppointmentDTO updateAppointment(Integer id, CreateOrUpdateAppointmentDTO updatedDto){
+        // Find the target appointment.
+        Optional<Appointment> target = appointmentRepository.findById(id);
+
+        // If the target exists, overwrite new dto onto the target.
+        if(target.isPresent()){
+            Appointment updatedTarget = appointmentMapper.mapExistingEntity(updatedDto, target.get());
+            appointmentRepository.save(updatedTarget);
+            return appointmentMapper.convertToDto(updatedTarget);
+        }
+        else
+            return null;
     }
 
     public AppointmentDTO deleteAppointment(Integer id) {
