@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.Mappers;
 
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
 import com.production.ehayvanbackendapi.DTO.ScheduleDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateScheduleDTO;
 import com.production.ehayvanbackendapi.Entities.Customer;
 import com.production.ehayvanbackendapi.Entities.Schedule;
 import org.modelmapper.ModelMapper;

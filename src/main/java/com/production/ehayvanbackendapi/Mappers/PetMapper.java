@@ -22,6 +22,8 @@ public class PetMapper {
                     mapper.skip(src -> src.getPetOwnerID(),
                             (dest, val) -> dest.getPetOwnerID().setPetOwnerID((Integer) val));
                     mapper.skip(src -> src.getPetTypeID(),
+                            (dest, val) -> dest.getPetTypeID().setPetTypeID((Integer) val));
+                    mapper.skip(src -> src.getPetTypeID(),
                             (dest, val) -> dest.getPetTypeID().setType((String) val));
                 }
         );

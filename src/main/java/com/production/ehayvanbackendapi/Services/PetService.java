@@ -55,6 +55,11 @@ public class PetService {
         ownerOfPet.setPetOwnerID(newPetDto.getPetOwnerID());
         newPet.setPetOwnerID(ownerOfPet);
 
+        // Set the petType of newly created pet.
+        PetType petType = new PetType();
+        petType.setPetTypeID(newPetDto.getPetTypeID());
+        newPet.setPetTypeID(petType);
+
         try{
             petRepository.save(newPet);
             return petMapper.convertToDto(newPet);
