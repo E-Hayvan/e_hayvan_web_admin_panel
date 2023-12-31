@@ -15,10 +15,10 @@ public class MedType{
     @OneToMany(mappedBy = "MedTypeID")
     private List<Medication> medications;
 
-    public int getMedTypeID() {
+    public Integer getMedTypeID() {
         return MedTypeID;
     }
-    public void setMedTypeID(int medTypeID) {
+    public void setMedTypeID(Integer medTypeID) {
         MedTypeID = medTypeID;
     }
     public String getMedType() {

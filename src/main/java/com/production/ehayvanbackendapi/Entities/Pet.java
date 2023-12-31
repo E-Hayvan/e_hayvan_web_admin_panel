@@ -27,7 +27,7 @@ public class Pet {
     public Integer getPetID() {
         return PetID;
     }
-    public void setPetID(int petID) {
+    public void setPetID(Integer petID) {
         PetID = petID;
     }
     public String getPetName() {
@@ -39,7 +39,7 @@ public class Pet {
     public Integer getAge() {
         return Age;
     }
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         Age = age;
     }
     public PetType getPetTypeID() {
