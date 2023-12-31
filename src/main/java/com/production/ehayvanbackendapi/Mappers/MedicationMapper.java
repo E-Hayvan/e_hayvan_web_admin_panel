@@ -19,11 +19,12 @@ public class MedicationMapper {
                 mapper -> {
                     mapper.map(src -> src.getPetID().getPetID(), MedicationDTO::setPetID);
                     mapper.map(src -> src.getMedTypeID().getMedTypeID(), MedicationDTO::setMedTypeID);
+                    mapper.map(src -> src.getScheduleID().getScheduleID(), MedicationDTO::setScheduleID);
                 }
         );
         this.modelMapper.createTypeMap(CreateOrUpdateMedicationDTO.class, Medication.class).addMappings(
                 mapper -> {
-                    mapper.skip(src -> src.getScheduleID(),
+                    mapper.skip(CreateOrUpdateMedicationDTO::getScheduleID,
                             (dest, v) -> dest.getScheduleID().setScheduleID((Integer) v));
                     mapper.map(CreateOrUpdateMedicationDTO::getScheduleID, Medication::setScheduleID);
                     mapper.skip(Medication::setMedicationID);
