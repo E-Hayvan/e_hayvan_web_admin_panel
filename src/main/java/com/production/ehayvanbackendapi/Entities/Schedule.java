@@ -13,7 +13,7 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ScheduleID;
-    @OneToMany(mappedBy = "ScheduleID")
+    @OneToMany(mappedBy = "ScheduleID", cascade = CascadeType.ALL)
     private List<Medication> medications;
     @Column(nullable = false)
     private Date beginningDate;
@@ -22,7 +22,7 @@ public class Schedule {
     @Column(nullable = false)
     private Integer doseCount;
 
-    public int getScheduleID() {
+    public Integer getScheduleID() {
         return ScheduleID;
     }
     public void setScheduleID(Integer scheduleID) {

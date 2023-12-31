@@ -6,6 +6,13 @@ public class CreateOrUpdateMedicationDTO {
     private CreateOrUpdateScheduleDTO scheduleID;
     private Integer petID;
 
+    public CreateOrUpdateMedicationDTO(String medicationName, Integer medTypeID, CreateOrUpdateScheduleDTO scheduleID, Integer petID) {
+        this.medicationName = medicationName;
+        this.medTypeID = medTypeID;
+        this.scheduleID = scheduleID;
+        this.petID = petID;
+    }
+
     public String getMedicationName() {
         return medicationName;
     }
