@@ -26,6 +26,7 @@ public class MedicationMapper {
                     mapper.skip(src -> src.getScheduleID(),
                             (dest, v) -> dest.getScheduleID().setScheduleID((Integer) v));
                     mapper.map(CreateOrUpdateMedicationDTO::getScheduleID, Medication::setScheduleID);
+                    mapper.skip(Medication::setMedicationID);
                 }
         );
     }

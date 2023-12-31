@@ -5,7 +5,6 @@ import java.util.List;
 
 public class ScheduleDTO {
     private Integer scheduleID;
-    private List<MedicationDTO> medications;
     private Date beginningDate;
     private Integer doseFrequency;
     private Integer doseCount;
@@ -15,7 +14,6 @@ public class ScheduleDTO {
     public ScheduleDTO(Integer scheduleID, List<MedicationDTO> medications,
                        Date beginningDate, Integer doseFrequency, Integer doseCount) {
         this.scheduleID = scheduleID;
-        this.medications = medications;
         this.beginningDate = beginningDate;
         this.doseFrequency = doseFrequency;
         this.doseCount = doseCount;
@@ -27,14 +25,6 @@ public class ScheduleDTO {
 
     public void setScheduleID(Integer scheduleID) {
         this.scheduleID = scheduleID;
-    }
-
-    public List<MedicationDTO> getMedications() {
-        return medications;
-    }
-
-    public void setMedications(List<MedicationDTO> medications) {
-        this.medications = medications;
     }
 
     public Date getBeginningDate() {
@@ -60,9 +50,6 @@ public class ScheduleDTO {
     public void setDoseCount(Integer doseCount) {
         this.doseCount = doseCount;
     }
-
-
-
 
 }
 

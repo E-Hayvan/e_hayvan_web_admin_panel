@@ -6,6 +6,7 @@ import com.production.ehayvanbackendapi.Services.VeterinarianService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/veterinarians")
@@ -22,6 +23,17 @@ public class VeterinarianController {
 
         if (veterinarianDTO != null) {
             return new ResponseEntity<>(veterinarianDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<VeterinarianDTO>> getVeterinariansByName(@PathVariable String name){
+        List<VeterinarianDTO> veterinarianDTOS = veterinarianService.getVeterinariansByClinic(name);
+
+        if(veterinarianDTOS != null){
+            return new ResponseEntity<>(veterinarianDTOS, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

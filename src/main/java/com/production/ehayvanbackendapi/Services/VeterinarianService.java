@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.Services;
 
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateVeterinarianDTO;
+import com.production.ehayvanbackendapi.Entities.Customer;
 import com.production.ehayvanbackendapi.Entities.UserType;
 import com.production.ehayvanbackendapi.Entities.Veterinarian;
 import com.production.ehayvanbackendapi.Mappers.VeterinarianMapper;
@@ -9,6 +10,7 @@ import com.production.ehayvanbackendapi.Repositories.VeterinarianRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,22 @@ public class VeterinarianService {
     public VeterinarianDTO getVeterinarianById(Integer id) {
         Veterinarian veterinarian = veterinarianRepository.findById(id).orElse(null);
         return veterinarian != null ? veterinarianMapper.convertToDto(veterinarian) : null;
+    }
+
+    public List<VeterinarianDTO> getVeterinariansByClinic(String name){
+        // Get all veterinarians using the given filter
+        List<Veterinarian> targetVeterinarians = veterinarianRepository.findVeterinariansByName(name);
+
+        // If result is empty, return all veterinarians
+        if(targetVeterinarians.isEmpty()){
+            return null;
+        }
+
+        // Else, return the list of veterinarians
+        else{
+            List<VeterinarianDTO> listOfDtos = targetVeterinarians.stream().map(veterinarianMapper::convertToDto).collect(Collectors.toList());
+            return listOfDtos;
+        }
     }
 
     public VeterinarianDTO postVeterinarian(CreateOrUpdateVeterinarianDTO newDto){
