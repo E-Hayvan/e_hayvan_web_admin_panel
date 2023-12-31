@@ -37,6 +37,18 @@ public class MedicationController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<MedicationDTO> updateMedication(@PathVariable Integer id,
+                                                          @RequestBody CreateOrUpdateMedicationDTO updatedDto){
+        MedicationDTO updatedMedication = medicationService.updateMedication(id, updatedDto);
+
+        if(updatedMedication != null){
+            return new ResponseEntity<>(updatedMedication, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<MedicationDTO> deleteMedication(@PathVariable Integer id) {
         MedicationDTO deletedMedication = medicationService.deleteMedication(id);

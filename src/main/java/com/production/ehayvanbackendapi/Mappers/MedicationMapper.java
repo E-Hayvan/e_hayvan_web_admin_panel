@@ -38,5 +38,10 @@ public class MedicationMapper {
     public Medication convertToEntity(CreateOrUpdateMedicationDTO medicationDTO) {
         return modelMapper.map(medicationDTO, Medication.class);
     }
+
+    public Medication mapExistingEntity(CreateOrUpdateMedicationDTO updatedDTO, Medication target){
+        modelMapper.map(updatedDTO, target);
+        return target;
+    }
 }
 

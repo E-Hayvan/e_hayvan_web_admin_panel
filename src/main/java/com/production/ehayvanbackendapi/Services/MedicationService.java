@@ -39,6 +39,23 @@ public class MedicationService {
         }
     }
 
+    public MedicationDTO updateMedication(Integer id, CreateOrUpdateMedicationDTO updatedDto){
+        // Find the existing medication.
+        Optional<Medication> targetMedication = medicationRepository.findById(id);
+
+        // If target medication is present, update it.
+        if(targetMedication.isPresent()){
+            Medication updatedMedication = medicationMapper.mapExistingEntity(updatedDto, targetMedication.get());
+            medicationRepository.save(updatedMedication);
+            return medicationMapper.convertToDto(updatedMedication);
+        }
+
+        // If the target doesn't exist, return null.
+        else{
+            return null;
+        }
+    }
+
     public MedicationDTO deleteMedication(Integer id) {
         // Find the target medication to delete.
         Optional<Medication> targetMedication = medicationRepository.findById(id);
