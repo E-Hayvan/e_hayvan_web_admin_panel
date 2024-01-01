@@ -29,6 +29,20 @@ public class PetOwnerService {
         this.petOwnerMapper = petOwnerMapper;
     }
 
+    public List<PetOwnerDTO> getPetOwnersForVeterinarian(Integer vetId) {
+        Optional<List<PetOwner>> petOwnersOptional = petOwnerRepository.getAllPetsForPetOwner(vetId);
+
+        if (petOwnersOptional.isPresent()) {
+            List<PetOwnerDTO> petOwnerDtoList = new ArrayList<>();
+            for (PetOwner petOwner : petOwnersOptional.get()) {
+                petOwnerDtoList.add(petOwnerMapper.convertToDto(petOwner));
+            }
+            return petOwnerDtoList;
+        } else {
+            return null;
+        }
+    }
+
     public PetOwnerDTO getPetOwnerById(Integer id) {
         Optional<PetOwner> petOwner = petOwnerRepository.findById(id);
         // Listeler otomatik olarak mapleniyor. Şimdilik bir problem yok.
@@ -40,7 +54,6 @@ public class PetOwnerService {
     }
     // Other service methods for updating, deleting pet owners, etc.
 
-    // TODO: getAllPetOwners() fonksiyonu oluşturulacak.
 
     public PetOwnerDTO postPetOwner(CreateOrUpdatePetOwnerDTO petOwnerDTO){
         // Map the data transfer object data to real object.
