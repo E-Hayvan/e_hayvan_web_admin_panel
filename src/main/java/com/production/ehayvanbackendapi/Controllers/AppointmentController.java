@@ -43,6 +43,16 @@ public class AppointmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/all/{petOwnerId}")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointmentsForPetOwner(@PathVariable Integer petOwnerId) {
+        List<AppointmentDTO> response = appointmentService.getAllAppointmentsForPetOwner(petOwnerId);
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping
     public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody CreateOrUpdateAppointmentDTO appointmentDTO) {

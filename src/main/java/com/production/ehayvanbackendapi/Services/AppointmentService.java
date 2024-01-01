@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Services;
 
 import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
+import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateAppointmentDTO;
 import com.production.ehayvanbackendapi.Entities.Appointment;
 import com.production.ehayvanbackendapi.Entities.Pet;
@@ -39,6 +40,20 @@ public class AppointmentService {
         }
 
         return appointmentDtoList;
+    }
+
+    public List<AppointmentDTO> getAllAppointmentsForPetOwner(Integer petOwnerId) {
+        Optional<List<Appointment>> appointmentsOptional = appointmentRepository.getAppointmentsForPetOwnerId(petOwnerId);
+
+        if (appointmentsOptional.isPresent()) {
+            List<AppointmentDTO> appointmentDtoList = new ArrayList<>();
+            for (Appointment appointment : appointmentsOptional.get()) {
+                appointmentDtoList.add(appointmentMapper.convertToDto(appointment));
+            }
+            return appointmentDtoList;
+        } else {
+            return null;
+        }
     }
 
     public AppointmentDTO postAppointment(CreateOrUpdateAppointmentDTO appointmentDto){
