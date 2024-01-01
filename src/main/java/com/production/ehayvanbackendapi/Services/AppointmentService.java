@@ -9,6 +9,7 @@ import com.production.ehayvanbackendapi.Entities.Veterinarian;
 import com.production.ehayvanbackendapi.Mappers.AppointmentMapper;
 import com.production.ehayvanbackendapi.Repositories.AppointmentRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +28,17 @@ public class AppointmentService {
     public AppointmentDTO getAppointmentById(Integer id) {
         Appointment appointment = appointmentRepository.findById(id).orElse(null);
         return appointment != null ? appointmentMapper.convertToDto(appointment) : null;
+    }
+
+    public List<AppointmentDTO> getAllAppointments() {
+        List<Appointment> appointmentList = appointmentRepository.findAll();
+        List<AppointmentDTO> appointmentDtoList = new ArrayList<>();
+
+        for (Appointment appointment : appointmentList) {
+            appointmentDtoList.add(appointmentMapper.convertToDto(appointment));
+        }
+
+        return appointmentDtoList;
     }
 
     public AppointmentDTO postAppointment(CreateOrUpdateAppointmentDTO appointmentDto){
