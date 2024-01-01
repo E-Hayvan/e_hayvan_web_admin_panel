@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @SpringBootTest
@@ -28,13 +30,13 @@ class AppointmentTest {
 
         Appointment test_appointment = new Appointment();
         test_appointment.setAppointmentID(1773);
-        test_appointment.setAppointmentDate(new Date(17731731));
+        test_appointment.setAppointmentDate(LocalDateTime.now());
         test_appointment.setPetID(test_pet);
         test_appointment.setVetID(test_veterinarian);
         test_appointment.setPetOwnerID(test_pet_owner);
 
         assertThat(test_appointment.getAppointmentID()).isEqualTo(1773);
-        assertThat(test_appointment.getAppointmentDate()).isEqualTo(new Date(17731731));
+        assertThat(test_appointment.getAppointmentDate()).isEqualTo(LocalDate.now());
         assertThat(test_appointment.getPetID().getAppointments().size()).isEqualTo(4);
         assertThat(test_appointment.getVetID().getAppointments().size()).isEqualTo(2);
         assertThat(test_appointment.getPetOwnerID().getAppointments().size()).isEqualTo(3);

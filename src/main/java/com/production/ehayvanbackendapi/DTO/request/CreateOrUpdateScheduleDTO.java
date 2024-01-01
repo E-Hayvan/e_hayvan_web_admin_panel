@@ -1,17 +1,21 @@
 package com.production.ehayvanbackendapi.DTO.request;
 
+import org.springframework.cglib.core.Local;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class CreateOrUpdateScheduleDTO {
-    private Date beginningDate;
+
+    private LocalDateTime beginningDate;
     private Integer doseFrequency;
     private Integer doseCount;
 
-    public Date getBeginningDate() {
+    public LocalDateTime getBeginningDate() {
         return beginningDate;
     }
 
-    public void setBeginningDate(Date beginningDate) {
+    public void setBeginningDate(LocalDateTime beginningDate) {
         this.beginningDate = beginningDate;
     }
 

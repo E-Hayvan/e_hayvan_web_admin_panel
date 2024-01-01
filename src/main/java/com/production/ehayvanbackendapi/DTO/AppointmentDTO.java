@@ -1,5 +1,9 @@
 package com.production.ehayvanbackendapi.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class AppointmentDTO {
@@ -7,12 +11,14 @@ public class AppointmentDTO {
     private Integer petOwnerID;
     private Integer vetID;
     private Integer petID;
-    private Date appointmentDate;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime appointmentDate;
 
     public AppointmentDTO(){
 
     }
-    public AppointmentDTO(Integer appointmentID, Integer petOwnerID, Integer vetID, Integer petID, Date appointmentDate) {
+    public AppointmentDTO(Integer appointmentID, Integer petOwnerID, Integer vetID, Integer petID, LocalDateTime appointmentDate) {
         this.appointmentID = appointmentID;
         this.petOwnerID = petOwnerID;
         this.vetID = vetID;
@@ -52,11 +58,11 @@ public class AppointmentDTO {
         this.petID = petID;
     }
 
-    public Date getAppointmentDate() {
+    public LocalDateTime getAppointmentDate() {
         return appointmentDate;
     }
 
-    public void setAppointmentDate(Date appointmentDate) {
+    public void setAppointmentDate(LocalDateTime appointmentDate) {
         this.appointmentDate = appointmentDate;
     }
 }

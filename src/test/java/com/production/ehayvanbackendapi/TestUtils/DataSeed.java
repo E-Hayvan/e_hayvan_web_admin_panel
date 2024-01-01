@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -155,7 +157,7 @@ public class DataSeed {
                 //Create an Appointment
                 Appointment exampleAppointment = new Appointment();
                 Date date = new Date();
-                exampleAppointment.setAppointmentDate(date);
+                exampleAppointment.setAppointmentDate(LocalDateTime.now());
                 exampleAppointment.setVetID(exampleVeterinarian);
                 exampleAppointment.setPetID(examplePet);
                 exampleAppointment.setPetOwnerID(exampleOwner);
@@ -175,7 +177,7 @@ public class DataSeed {
 
                 //Create Schedule
                 Schedule exampleSchedule = new Schedule();
-                exampleSchedule.setBeginningDate(new Date());
+                exampleSchedule.setBeginningDate(LocalDateTime.now());
                 exampleSchedule.setDoseCount(1);
                 exampleSchedule.setDoseFrequency(1);
 

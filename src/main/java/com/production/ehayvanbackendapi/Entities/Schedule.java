@@ -2,7 +2,9 @@ package com.production.ehayvanbackendapi.Entities;
 
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import org.springframework.cglib.core.Local;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public class Schedule {
     @OneToMany(mappedBy = "ScheduleID", cascade = CascadeType.ALL)
     private List<Medication> medications;
     @Column(nullable = false)
-    private Date beginningDate;
+    private LocalDateTime beginningDate;
     @Column(nullable = false)
     private Integer doseFrequency;
     @Column(nullable = false)
@@ -28,10 +30,10 @@ public class Schedule {
     public void setScheduleID(Integer scheduleID) {
         ScheduleID = scheduleID;
     }
-    public Date getBeginningDate() {
+    public LocalDateTime getBeginningDate() {
         return beginningDate;
     }
-    public void setBeginningDate(Date beginningDate) {
+    public void setBeginningDate(LocalDateTime beginningDate) {
         this.beginningDate = beginningDate;
     }
     public Integer getDoseFrequency() {
