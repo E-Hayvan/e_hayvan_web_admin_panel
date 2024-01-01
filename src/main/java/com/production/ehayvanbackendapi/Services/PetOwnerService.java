@@ -21,12 +21,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PetOwnerService {
     private final PetOwnerRepository petOwnerRepository;
+    private final AppointmentService appointmentService;
     private final PetOwnerMapper petOwnerMapper;
 
     @Autowired
-    public PetOwnerService(PetOwnerRepository petOwnerRepository, PetOwnerMapper petOwnerMapper) {
+    public PetOwnerService(PetOwnerRepository petOwnerRepository,
+                           PetOwnerMapper petOwnerMapper,
+                           AppointmentService appointmentService) {
         this.petOwnerRepository = petOwnerRepository;
         this.petOwnerMapper = petOwnerMapper;
+        this.appointmentService = appointmentService;
     }
 
     public List<PetOwnerDTO> getPetOwnersForVeterinarian(Integer vetId) {
@@ -96,7 +100,14 @@ public class PetOwnerService {
             Veterinarian assignedVeterinarian = new Veterinarian();
             assignedVeterinarian.setVetID(vetId);
             targetPetOwner.get().setVet(assignedVeterinarian);
+
             petOwnerRepository.save(targetPetOwner.get());
+
+            // Remove all the existing previous appointments of the pet owner.
+            for(Appointment ap: targetPetOwner.get().getAppointments()){
+                appointmentService.deleteAppointment(ap.getAppointmentID());
+            }
+
             return petOwnerMapper.convertToDto(targetPetOwner.get());
         }
 
