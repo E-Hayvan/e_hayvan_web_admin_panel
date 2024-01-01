@@ -5,6 +5,7 @@ import com.production.ehayvanbackendapi.Entities.UserType;
 import com.production.ehayvanbackendapi.Mappers.UserTypeMapper;
 import com.production.ehayvanbackendapi.Repositories.UserTypeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,17 @@ public class UserTypeService {
     public UserTypeDTO getUserTypeById(Integer id) {
         UserType userType = userTypeRepository.findById(id).orElse(null);
         return userType != null ? userTypeMapper.convertToDto(userType) : null;
+    }
+
+    public List<UserTypeDTO> getAllUserTypes() {
+        List<UserType> userTypeList = userTypeRepository.findAll();
+        List<UserTypeDTO> userTypeDtoList = new ArrayList<>();
+
+        for (UserType userType : userTypeList) {
+            userTypeDtoList.add(userTypeMapper.convertToDto(userType));
+        }
+
+        return userTypeDtoList;
     }
 
 

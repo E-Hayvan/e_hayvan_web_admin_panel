@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/usertypes")
 public class UserTypeController {
@@ -22,6 +24,17 @@ public class UserTypeController {
 
         if (userTypeDTO != null) {
             return new ResponseEntity<>(userTypeDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserTypeDTO>> getAllUserTypes() {
+        List<UserTypeDTO> response = userTypeService.getAllUserTypes();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
