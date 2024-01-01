@@ -44,7 +44,6 @@ public class PetService {
             return null;
     }
 
-    // TODO: getAllPetsByPetOwnerId yapılacak. Owner'ın id'si girilecek ve ona ait tüm petler görüntülenecek.
 
     public PetDTO postPet(CreateOrUpdatePetDTO newPetDto){
         // Map the data transfer object data to real object.
@@ -128,8 +127,5 @@ public class PetService {
             return null;
         }
     }
-
-
-
 }
 

@@ -8,6 +8,7 @@ import com.production.ehayvanbackendapi.Entities.Veterinarian;
 import com.production.ehayvanbackendapi.Mappers.VeterinarianMapper;
 import com.production.ehayvanbackendapi.Repositories.VeterinarianRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,6 +95,17 @@ public class VeterinarianService {
         else{
             return null;
         }
+    }
+
+    public List<VeterinarianDTO> getAllVeterinarians() {
+        List<Veterinarian> veterinarianList = veterinarianRepository.findAll();
+        List<VeterinarianDTO> veterinarianDtoList = new ArrayList<>();
+
+        for (Veterinarian veterinarian : veterinarianList) {
+            veterinarianDtoList.add(veterinarianMapper.convertToDto(veterinarian));
+        }
+
+        return veterinarianDtoList;
     }
 
     // Other service methods for updating, deleting veterinarians, etc.

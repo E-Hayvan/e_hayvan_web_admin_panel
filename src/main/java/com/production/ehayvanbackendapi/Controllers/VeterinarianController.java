@@ -73,6 +73,17 @@ public class VeterinarianController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<VeterinarianDTO>> getAllVeterinarians() {
+        List<VeterinarianDTO> response = veterinarianService.getAllVeterinarians();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     // Other controller methods for updating, deleting veterinarians, etc.
 }
 
