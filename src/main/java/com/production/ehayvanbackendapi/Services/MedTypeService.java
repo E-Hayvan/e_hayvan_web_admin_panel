@@ -6,6 +6,7 @@ import com.production.ehayvanbackendapi.Mappers.MedTypeMapper;
 import com.production.ehayvanbackendapi.Repositories.MedTypeRepository;
 import com.production.ehayvanbackendapi.Repositories.MedicationRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,17 @@ public class MedTypeService {
     public MedTypeDTO getMedTypeById(Integer id) {
         MedType medType = medTypeRepository.findById(id).orElse(null);
         return medType != null ? medTypeMapper.convertToDto(medType) : null;
+    }
+
+    public List<MedTypeDTO> getAllMedTypes() {
+        List<MedType> medTypeList = medTypeRepository.findAll();
+        List<MedTypeDTO> medTypeDtoList = new ArrayList<>();
+
+        for (MedType medType : medTypeList) {
+            medTypeDtoList.add(medTypeMapper.convertToDto(medType));
+        }
+
+        return medTypeDtoList;
     }
 
     //gerekli mi bilemedim?????

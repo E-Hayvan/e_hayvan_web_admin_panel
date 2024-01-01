@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/medtypes")
 public class MedTypeController {
@@ -21,6 +23,17 @@ public class MedTypeController {
 
         if (medTypeDTO != null) {
             return new ResponseEntity<>(medTypeDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<MedTypeDTO>> getAllMedTypes() {
+        List<MedTypeDTO> response = medTypeService.getAllMedTypes();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
