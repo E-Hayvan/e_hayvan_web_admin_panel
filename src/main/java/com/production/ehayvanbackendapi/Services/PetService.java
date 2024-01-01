@@ -44,6 +44,17 @@ public class PetService {
             return null;
     }
 
+    public List<PetDTO> getAllPets() {
+        List<Pet> petList = petRepository.findAll();
+        List<PetDTO> petDtoList = new ArrayList<>();
+
+        for (Pet pet : petList) {
+            petDtoList.add(petMapper.convertToDto(pet));
+        }
+
+        return petDtoList;
+    }
+
 
     public PetDTO postPet(CreateOrUpdatePetDTO newPetDto){
         // Map the data transfer object data to real object.
