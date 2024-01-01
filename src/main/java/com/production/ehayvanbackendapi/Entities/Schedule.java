@@ -1,8 +1,10 @@
 package com.production.ehayvanbackendapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -17,6 +19,8 @@ public class Schedule {
     private Integer ScheduleID;
     @OneToMany(mappedBy = "ScheduleID", cascade = CascadeType.ALL)
     private List<Medication> medications;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     @Column(nullable = false)
     private LocalDateTime beginningDate;
     @Column(nullable = false)
