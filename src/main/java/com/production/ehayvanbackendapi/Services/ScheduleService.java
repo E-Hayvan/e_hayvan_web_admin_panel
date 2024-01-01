@@ -5,6 +5,7 @@ import com.production.ehayvanbackendapi.Entities.Schedule;
 import com.production.ehayvanbackendapi.Mappers.ScheduleMapper;
 import com.production.ehayvanbackendapi.Repositories.ScheduleRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +38,17 @@ public class ScheduleService {
         }
         // Return null if the target entity does not exist.
         return null;
+    }
+
+    public List<ScheduleDTO> getAllSchedules() {
+        List<Schedule> scheduleList = scheduleRepository.findAll();
+        List<ScheduleDTO> scheduleDtoList = new ArrayList<>();
+
+        for (Schedule schedule : scheduleList) {
+            scheduleDtoList.add(scheduleMapper.convertToDto(schedule));
+        }
+
+        return scheduleDtoList;
     }
 
 //    public ScheduleDTO saveSchedule(ScheduleDTO scheduleDTO) {
