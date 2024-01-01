@@ -11,6 +11,8 @@ import net.sf.jsqlparser.statement.create.table.CreateTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,6 +28,17 @@ public class MedicationService {
     public MedicationDTO getMedicationById(Integer id) {
         Medication medication = medicationRepository.findById(id).orElse(null);
         return medication != null ? medicationMapper.convertToDto(medication) : null;
+    }
+
+    public List<MedicationDTO> getAllMedications() {
+        List<Medication> medicationList = medicationRepository.findAll();
+        List<MedicationDTO> medicationDtoList = new ArrayList<>();
+
+        for (Medication medication : medicationList) {
+            medicationDtoList.add(medicationMapper.convertToDto(medication));
+        }
+
+        return medicationDtoList;
     }
 
     public MedicationDTO postMedication(CreateOrUpdateMedicationDTO medicationDto){

@@ -25,7 +25,7 @@ public class ScheduleController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<ScheduleDTO> deleteSchedule(@PathVariable Integer id) {
         ScheduleDTO deletedSchedule = scheduleService.deleteSchedule(id);
