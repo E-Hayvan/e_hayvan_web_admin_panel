@@ -11,6 +11,7 @@ import com.production.ehayvanbackendapi.Mappers.AppointmentMapper;
 import com.production.ehayvanbackendapi.Repositories.AppointmentRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,6 +54,19 @@ public class AppointmentService {
             return appointmentDtoList;
         } else {
             return null;
+        }
+    }
+    public List<AppointmentDTO> getAllAppointmentsForVeterinarian(Integer vetId) {
+        Optional<List<Appointment>> appointmentsOptional = appointmentRepository.getAppointmentsForVetID(vetId);
+
+        if (appointmentsOptional.isPresent()) {
+            List<AppointmentDTO> appointmentDtoList = new ArrayList<>();
+            for (Appointment appointment : appointmentsOptional.get()) {
+                appointmentDtoList.add(appointmentMapper.convertToDto(appointment));
+            }
+            return appointmentDtoList;
+        } else {
+            return Collections.emptyList(); // empty list mi dönmeli null mı emin olamadım
         }
     }
 

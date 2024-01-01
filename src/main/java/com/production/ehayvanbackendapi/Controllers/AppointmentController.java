@@ -54,6 +54,17 @@ public class AppointmentController {
         }
     }
 
+    @GetMapping("/all/veterinarian/{vetId}")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointmentsForVeterinarian(@PathVariable Integer vetId) {
+        List<AppointmentDTO> response = appointmentService.getAllAppointmentsForVeterinarian(vetId);
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody CreateOrUpdateAppointmentDTO appointmentDTO) {
         AppointmentDTO createdAppointment = appointmentService.postAppointment(appointmentDTO);
