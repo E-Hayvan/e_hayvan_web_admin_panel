@@ -41,6 +41,17 @@ public class PetController {
         }
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<PetDTO>> getAllPets() {
+        List<PetDTO> response = petService.getAllPets();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<PetDTO> savePet(@RequestBody CreateOrUpdatePetDTO petDTO) {
         PetDTO savedPet = petService.postPet(petDTO);
