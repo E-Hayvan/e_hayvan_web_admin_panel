@@ -115,11 +115,21 @@ public class PetService {
         return null;
     }
 
-//    public List<PetDTO> getAllPets() {
-//        List<Pet> pets = petRepository.findAll();
-//        return petMapper.mapList(pets, PetDTO.class);
-//    }
+    public List<PetDTO> getAllPetsForPetOwner(Integer petOwnerId) {
+        Optional<List<Pet>> petsOptional = petRepository.getAllPetsForPetOwner(petOwnerId);
 
-    // Other service methods
+        if (petsOptional.isPresent()) {
+            List<PetDTO> petDtoList = new ArrayList<>();
+            for (Pet pet : petsOptional.get()) {
+                petDtoList.add(petMapper.convertToDto(pet));
+            }
+            return petDtoList;
+        } else {
+            return null;
+        }
+    }
+
+
+
 }
 

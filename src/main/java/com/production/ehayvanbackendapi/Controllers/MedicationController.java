@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/medications")
 public class MedicationController {
@@ -25,6 +27,18 @@ public class MedicationController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<MedicationDTO>> getAllMedications() {
+        List<MedicationDTO> response = medicationService.getAllMedications();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     @PostMapping
     public ResponseEntity<MedicationDTO> postMedication(@RequestBody CreateOrUpdateMedicationDTO medicationDto){

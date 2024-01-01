@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Services;
 
 import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
+import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateAppointmentDTO;
 import com.production.ehayvanbackendapi.Entities.Appointment;
 import com.production.ehayvanbackendapi.Entities.Pet;
@@ -9,6 +10,8 @@ import com.production.ehayvanbackendapi.Entities.Veterinarian;
 import com.production.ehayvanbackendapi.Mappers.AppointmentMapper;
 import com.production.ehayvanbackendapi.Repositories.AppointmentRepository;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,44 @@ public class AppointmentService {
     public AppointmentDTO getAppointmentById(Integer id) {
         Appointment appointment = appointmentRepository.findById(id).orElse(null);
         return appointment != null ? appointmentMapper.convertToDto(appointment) : null;
+    }
+
+    public List<AppointmentDTO> getAllAppointments() {
+        List<Appointment> appointmentList = appointmentRepository.findAll();
+        List<AppointmentDTO> appointmentDtoList = new ArrayList<>();
+
+        for (Appointment appointment : appointmentList) {
+            appointmentDtoList.add(appointmentMapper.convertToDto(appointment));
+        }
+
+        return appointmentDtoList;
+    }
+
+    public List<AppointmentDTO> getAllAppointmentsForPetOwner(Integer petOwnerId) {
+        Optional<List<Appointment>> appointmentsOptional = appointmentRepository.getAppointmentsForPetOwnerId(petOwnerId);
+
+        if (appointmentsOptional.isPresent()) {
+            List<AppointmentDTO> appointmentDtoList = new ArrayList<>();
+            for (Appointment appointment : appointmentsOptional.get()) {
+                appointmentDtoList.add(appointmentMapper.convertToDto(appointment));
+            }
+            return appointmentDtoList;
+        } else {
+            return null;
+        }
+    }
+    public List<AppointmentDTO> getAllAppointmentsForVeterinarian(Integer vetId) {
+        Optional<List<Appointment>> appointmentsOptional = appointmentRepository.getAppointmentsForVetID(vetId);
+
+        if (appointmentsOptional.isPresent()) {
+            List<AppointmentDTO> appointmentDtoList = new ArrayList<>();
+            for (Appointment appointment : appointmentsOptional.get()) {
+                appointmentDtoList.add(appointmentMapper.convertToDto(appointment));
+            }
+            return appointmentDtoList;
+        } else {
+            return Collections.emptyList(); // empty list mi dönmeli null mı emin olamadım
+        }
     }
 
     public AppointmentDTO postAppointment(CreateOrUpdateAppointmentDTO appointmentDto){

@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/petowners")
 public class PetOwnerController {
@@ -22,6 +24,17 @@ public class PetOwnerController {
 
         if (petOwnerDTO != null) {
             return new ResponseEntity<>(petOwnerDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/forVet/{vetId}")
+    public ResponseEntity<List<PetOwnerDTO>> getPetOwnersForVeterinarian(@PathVariable Integer vetId) {
+        List<PetOwnerDTO> response = petOwnerService.getPetOwnersForVeterinarian(vetId);
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
