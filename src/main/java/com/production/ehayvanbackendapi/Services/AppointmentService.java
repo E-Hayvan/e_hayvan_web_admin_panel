@@ -27,6 +27,7 @@ public class AppointmentService {
         this.appointmentRepository = appointmentRepository;
         this.appointmentMapper = appointmentMapper;
     }
+
     public AppointmentDTO getAppointmentById(Integer id) {
         Appointment appointment = appointmentRepository.findById(id).orElse(null);
         return appointment != null ? appointmentMapper.convertToDto(appointment) : null;
@@ -56,6 +57,7 @@ public class AppointmentService {
             return null;
         }
     }
+
     public List<AppointmentDTO> getAllAppointmentsForVeterinarian(Integer vetId) {
         Optional<List<Appointment>> appointmentsOptional = appointmentRepository.getAppointmentsForVetID(vetId);
 
@@ -110,12 +112,5 @@ public class AppointmentService {
         // Return null if the target entity does not exist.
         return null;
     }
-
-//    public AppointmentDTO createAppointment(AppointmentDTO appointmentDTO) {
-//        Appointment appointment = appointmentMapper.convertToEntity(appointmentDTO);
-//        Appointment savedAppointment = appointmentRepository.save(appointment);
-//        return appointmentMapper.convertToDto(savedAppointment);
-//    }
-    // Other service methods for creating, updating, and deleting appointments
 }
 

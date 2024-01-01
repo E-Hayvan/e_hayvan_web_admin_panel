@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -25,7 +26,7 @@ public class Appointment {
     @Column(nullable = false)
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    private Date AppointmentDate;
+    private LocalDateTime AppointmentDate;
     public int getAppointmentID() {
         return AppointmentID;
     }
@@ -50,10 +51,10 @@ public class Appointment {
     public void setPetID(Pet petID) {
         PetID = petID;
     }
-    public Date getAppointmentDate() {
+    public LocalDateTime getAppointmentDate() {
         return AppointmentDate;
     }
-    public void setAppointmentDate(Date appointmentDate) {
+    public void setAppointmentDate(LocalDateTime appointmentDate) {
         AppointmentDate = appointmentDate;
     }
 }

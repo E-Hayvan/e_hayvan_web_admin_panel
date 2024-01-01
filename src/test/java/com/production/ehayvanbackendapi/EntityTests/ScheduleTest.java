@@ -17,7 +17,7 @@ class ScheduleTest {
         Schedule test_schedule = new Schedule();
         test_schedule.setDoseCount(15);
         test_schedule.setScheduleID(1915);
-        test_schedule.setBeginningDate(new Date(3451));
+//        test_schedule.setBeginningDate(new Date(3451));
         test_schedule.setMedications(List.of(new Medication()));
         test_schedule.setDoseFrequency(20);
 
