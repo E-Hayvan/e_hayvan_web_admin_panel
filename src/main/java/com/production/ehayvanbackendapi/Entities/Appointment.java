@@ -1,7 +1,9 @@
 package com.production.ehayvanbackendapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -21,6 +23,8 @@ public class Appointment {
     @JoinColumn(name = "PetID", referencedColumnName = "PetID")
     private Pet PetID;
     @Column(nullable = false)
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private Date AppointmentDate;
     public int getAppointmentID() {
         return AppointmentID;
