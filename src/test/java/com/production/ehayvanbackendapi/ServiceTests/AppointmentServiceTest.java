@@ -135,7 +135,7 @@ public class AppointmentServiceTest {
 
     @Test
     @Transactional
-    public void testServiceDeletePet() {
+    public void testServiceDeleteSchedule() {
         // firstly save new Appointment
         Appointment returnedAppointment = testAppointmentRepository.save(testAppointment);
         Optional<Appointment> searchedAppointment = testAppointmentRepository.findById(returnedAppointment.getAppointmentID());
