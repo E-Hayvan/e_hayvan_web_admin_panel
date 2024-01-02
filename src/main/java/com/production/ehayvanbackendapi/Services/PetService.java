@@ -44,7 +44,17 @@ public class PetService {
             return null;
     }
 
-    // TODO: getAllPetsByPetOwnerId yapılacak. Owner'ın id'si girilecek ve ona ait tüm petler görüntülenecek.
+    public List<PetDTO> getAllPets() {
+        List<Pet> petList = petRepository.findAll();
+        List<PetDTO> petDtoList = new ArrayList<>();
+
+        for (Pet pet : petList) {
+            petDtoList.add(petMapper.convertToDto(pet));
+        }
+
+        return petDtoList;
+    }
+
 
     public PetDTO postPet(CreateOrUpdatePetDTO newPetDto){
         // Map the data transfer object data to real object.
@@ -115,11 +125,18 @@ public class PetService {
         return null;
     }
 
-//    public List<PetDTO> getAllPets() {
-//        List<Pet> pets = petRepository.findAll();
-//        return petMapper.mapList(pets, PetDTO.class);
-//    }
+    public List<PetDTO> getAllPetsForPetOwner(Integer petOwnerId) {
+        Optional<List<Pet>> petsOptional = petRepository.getAllPetsForPetOwner(petOwnerId);
 
-    // Other service methods
+        if (petsOptional.isPresent()) {
+            List<PetDTO> petDtoList = new ArrayList<>();
+            for (Pet pet : petsOptional.get()) {
+                petDtoList.add(petMapper.convertToDto(pet));
+            }
+            return petDtoList;
+        } else {
+            return null;
+        }
+    }
 }
 

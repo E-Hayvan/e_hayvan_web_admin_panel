@@ -1,8 +1,12 @@
 package com.production.ehayvanbackendapi.Entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
+import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +19,10 @@ public class Schedule {
     private Integer ScheduleID;
     @OneToMany(mappedBy = "ScheduleID", cascade = CascadeType.ALL)
     private List<Medication> medications;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     @Column(nullable = false)
-    private Date beginningDate;
+    private LocalDateTime beginningDate;
     @Column(nullable = false)
     private Integer doseFrequency;
     @Column(nullable = false)
@@ -28,10 +34,10 @@ public class Schedule {
     public void setScheduleID(Integer scheduleID) {
         ScheduleID = scheduleID;
     }
-    public Date getBeginningDate() {
+    public LocalDateTime getBeginningDate() {
         return beginningDate;
     }
-    public void setBeginningDate(Date beginningDate) {
+    public void setBeginningDate(LocalDateTime beginningDate) {
         this.beginningDate = beginningDate;
     }
     public Integer getDoseFrequency() {

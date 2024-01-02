@@ -21,12 +21,30 @@ import org.springframework.stereotype.Service;
 @Service
 public class PetOwnerService {
     private final PetOwnerRepository petOwnerRepository;
+    private final AppointmentService appointmentService;
     private final PetOwnerMapper petOwnerMapper;
 
     @Autowired
-    public PetOwnerService(PetOwnerRepository petOwnerRepository, PetOwnerMapper petOwnerMapper) {
+    public PetOwnerService(PetOwnerRepository petOwnerRepository,
+                           PetOwnerMapper petOwnerMapper,
+                           AppointmentService appointmentService) {
         this.petOwnerRepository = petOwnerRepository;
         this.petOwnerMapper = petOwnerMapper;
+        this.appointmentService = appointmentService;
+    }
+
+    public List<PetOwnerDTO> getPetOwnersForVeterinarian(Integer vetId) {
+        Optional<List<PetOwner>> petOwnersOptional = petOwnerRepository.getAllPetsForPetOwner(vetId);
+
+        if (petOwnersOptional.isPresent()) {
+            List<PetOwnerDTO> petOwnerDtoList = new ArrayList<>();
+            for (PetOwner petOwner : petOwnersOptional.get()) {
+                petOwnerDtoList.add(petOwnerMapper.convertToDto(petOwner));
+            }
+            return petOwnerDtoList;
+        } else {
+            return null;
+        }
     }
 
     public PetOwnerDTO getPetOwnerById(Integer id) {
@@ -40,7 +58,6 @@ public class PetOwnerService {
     }
     // Other service methods for updating, deleting pet owners, etc.
 
-    // TODO: getAllPetOwners() fonksiyonu oluşturulacak.
 
     public PetOwnerDTO postPetOwner(CreateOrUpdatePetOwnerDTO petOwnerDTO){
         // Map the data transfer object data to real object.
@@ -83,7 +100,14 @@ public class PetOwnerService {
             Veterinarian assignedVeterinarian = new Veterinarian();
             assignedVeterinarian.setVetID(vetId);
             targetPetOwner.get().setVet(assignedVeterinarian);
+
             petOwnerRepository.save(targetPetOwner.get());
+
+            // Remove all the existing previous appointments of the pet owner.
+            for(Appointment ap: targetPetOwner.get().getAppointments()){
+                appointmentService.deleteAppointment(ap.getAppointmentID());
+            }
+
             return petOwnerMapper.convertToDto(targetPetOwner.get());
         }
 

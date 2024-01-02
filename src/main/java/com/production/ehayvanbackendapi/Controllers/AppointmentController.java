@@ -33,6 +33,37 @@ public class AppointmentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointments() {
+        List<AppointmentDTO> response = appointmentService.getAllAppointments();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @GetMapping("/all/{petOwnerId}")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointmentsForPetOwner(@PathVariable Integer petOwnerId) {
+        List<AppointmentDTO> response = appointmentService.getAllAppointmentsForPetOwner(petOwnerId);
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/all/veterinarian/{vetId}")
+    public ResponseEntity<List<AppointmentDTO>> getAllAppointmentsForVeterinarian(@PathVariable Integer vetId) {
+        List<AppointmentDTO> response = appointmentService.getAllAppointmentsForVeterinarian(vetId);
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @PostMapping
     public ResponseEntity<AppointmentDTO> saveAppointment(@RequestBody CreateOrUpdateAppointmentDTO appointmentDTO) {

@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/schedules")
 public class ScheduleController {
@@ -31,6 +33,17 @@ public class ScheduleController {
         ScheduleDTO deletedSchedule = scheduleService.deleteSchedule(id);
         if (deletedSchedule != null) {
             return new ResponseEntity<>(deletedSchedule, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ScheduleDTO>> getAllSchedules() {
+        List<ScheduleDTO> response = scheduleService.getAllSchedules();
+
+        if (!response.isEmpty()) {
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

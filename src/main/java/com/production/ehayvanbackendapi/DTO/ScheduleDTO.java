@@ -1,18 +1,24 @@
 package com.production.ehayvanbackendapi.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
 public class ScheduleDTO {
     private Integer scheduleID;
-    private Date beginningDate;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+    private LocalDateTime beginningDate;
     private Integer doseFrequency;
     private Integer doseCount;
     public ScheduleDTO(){
 
     }
     public ScheduleDTO(Integer scheduleID, List<MedicationDTO> medications,
-                       Date beginningDate, Integer doseFrequency, Integer doseCount) {
+                       LocalDateTime beginningDate, Integer doseFrequency, Integer doseCount) {
         this.scheduleID = scheduleID;
         this.beginningDate = beginningDate;
         this.doseFrequency = doseFrequency;
@@ -27,11 +33,11 @@ public class ScheduleDTO {
         this.scheduleID = scheduleID;
     }
 
-    public Date getBeginningDate() {
+    public LocalDateTime getBeginningDate() {
         return beginningDate;
     }
 
-    public void setBeginningDate(Date beginningDate) {
+    public void setBeginningDate(LocalDateTime beginningDate) {
         this.beginningDate = beginningDate;
     }
 
