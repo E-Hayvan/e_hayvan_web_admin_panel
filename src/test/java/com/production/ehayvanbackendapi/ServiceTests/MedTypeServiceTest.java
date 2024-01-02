@@ -50,7 +50,7 @@ public class MedTypeServiceTest {
     @Transactional
     public void onEachTestStart() {
         testMedType = new MedType();
-        testMedType.setMedTypeID(11);
+        testMedType.setMedTypeID(0);
         testMedType.setMedications(List.of());
         testMedType.setMedType("Nigde Buyuksehir Belediye Spor");
     }

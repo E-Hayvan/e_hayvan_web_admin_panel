@@ -50,6 +50,7 @@ public class VeterinarianServiceTest {
     public void onEachTestStart() {
 
         testVeterinarian = new Veterinarian();
+        testVeterinarian.setVetID(0);
         testVeterinarian.setClinic("cincinella");
         testVeterinarian.setUser(new Customer());
         testVeterinarian.getUser().setUserTypeID(new UserType(2));

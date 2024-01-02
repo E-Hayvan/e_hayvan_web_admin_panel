@@ -59,6 +59,7 @@ public class PetOwnerServiceTest {
     @Transactional
     public void onEachTestStart() {
         testPetOwner = new PetOwner();
+        testPetOwner.setPetOwnerID(0);
         testPetOwner.setUser(new Customer());
         testPetOwner.getUser().setUserTypeID(new UserType(1));
         testPetOwner.getUser().setName("And i return to nothingness");
@@ -135,12 +136,14 @@ public class PetOwnerServiceTest {
     @Test
     @Transactional
     public void testServiceUpdateAssignedVeterinarian() {
+        testPetOwner.setPetOwnerID(0);
         testPetOwner.setVet(new Veterinarian());
         testPetOwner.getVet().setClinic("sun of the run");
         testPetOwner.setAppointments(List.of());
         PetOwner returnedPetOwner = testPetOwnerRepository.save(testPetOwner);
 
         Veterinarian otherVeterinarian = new Veterinarian();
+        otherVeterinarian.setVetID(0);
         otherVeterinarian.setClinic("goke bakma duragi");
         otherVeterinarian = testVeterinarianRepository.save(otherVeterinarian);
 

@@ -27,7 +27,7 @@ public class Customer {
     public Integer getUserID() {
         return UserID;
     }
-    public void setUserID(int userID) {
+    public void setUserID(Integer userID) {
         UserID = userID;
     }
 

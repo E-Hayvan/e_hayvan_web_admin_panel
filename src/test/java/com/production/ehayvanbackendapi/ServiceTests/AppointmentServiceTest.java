@@ -75,7 +75,7 @@ public class AppointmentServiceTest {
     @Transactional
     public void onEachTestStart() {
         testAppointment = new Appointment();
-        testAppointment.setAppointmentID(13);
+        testAppointment.setAppointmentID(0);
         testAppointment.setPetOwnerID(new PetOwner());
         testAppointment.setPetID(new Pet());
         testAppointment.setVetID(new Veterinarian());
@@ -171,17 +171,17 @@ public class AppointmentServiceTest {
         List<Appointment> listOfAllAddedAppointments = new ArrayList<>();
         Appointment returnedAppointment;
 
-        testAppointment.setAppointmentID(17);
+        testAppointment.setAppointmentID(0);
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         listOfAllAddedAppointments.add(returnedAppointment);
 
-        testAppointment.setAppointmentID(18);
+        testAppointment.setAppointmentID(0);
         returnedAppointment = testAppointmentRepository.save(testAppointment);
-        listOfAllAddedAppointments.addLast(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
 
-        testAppointment.setAppointmentID(19);
+        testAppointment.setAppointmentID(0);
         returnedAppointment = testAppointmentRepository.save(testAppointment);
-        listOfAllAddedAppointments.addLast(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
 
         List<AppointmentDTO> appointmentList = testAppointmentService.getAllAppointments();
 
@@ -210,7 +210,7 @@ public class AppointmentServiceTest {
         List<PetOwner> listOfAllAddedPetOwner = new ArrayList<>();
 
         PetOwner otherPetOwner = new PetOwner();
-        otherPetOwner.setPetOwnerID(17);
+        otherPetOwner.setPetOwnerID(0);
         otherPetOwner.setUser(new Customer());
         otherPetOwner.getUser().setEmail("damacana@gmail.com");
         otherPetOwner.getUser().setPassword("Sopa");
@@ -218,7 +218,7 @@ public class AppointmentServiceTest {
         otherPetOwner.getUser().setName("Erdem");
         listOfAllAddedPetOwner.add(testPetOwnerRepository.save(otherPetOwner));
 
-        otherPetOwner.setPetOwnerID(19);
+        otherPetOwner.setPetOwnerID(0);
         otherPetOwner.setUser(new Customer());
         otherPetOwner.getUser().setEmail("topcuyum@gmail.com");
         otherPetOwner.getUser().setPassword("Gec bile kaldim");
@@ -230,19 +230,19 @@ public class AppointmentServiceTest {
         List<Appointment> listOfAllAddedAppointments = new ArrayList<>();
         Appointment returnedAppointment;
 
-        testAppointment.setAppointmentID(17);
+        testAppointment.setAppointmentID(0);
         testAppointment.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(0).getPetOwnerID());
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         listOfAllAddedAppointmentsForPetOwner.add(returnedAppointment);
         listOfAllAddedAppointments.add(returnedAppointment);
 
-        testAppointment.setAppointmentID(18);
+        testAppointment.setAppointmentID(0);
         testAppointment.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(0).getPetOwnerID());
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         listOfAllAddedAppointmentsForPetOwner.addLast(returnedAppointment);
         listOfAllAddedAppointments.add(returnedAppointment);
 
-        testAppointment.setAppointmentID(19);
+        testAppointment.setAppointmentID(0);
         testAppointment.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(1).getPetOwnerID());
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         // listOfAllAddedAppointmentsForPetOwner.addLast(returnedAppointment);
@@ -280,7 +280,7 @@ public class AppointmentServiceTest {
         List<Veterinarian> listOfAllAddedVeterinarian = new ArrayList<>();
 
         Veterinarian otherVeterinarian = new Veterinarian();
-        otherVeterinarian.setVetID(15);
+        otherVeterinarian.setVetID(0);
         otherVeterinarian.setClinic("cincinella");
         otherVeterinarian.setUser(new Customer());
         otherVeterinarian.getUser().setUserTypeID(new UserType(2));
@@ -290,7 +290,7 @@ public class AppointmentServiceTest {
         otherVeterinarian.getUser().setPassword("akaryakit");
         listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(otherVeterinarian));
 
-        otherVeterinarian.setVetID(16);
+        otherVeterinarian.setVetID(0);
         otherVeterinarian.setClinic("Medico");
         otherVeterinarian.setUser(new Customer());
         otherVeterinarian.getUser().setUserTypeID(new UserType(2));
@@ -304,19 +304,19 @@ public class AppointmentServiceTest {
         List<Appointment> listOfAllAddedAppointments = new ArrayList<>();
         Appointment returnedAppointment;
 
-        testAppointment.setAppointmentID(17);
+        testAppointment.setAppointmentID(0);
         testAppointment.getVetID().setVetID(listOfAllAddedVeterinarian.get(0).getVetID());
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         listOfAllAddedAppointmentsForVeterinarian.add(returnedAppointment);
         listOfAllAddedAppointments.add(returnedAppointment);
 
-        testAppointment.setAppointmentID(18);
+        testAppointment.setAppointmentID(0);
         testAppointment.getVetID().setVetID(listOfAllAddedVeterinarian.get(0).getVetID());
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         listOfAllAddedAppointmentsForVeterinarian.addLast(returnedAppointment);
         listOfAllAddedAppointments.add(returnedAppointment);
 
-        testAppointment.setAppointmentID(19);
+        testAppointment.setAppointmentID(0);
         testAppointment.getVetID().setVetID(listOfAllAddedVeterinarian.get(1).getVetID());
         returnedAppointment = testAppointmentRepository.save(testAppointment);
         // listOfAllAddedAppointmentsForVeterinarian.addLast(returnedAppointment);
