@@ -1,5 +1,7 @@
 package com.production.ehayvanbackendapi.Controllers;
-
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateVeterinarianDTO;
 import com.production.ehayvanbackendapi.Services.VeterinarianService;
@@ -8,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/api/veterinarians")
 public class VeterinarianController {
     private final VeterinarianService veterinarianService;
@@ -82,6 +84,13 @@ public class VeterinarianController {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/desktop")
+    public String desktop(Model model) {
+        List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
+        model.addAttribute("veterinarians", veterinarians);
+        return "desktop";
     }
 
     // Other controller methods for updating, deleting veterinarians, etc.

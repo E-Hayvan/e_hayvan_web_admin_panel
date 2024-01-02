@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height: 100%;">
+<html lang="en" style="height: 100%;" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8" />
@@ -30,11 +30,11 @@
           <div class="Text" style="text-align: center; color: white; font-size: 40px; font-family: RocknRoll One; font-weight: 400">
             E-H
             <div class="Icon" style="display: inline-block; width: 12%; height: 12%">
-              <img class="Vector" src="Images/Union.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: center; padding-bottom: 10px;">
+              <img class="Vector" src="../static/images/Union.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: center; padding-bottom: 10px;">
             </div>
             YV
             <div class="Icon" style="display: inline-block; width: 12%; height: 12%">
-              <img class="Vector" src="Images/Union.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: center; padding-bottom: 10px;">
+              <img class="Vector" src="../static/images/Union.png" alt="Logo" style="width: 100%; height: 100%; object-fit: contain; vertical-align: center; padding-bottom: 10px;">
             </div>
             N
           </div>
@@ -52,7 +52,7 @@
               <div class="Esther" style="align-self: stretch; color: white; font-size: 18px; font-weight: 600; line-height: 26px; word-wrap: break-word">Esther</div>
             </div>
             <div class="Icon" style="width: 20px; height: 20px; position: relative; overflow: hidden;">
-              <img class="Vector" src="Images/logout.png" alt="Logout Icon" style="width: 100%; height: 100%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                <img th:src="@{/images/logout.png}" alt="Logout Icon" style="width: 100%; height: 100%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
             </div>
           </div>
         </div>
@@ -69,14 +69,23 @@
             <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#filter-vet-modal" style="position: fixed; bottom: 2.5em; right: 2.5em; background-color: #1B85F3; border: none; color: white;">
               Filter Veterinarian
             </button>
-            <table class="table table-hover table-sm" style="width: 100%;">
-              <tr class = "table-active" style="text-align: center;">
-                  <th>Name</th>
-                  <th>Clinic Name</th>
-                  <th colspan="2">Delete</th>
-              </tr>
-            </table>
-          <!-- FILTER -->
+              <table class="table table-hover table-sm" style="width: 100%; text-align: center;">
+                  <thead>
+                  <tr class="table-active">
+                      <th>Name</th>
+                      <th>Clinic Name</th>
+                      <th colspan="2">Delete</th>
+                  </tr>
+                  </thead>
+                  <tbody style="text-align: center;">
+                  <tr th:each="vet : ${veterinarians}">
+                      <td th:text="${vet.user.name}"></td>
+                      <td th:text="${vet.clinic}"></td>
+                  </tr>
+                  </tbody>
+              </table>
+
+              <!-- FILTER -->
             <div class="modal fade" id="filter-vet-modal" tabindex="-1" aria-labelledby="filter-vet-modal-label" aria-hidden="true">
               <div class="modal-dialog modal-sm">
                 <div class="modal-content">
