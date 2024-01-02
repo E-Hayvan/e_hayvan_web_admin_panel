@@ -4,22 +4,22 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CreateOrUpdateScheduleDTO {
 
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime beginningDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    private LocalDate beginningDate;
     private Integer doseFrequency;
     private Integer doseCount;
 
-    public LocalDateTime getBeginningDate() {
+    public LocalDate getBeginningDate() {
         return beginningDate;
     }
 
-    public void setBeginningDate(LocalDateTime beginningDate) {
+    public void setBeginningDate(LocalDate beginningDate) {
         this.beginningDate = beginningDate;
     }
 

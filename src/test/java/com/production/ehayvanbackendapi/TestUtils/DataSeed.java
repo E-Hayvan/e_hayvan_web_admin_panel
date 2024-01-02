@@ -177,7 +177,7 @@ public class DataSeed {
 
                 //Create Schedule
                 Schedule exampleSchedule = new Schedule();
-                exampleSchedule.setBeginningDate(LocalDateTime.now());
+                exampleSchedule.setBeginningDate(LocalDate.now());
                 exampleSchedule.setDoseCount(1);
                 exampleSchedule.setDoseFrequency(1);
 
