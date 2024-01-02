@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -136,6 +137,7 @@ public class PetOwnerServiceTest {
     public void testServiceUpdateAssignedVeterinarian() {
         testPetOwner.setVet(new Veterinarian());
         testPetOwner.getVet().setClinic("sun of the run");
+        testPetOwner.setAppointments(List.of());
         PetOwner returnedPetOwner = testPetOwnerRepository.save(testPetOwner);
 
         Veterinarian otherVeterinarian = new Veterinarian();
