@@ -23,6 +23,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.Month;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -61,6 +64,9 @@ public class MedicationControllerTest {
     public void onEachTestStart() {
         testCreateOrUpdateScheduleDTO = new CreateOrUpdateScheduleDTO();
         testCreateOrUpdateMedicationDTO = new CreateOrUpdateMedicationDTO("elma", 1, testCreateOrUpdateScheduleDTO, 1);
+        testCreateOrUpdateMedicationDTO.getScheduleID().setBeginningDate(LocalDate.of(2034, Month.JANUARY, 1));
+        testCreateOrUpdateMedicationDTO.getScheduleID().setDoseCount(54);
+        testCreateOrUpdateMedicationDTO.getScheduleID().setDoseFrequency(100);
     }
 
     @AfterEach

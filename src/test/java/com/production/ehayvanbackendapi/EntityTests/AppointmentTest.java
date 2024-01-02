@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 
 @SpringBootTest
@@ -30,13 +31,13 @@ class AppointmentTest {
 
         Appointment test_appointment = new Appointment();
         test_appointment.setAppointmentID(1773);
-        test_appointment.setAppointmentDate(LocalDateTime.now());
+        test_appointment.setAppointmentDate(LocalDateTime.of(2034, Month.JANUARY, 4, 9, 5));
         test_appointment.setPetID(test_pet);
         test_appointment.setVetID(test_veterinarian);
         test_appointment.setPetOwnerID(test_pet_owner);
 
         assertThat(test_appointment.getAppointmentID()).isEqualTo(1773);
-        assertThat(test_appointment.getAppointmentDate()).isEqualTo(LocalDate.now());
+        assertThat(test_appointment.getAppointmentDate()).isEqualTo(LocalDateTime.of(2034, Month.JANUARY, 4, 9, 5));
         assertThat(test_appointment.getPetID().getAppointments().size()).isEqualTo(4);
         assertThat(test_appointment.getVetID().getAppointments().size()).isEqualTo(2);
         assertThat(test_appointment.getPetOwnerID().getAppointments().size()).isEqualTo(3);

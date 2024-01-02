@@ -1,5 +1,7 @@
 package com.production.ehayvanbackendapi.DTO.request;
 
+import com.production.ehayvanbackendapi.DTO.MedicationDTO;
+
 public class CreateOrUpdateMedicationDTO {
     private String medicationName;
     private Integer medTypeID;
@@ -11,6 +13,13 @@ public class CreateOrUpdateMedicationDTO {
         this.medTypeID = medTypeID;
         this.scheduleID = scheduleID;
         this.petID = petID;
+    }
+
+    public CreateOrUpdateMedicationDTO(MedicationDTO medicationDTO) {
+        this.medicationName = medicationDTO.getMedicationName();
+        this.medTypeID = medicationDTO.getMedTypeID();
+        this.scheduleID = new CreateOrUpdateScheduleDTO(medicationDTO.getScheduleID());
+        this.petID = medicationDTO.getPetID();
     }
 
     public String getMedicationName() {
