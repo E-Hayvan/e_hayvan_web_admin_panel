@@ -2,15 +2,19 @@ package com.production.ehayvanbackendapi.ServiceTests;
 
 import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.PetDTO;
+import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateAppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetDTO;
 import com.production.ehayvanbackendapi.Entities.*;
 import com.production.ehayvanbackendapi.Mappers.AppointmentMapper;
 import com.production.ehayvanbackendapi.Mappers.PetMapper;
 import com.production.ehayvanbackendapi.Repositories.AppointmentRepository;
+import com.production.ehayvanbackendapi.Repositories.PetOwnerRepository;
 import com.production.ehayvanbackendapi.Repositories.PetRepository;
+import com.production.ehayvanbackendapi.Repositories.VeterinarianRepository;
 import com.production.ehayvanbackendapi.Services.AppointmentService;
 import com.production.ehayvanbackendapi.Services.PetService;
+import com.production.ehayvanbackendapi.Services.VeterinarianService;
 import com.production.ehayvanbackendapi.TestUtils.DataSeed;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.*;
@@ -20,11 +24,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.resource.VersionResourceResolver;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,6 +47,14 @@ public class AppointmentServiceTest {
     @SpyBean
     @Autowired
     private AppointmentRepository testAppointmentRepository;
+
+    @SpyBean
+    @Autowired
+    private PetOwnerRepository testPetOwnerRepository;
+
+    @SpyBean
+    @Autowired
+    private VeterinarianRepository testVeterinarianRepository;
 
     @Autowired
     DataSeed dataSeed;
@@ -101,7 +117,7 @@ public class AppointmentServiceTest {
 
     @Test
     @Transactional
-    public void testServicePostPet() {
+    public void testServicePostAppointment() {
         AppointmentDTO returnedAppointmentDTO = testAppointmentService.postAppointment(testCreateOrUpdateAppointmentDTO);
 
         Optional<Appointment> searchedAppointmentOptional = testAppointmentRepository.findById(returnedAppointmentDTO.getAppointmentID());
@@ -113,7 +129,7 @@ public class AppointmentServiceTest {
 
     @Test
     @Transactional
-    public void testServiceUpdatePet() {
+    public void testServiceUpdateAppointment() {
         // firstly save new Appointment
         Appointment returnedAppointment = testAppointmentRepository.save(testAppointment);
 
@@ -135,7 +151,7 @@ public class AppointmentServiceTest {
 
     @Test
     @Transactional
-    public void testServiceDeleteSchedule() {
+    public void testServiceDeleteAppointment() {
         // firstly save new Appointment
         Appointment returnedAppointment = testAppointmentRepository.save(testAppointment);
         Optional<Appointment> searchedAppointment = testAppointmentRepository.findById(returnedAppointment.getAppointmentID());
@@ -147,5 +163,188 @@ public class AppointmentServiceTest {
 
         searchedAppointment = testAppointmentRepository.findById(returnedAppointment.getAppointmentID());
         assertThat(searchedAppointment.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllAppointments() {
+        List<Appointment> listOfAllAddedAppointments = new ArrayList<>();
+        Appointment returnedAppointment;
+
+        testAppointment.setAppointmentID(17);
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        testAppointment.setAppointmentID(18);
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointments.addLast(returnedAppointment);
+
+        testAppointment.setAppointmentID(19);
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointments.addLast(returnedAppointment);
+
+        List<AppointmentDTO> appointmentList = testAppointmentService.getAllAppointments();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 1. "1" is seeded data in there.
+        assertThat(appointmentList.size() - 1).isEqualTo(listOfAllAddedAppointments.size());
+
+        // check if there is seeded data's appointment id
+        assertThat(appointmentList.stream().map(
+                AppointmentDTO::getAppointmentID).toList().contains(1))
+                .isEqualTo(true);
+        for (Appointment addedAppointment : listOfAllAddedAppointments) {
+            assertThat(appointmentList.stream().map(
+                    AppointmentDTO::getAppointmentID).toList().contains(addedAppointment.getAppointmentID()))
+                    .isEqualTo(true);
+        }
+
+        for (Appointment addedAppointment : listOfAllAddedAppointments) {
+            testAppointmentRepository.deleteById(addedAppointment.getAppointmentID());
+        }
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllAppointmentsForPetOwner() {
+        List<PetOwner> listOfAllAddedPetOwner = new ArrayList<>();
+
+        PetOwner otherPetOwner = new PetOwner();
+        otherPetOwner.setPetOwnerID(17);
+        otherPetOwner.setUser(new Customer());
+        otherPetOwner.getUser().setEmail("damacana@gmail.com");
+        otherPetOwner.getUser().setPassword("Sopa");
+        otherPetOwner.getUser().setSurname("Geyik");
+        otherPetOwner.getUser().setName("Erdem");
+        listOfAllAddedPetOwner.add(testPetOwnerRepository.save(otherPetOwner));
+
+        otherPetOwner.setPetOwnerID(19);
+        otherPetOwner.setUser(new Customer());
+        otherPetOwner.getUser().setEmail("topcuyum@gmail.com");
+        otherPetOwner.getUser().setPassword("Gec bile kaldim");
+        otherPetOwner.getUser().setSurname("Maden");
+        otherPetOwner.getUser().setName("Muzaffer");
+        listOfAllAddedPetOwner.add(testPetOwnerRepository.save(otherPetOwner));
+
+        List<Appointment> listOfAllAddedAppointmentsForPetOwner = new ArrayList<>();
+        List<Appointment> listOfAllAddedAppointments = new ArrayList<>();
+        Appointment returnedAppointment;
+
+        testAppointment.setAppointmentID(17);
+        testAppointment.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(0).getPetOwnerID());
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointmentsForPetOwner.add(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        testAppointment.setAppointmentID(18);
+        testAppointment.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(0).getPetOwnerID());
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointmentsForPetOwner.addLast(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        testAppointment.setAppointmentID(19);
+        testAppointment.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(1).getPetOwnerID());
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        // listOfAllAddedAppointmentsForPetOwner.addLast(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        Integer testPetOwnerId = listOfAllAddedPetOwner.get(0).getPetOwnerID();
+        List<AppointmentDTO> appointmentList = testAppointmentService.getAllAppointmentsForPetOwner(testPetOwnerId);
+
+        // we exlude seeded data before tests start. Because pet owner id of seededAppointment data
+        // is not inside list of new added pet owner id.
+        assertThat(appointmentList.size()).isEqualTo(listOfAllAddedAppointmentsForPetOwner.size());
+
+        // check if there is not seeded data's appointment id
+        assertThat(appointmentList.stream().map(
+                AppointmentDTO::getAppointmentID).toList().contains(1))
+                .isEqualTo(false);
+        for (Appointment addedAppointment : listOfAllAddedAppointmentsForPetOwner) {
+            assertThat(appointmentList.stream().map(
+                    AppointmentDTO::getAppointmentID).toList().contains(addedAppointment.getAppointmentID()))
+                    .isEqualTo(true);
+        }
+
+        for (Appointment addedAppointment : listOfAllAddedAppointments) {
+            testAppointmentRepository.deleteById(addedAppointment.getAppointmentID());
+        }
+
+        for (PetOwner addedPetOwner : listOfAllAddedPetOwner) {
+            testPetOwnerRepository.deleteById(addedPetOwner.getPetOwnerID());
+        }
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllAppointmentsForVeterinarian() {
+        List<Veterinarian> listOfAllAddedVeterinarian = new ArrayList<>();
+
+        Veterinarian otherVeterinarian = new Veterinarian();
+        otherVeterinarian.setVetID(15);
+        otherVeterinarian.setClinic("cincinella");
+        otherVeterinarian.setUser(new Customer());
+        otherVeterinarian.getUser().setUserTypeID(new UserType(2));
+        otherVeterinarian.getUser().setName("Yakisikli");
+        otherVeterinarian.getUser().setSurname("Guvenlik");
+        otherVeterinarian.getUser().setEmail("Stella@Mtella.com");
+        otherVeterinarian.getUser().setPassword("akaryakit");
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(otherVeterinarian));
+
+        otherVeterinarian.setVetID(16);
+        otherVeterinarian.setClinic("Medico");
+        otherVeterinarian.setUser(new Customer());
+        otherVeterinarian.getUser().setUserTypeID(new UserType(2));
+        otherVeterinarian.getUser().setName("Erkan");
+        otherVeterinarian.getUser().setSurname("Abe");
+        otherVeterinarian.getUser().setEmail("kamiller@gmail.com");
+        otherVeterinarian.getUser().setPassword("dogalgaz");
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(otherVeterinarian));
+
+        List<Appointment> listOfAllAddedAppointmentsForVeterinarian = new ArrayList<>();
+        List<Appointment> listOfAllAddedAppointments = new ArrayList<>();
+        Appointment returnedAppointment;
+
+        testAppointment.setAppointmentID(17);
+        testAppointment.getVetID().setVetID(listOfAllAddedVeterinarian.get(0).getVetID());
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointmentsForVeterinarian.add(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        testAppointment.setAppointmentID(18);
+        testAppointment.getVetID().setVetID(listOfAllAddedVeterinarian.get(0).getVetID());
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        listOfAllAddedAppointmentsForVeterinarian.addLast(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        testAppointment.setAppointmentID(19);
+        testAppointment.getVetID().setVetID(listOfAllAddedVeterinarian.get(1).getVetID());
+        returnedAppointment = testAppointmentRepository.save(testAppointment);
+        // listOfAllAddedAppointmentsForVeterinarian.addLast(returnedAppointment);
+        listOfAllAddedAppointments.add(returnedAppointment);
+
+        Integer testVeterinarianId = listOfAllAddedVeterinarian.get(0).getVetID();
+        List<AppointmentDTO> appointmentList = testAppointmentService.getAllAppointmentsForVeterinarian(testVeterinarianId);
+
+        // we exlude seeded data before tests start. Because pet owner id of seededAppointment data
+        // is not inside list of new added pet owner id.
+        assertThat(appointmentList.size()).isEqualTo(listOfAllAddedAppointmentsForVeterinarian.size());
+
+        // check if there is not seeded data's appointment id
+        assertThat(appointmentList.stream().map(
+                AppointmentDTO::getAppointmentID).toList().contains(1))
+                .isEqualTo(false);
+        for (Appointment addedAppointment : listOfAllAddedAppointmentsForVeterinarian) {
+            assertThat(appointmentList.stream().map(
+                    AppointmentDTO::getAppointmentID).toList().contains(addedAppointment.getAppointmentID()))
+                    .isEqualTo(true);
+        }
+
+        for (Appointment addedAppointment : listOfAllAddedAppointments) {
+            testAppointmentRepository.deleteById(addedAppointment.getAppointmentID());
+        }
+
+        for (Veterinarian addedVeterinarian : listOfAllAddedVeterinarian) {
+            testVeterinarianRepository.deleteById(addedVeterinarian.getVetID());
+        }
     }
 }
