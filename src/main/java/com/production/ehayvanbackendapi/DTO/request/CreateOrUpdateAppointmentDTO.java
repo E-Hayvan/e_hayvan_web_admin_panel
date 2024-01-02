@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.DTO.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -13,6 +14,13 @@ public class CreateOrUpdateAppointmentDTO {
     private Integer petID;
     private Integer vetID;
     private Integer petOwnerID;
+
+    public CreateOrUpdateAppointmentDTO(AppointmentDTO appointmentDTO) {
+        this.petID = appointmentDTO.getPetID();
+        this.vetID = appointmentDTO.getVetID();
+        this.petOwnerID = appointmentDTO.getPetOwnerID();
+        this.appointmentDate = appointmentDTO.getAppointmentDate();
+    }
 
     public LocalDateTime getAppointmentDate() {
         return appointmentDate;
