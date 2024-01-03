@@ -77,6 +77,16 @@ public class VeterinarianController {
         }
     }
 
+    @GetMapping("/delete/{id}")
+    public String getDeleteVeterinarian(@PathVariable Integer id, Model model) {
+        VeterinarianDTO deletedVeterinarian = veterinarianService.deleteVeterinarian(id);
+        List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
+        model.addAttribute("veterinarians", veterinarians);
+        model.addAttribute("viewType", "default");
+        return "redirect:/api/veterinarians/desktop";
+    }
+
+
     @GetMapping("/all")
     public ResponseEntity<List<VeterinarianDTO>> getAllVeterinarians() {
         List<VeterinarianDTO> response = veterinarianService.getAllVeterinarians();
