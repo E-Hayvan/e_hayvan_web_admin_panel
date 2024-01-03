@@ -79,11 +79,18 @@ public class VeterinarianController {
 
     @GetMapping("/delete/{id}")
     public String getDeleteVeterinarian(@PathVariable Integer id, Model model) {
-        VeterinarianDTO deletedVeterinarian = veterinarianService.deleteVeterinarian(id);
-        List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
-        model.addAttribute("veterinarians", veterinarians);
-        model.addAttribute("viewType", "default");
-        return "redirect:/api/veterinarians/desktop";
+        try{
+            VeterinarianDTO deletedVeterinarian = veterinarianService.deleteVeterinarian(id);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        finally {
+            List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
+            model.addAttribute("veterinarians", veterinarians);
+            model.addAttribute("viewType", "default");
+            return "redirect:/api/veterinarians/desktop";
+        }
     }
 
 

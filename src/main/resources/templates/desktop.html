@@ -84,7 +84,7 @@
                       <td th:text="${vet.user.name}"></td>
                       <td th:text="${vet.clinic}"></td>
                       <td>
-                          <a th:href="@{'/delete/' + ${vet.user.userID}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this veterinarian?')">Delete</a>
+                          <a th:href="@{'/api/veterinarians/delete/' + ${vet.vetID}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this veterinarian?')">Delete</a>
                       </td>
 
                   </tr>
