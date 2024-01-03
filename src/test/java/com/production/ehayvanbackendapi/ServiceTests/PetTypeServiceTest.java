@@ -22,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,5 +82,54 @@ public class PetTypeServiceTest {
         assertThat(returnedPetTypeDTO.getType()).isEqualTo(returnedPetType.getType());
 
         testPetTypeRepository.deleteById(returnedPetType.getPetTypeID());
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllPetType() {
+        List<PetType> listOfAllAddedPetTypes = new ArrayList<>();
+
+        testPetType.setPetTypeID(0);
+        listOfAllAddedPetTypes.add(testPetTypeRepository.save(testPetType));
+
+        testPetType.setPetTypeID(0);
+        listOfAllAddedPetTypes.add(testPetTypeRepository.save(testPetType));
+
+        testPetType.setPetTypeID(0);
+        listOfAllAddedPetTypes.add(testPetTypeRepository.save(testPetType));
+
+        List<PetTypeDTO> PetTypeList = testPetTypeService.getAllPetTypes();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 4.
+        assertThat(PetTypeList.size() - 4).isEqualTo(listOfAllAddedPetTypes.size());
+
+        // @TODO CihatAltiparmak : Find more chic solution, it's hard coded.
+        // check if there is seeded data's user id
+        assertThat(PetTypeList.stream().map(
+                PetTypeDTO::getPetTypeID).toList().contains(1))
+                .isEqualTo(true);
+
+        assertThat(PetTypeList.stream().map(
+                PetTypeDTO::getPetTypeID).toList().contains(2))
+                .isEqualTo(true);
+
+        assertThat(PetTypeList.stream().map(
+                PetTypeDTO::getPetTypeID).toList().contains(3))
+                .isEqualTo(true);
+
+        assertThat(PetTypeList.stream().map(
+                PetTypeDTO::getPetTypeID).toList().contains(4))
+                .isEqualTo(true);
+
+        for (PetType addedPetType : listOfAllAddedPetTypes) {
+            assertThat(PetTypeList.stream().map(
+                    PetTypeDTO::getPetTypeID).toList().contains(addedPetType.getPetTypeID()))
+                    .isEqualTo(true);
+        }
+
+        for (PetType addedPetType : listOfAllAddedPetTypes) {
+            testPetTypeRepository.deleteById(addedPetType.getPetTypeID());
+        }
     }
 }

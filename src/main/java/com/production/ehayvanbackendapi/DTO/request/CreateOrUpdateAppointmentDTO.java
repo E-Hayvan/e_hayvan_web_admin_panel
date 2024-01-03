@@ -15,6 +15,10 @@ public class CreateOrUpdateAppointmentDTO {
     private Integer vetID;
     private Integer petOwnerID;
 
+    public CreateOrUpdateAppointmentDTO(){
+
+    }
+
     public CreateOrUpdateAppointmentDTO(AppointmentDTO appointmentDTO) {
         this.petID = appointmentDTO.getPetID();
         this.vetID = appointmentDTO.getVetID();

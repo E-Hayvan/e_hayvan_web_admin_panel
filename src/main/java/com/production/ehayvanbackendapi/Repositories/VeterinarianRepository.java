@@ -15,4 +15,7 @@ public interface VeterinarianRepository extends JpaRepository<Veterinarian, Inte
     @Query(value = "SELECT veterinarian.* FROM veterinarian INNER JOIN customer ON veterinarian.userid = customer.userid WHERE name LIKE :name%",
     nativeQuery = true)
     public List<Veterinarian> findVeterinariansByName(@Param("name") String name);
+
+    @Query(value = "SELECT COUNT(*) FROM veterinarian", nativeQuery = true)
+    public int getAllVetsCount();
 }

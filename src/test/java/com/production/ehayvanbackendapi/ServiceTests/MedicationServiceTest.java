@@ -1,5 +1,6 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
+import com.production.ehayvanbackendapi.DTO.CustomerDTO;
 import com.production.ehayvanbackendapi.DTO.MedicationDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateMedicationDTO;
 import com.production.ehayvanbackendapi.Entities.*;
@@ -17,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -141,5 +144,48 @@ public class MedicationServiceTest {
 
         searchedMedication = testMedicationRepository.findById(returnedMedication.getMedicationID());
         assertThat(searchedMedication.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllMedication() {
+        List<Medication> listOfAllAddedMedications = new ArrayList<>();
+
+        testMedication.setMedicationID(0);
+        testMedication.setPetID(new Pet());
+        testMedication.getPetID().setPetID(1);
+        listOfAllAddedMedications.add(testMedicationRepository.save(testMedication));
+
+        testMedication.setMedicationID(0);
+        testMedication.setPetID(new Pet());
+        testMedication.getPetID().setPetID(1);
+        listOfAllAddedMedications.add(testMedicationRepository.save(testMedication));
+
+        testMedication.setMedicationID(0);
+        testMedication.setPetID(new Pet());
+        testMedication.getPetID().setPetID(1);
+        listOfAllAddedMedications.add(testMedicationRepository.save(testMedication));
+
+        List<MedicationDTO> MedicationList = testMedicationService.getAllMedications();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 1. "1" is seeded data in there.
+        assertThat(MedicationList.size() - 1).isEqualTo(listOfAllAddedMedications.size());
+
+        // @TODO CihatAltiparmak : Find more chic solution, it's hard coded.
+        // check if there is seeded data's user id
+        assertThat(MedicationList.stream().map(
+                MedicationDTO::getMedicationID).toList().contains(1))
+                .isEqualTo(true);
+
+        for (Medication addedMedication : listOfAllAddedMedications) {
+            assertThat(MedicationList.stream().map(
+                    MedicationDTO::getMedicationID).toList().contains(addedMedication.getMedicationID()))
+                    .isEqualTo(true);
+        }
+
+        for (Medication addedMedication : listOfAllAddedMedications) {
+            testMedicationRepository.deleteById(addedMedication.getMedicationID());
+        }
     }
 }

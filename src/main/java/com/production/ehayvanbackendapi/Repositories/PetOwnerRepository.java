@@ -14,5 +14,8 @@ import java.util.Optional;
 public interface PetOwnerRepository extends JpaRepository<PetOwner, Integer> {
     @Query(value="SELECT *FROM pet_owner WHERE pet_owner.vetid = :vetid",nativeQuery = true)
     public Optional<List<PetOwner>> getAllPetsForPetOwner(@Param("vetid") int vetid);
+
+    @Query(value = "SELECT COUNT(*) FROM pet_owner", nativeQuery = true)
+    public int getAllPetOwnersCount();
 }
 

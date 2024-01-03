@@ -29,6 +29,12 @@ public class PetOwnerController {
         }
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getAllPetOwnersCount() {
+        int count = petOwnerService.getAllPetOwnersCount();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
     @GetMapping("/forVet/{vetId}")
     public ResponseEntity<List<PetOwnerDTO>> getPetOwnersForVeterinarian(@PathVariable Integer vetId) {
         List<PetOwnerDTO> response = petOwnerService.getPetOwnersForVeterinarian(vetId);

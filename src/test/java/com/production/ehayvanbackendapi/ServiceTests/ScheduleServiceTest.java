@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
 import com.production.ehayvanbackendapi.DTO.PetDTO;
+import com.production.ehayvanbackendapi.DTO.PetTypeDTO;
 import com.production.ehayvanbackendapi.DTO.ScheduleDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateScheduleDTO;
@@ -22,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -106,5 +109,42 @@ public class ScheduleServiceTest {
 
         searchedSchedule = testScheduleRepository.findById(returnedSchedule.getScheduleID());
         assertThat(searchedSchedule.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllSchedule() {
+        List<Schedule> listOfAllAddedSchedules = new ArrayList<>();
+
+        testSchedule.setScheduleID(0);
+        listOfAllAddedSchedules.add(testScheduleRepository.save(testSchedule));
+
+        testSchedule.setScheduleID(0);
+        listOfAllAddedSchedules.add(testScheduleRepository.save(testSchedule));
+
+        testSchedule.setScheduleID(0);
+        listOfAllAddedSchedules.add(testScheduleRepository.save(testSchedule));
+
+        List<ScheduleDTO> scheduleList = testScheduleService.getAllSchedules();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 1.
+        assertThat(scheduleList.size() - 1).isEqualTo(listOfAllAddedSchedules.size());
+
+        // @TODO CihatAltiparmak : Find more chic solution, it's hard coded.
+        // check if there is seeded data's user id
+        assertThat(scheduleList.stream().map(
+                ScheduleDTO::getScheduleID).toList().contains(1))
+                .isEqualTo(true);
+
+        for (Schedule addedSchedule : listOfAllAddedSchedules) {
+            assertThat(scheduleList.stream().map(
+                    ScheduleDTO::getScheduleID).toList().contains(addedSchedule.getScheduleID()))
+                    .isEqualTo(true);
+        }
+
+        for (Schedule addedSchedule : listOfAllAddedSchedules) {
+            testScheduleRepository.deleteById(addedSchedule.getScheduleID());
+        }
     }
 }

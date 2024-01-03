@@ -21,6 +21,11 @@ public class VeterinarianController {
         this.veterinarianService = veterinarianService;
     }
 
+    @GetMapping("/count")
+    public ResponseEntity<Integer> getAllVetsCount() {
+        int count = veterinarianService.getAllVetsCount();
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
     @GetMapping("/{id}")
     public ResponseEntity<VeterinarianDTO> getVeterinarianById(@PathVariable Integer id) {
         VeterinarianDTO veterinarianDTO = veterinarianService.getVeterinarianById(id);

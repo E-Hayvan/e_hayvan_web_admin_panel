@@ -30,6 +30,10 @@ public class PetService {
         this.petMapper = petMapper;
     }
 
+    public int getAllPetsCount() {
+        return petRepository.getAllPetsCount();
+    }
+
     public PetDTO getPetById(Integer id) {
         // Find pet if exists.
         Optional<Pet> pet = petRepository.findById(id);

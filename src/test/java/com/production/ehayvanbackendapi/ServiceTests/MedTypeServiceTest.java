@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
 import com.production.ehayvanbackendapi.DTO.MedTypeDTO;
+import com.production.ehayvanbackendapi.DTO.MedicationDTO;
 import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetDTO;
 import com.production.ehayvanbackendapi.Entities.*;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,5 +96,46 @@ public class MedTypeServiceTest {
 
         searchedMedType = testMedTypeRepository.findById(returnedMedType.getMedTypeID());
         assertThat(searchedMedType.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllMedType() {
+        List<MedType> listOfAllAddedMedTypes = new ArrayList<>();
+
+        testMedType.setMedTypeID(0);
+        listOfAllAddedMedTypes.add(testMedTypeRepository.save(testMedType));
+
+        testMedType.setMedTypeID(0);
+        listOfAllAddedMedTypes.add(testMedTypeRepository.save(testMedType));
+
+        testMedType.setMedTypeID(0);
+        listOfAllAddedMedTypes.add(testMedTypeRepository.save(testMedType));
+
+        List<MedTypeDTO> medTypeList = testMedTypeService.getAllMedTypes();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 3.
+        assertThat(medTypeList.size() - 3).isEqualTo(listOfAllAddedMedTypes.size());
+
+        // @TODO CihatAltiparmak : Find more chic solution, it's hard coded.
+        // check if there is seeded data's user id
+        assertThat(medTypeList.stream().map(
+                MedTypeDTO::getMedTypeID).toList().contains(1))
+                .isEqualTo(true);
+
+        assertThat(medTypeList.stream().map(
+                MedTypeDTO::getMedTypeID).toList().contains(2))
+                .isEqualTo(true);
+
+        for (MedType addedMedType : listOfAllAddedMedTypes) {
+            assertThat(medTypeList.stream().map(
+                    MedTypeDTO::getMedTypeID).toList().contains(addedMedType.getMedTypeID()))
+                    .isEqualTo(true);
+        }
+
+        for (MedType addedMedType : listOfAllAddedMedTypes) {
+            testMedTypeRepository.deleteById(addedMedType.getMedTypeID());
+        }
     }
 }
