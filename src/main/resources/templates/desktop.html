@@ -105,6 +105,9 @@
                   <tr th:each="filteredvet : ${filteredVeterinarians}">
                       <td th:text="${filteredvet.user.name}"></td>
                       <td th:text="${filteredvet.clinic}"></td>
+                      <td>
+                          <a th:href="@{'/api/veterinarians/delete/' + ${filteredvet.vetID}}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this veterinarian?')">Delete</a>
+                      </td>
                   </tr>
                   </tbody>
               </table>
