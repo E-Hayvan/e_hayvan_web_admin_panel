@@ -47,6 +47,10 @@ public class PetOwnerService {
         }
     }
 
+    public int getAllPetOwnersCount() {
+        return petOwnerRepository.getAllPetOwnersCount();
+    }
+
     public PetOwnerDTO getPetOwnerById(Integer id) {
         Optional<PetOwner> petOwner = petOwnerRepository.findById(id);
         // Listeler otomatik olarak mapleniyor. Şimdilik bir problem yok.

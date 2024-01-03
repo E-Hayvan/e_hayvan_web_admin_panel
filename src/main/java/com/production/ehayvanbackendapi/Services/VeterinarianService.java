@@ -26,6 +26,10 @@ public class VeterinarianService {
         this.veterinarianMapper = veterinarianMapper;
     }
 
+    public int getAllVetsCount() {
+        return veterinarianRepository.getAllVetsCount();
+    }
+
     public VeterinarianDTO getVeterinarianById(Integer id) {
         Veterinarian veterinarian = veterinarianRepository.findById(id).orElse(null);
         return veterinarian != null ? veterinarianMapper.convertToDto(veterinarian) : null;
