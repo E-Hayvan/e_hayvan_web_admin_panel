@@ -1,7 +1,9 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
+import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.DTO.PetTypeDTO;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateVeterinarianDTO;
 import com.production.ehayvanbackendapi.Entities.*;
 import com.production.ehayvanbackendapi.Mappers.VeterinarianMapper;
@@ -101,6 +103,29 @@ public class VeterinarianServiceTest {
         assertThat(searchedVeterinarianOptional.isPresent()).isEqualTo(true);
         assertThat(searchedVeterinarianOptional.orElseThrow().getVetID()).isEqualTo(returnedVeterinarianDTO.getVetID());
 
+        testVeterinarianRepository.deleteById(searchedVeterinarianOptional.orElseThrow().getVetID());
+    }
+
+    @Test
+    @Transactional
+    public void testServiceUpdateVeterinarian() {
+        // firstly save new Veterinarian
+        Veterinarian returnedVeterinarian = testVeterinarianRepository.save(testVeterinarian);
+
+        // convert to DTO and change email address of new created DTO
+        testCreateOrUpdateVeterinarianDTO = new CreateOrUpdateVeterinarianDTO(testVeterinarianMapper.convertToDto(testVeterinarian));
+        testCreateOrUpdateVeterinarianDTO.setClinic("Uzi Clinic");
+
+        // update corresponding VeterinarianOwner
+        VeterinarianDTO returnedVeterinarianDTO = testVeterinarianService.updateVeterinarian(returnedVeterinarian.getVetID(), testCreateOrUpdateVeterinarianDTO);
+
+        // check if it is same as email that updated data and data we want to update
+        Optional<Veterinarian> searchedVeterinarianOptional = testVeterinarianRepository.findById(returnedVeterinarian.getVetID());
+        assertThat(searchedVeterinarianOptional.isPresent()).isEqualTo(true);
+        assertThat(searchedVeterinarianOptional.orElseThrow().getVetID()).isEqualTo(returnedVeterinarianDTO.getVetID());
+        assertThat(searchedVeterinarianOptional.orElseThrow().getClinic()).isEqualTo(testCreateOrUpdateVeterinarianDTO.getClinic());
+
+        // delete added data for testing
         testVeterinarianRepository.deleteById(searchedVeterinarianOptional.orElseThrow().getVetID());
     }
 

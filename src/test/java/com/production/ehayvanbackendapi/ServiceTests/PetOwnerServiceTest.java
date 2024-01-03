@@ -1,11 +1,9 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
+import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetOwnerDTO;
-import com.production.ehayvanbackendapi.Entities.Customer;
-import com.production.ehayvanbackendapi.Entities.PetOwner;
-import com.production.ehayvanbackendapi.Entities.UserType;
-import com.production.ehayvanbackendapi.Entities.Veterinarian;
+import com.production.ehayvanbackendapi.Entities.*;
 import com.production.ehayvanbackendapi.Mappers.PetOwnerMapper;
 import com.production.ehayvanbackendapi.Repositories.PetOwnerRepository;
 import com.production.ehayvanbackendapi.Repositories.VeterinarianRepository;
@@ -18,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -173,5 +172,84 @@ public class PetOwnerServiceTest {
 
         searchedPetOwner = testPetOwnerRepository.findById(returnedPetOwner.getPetOwnerID());
         assertThat(searchedPetOwner.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllPetOwnersForVeterinarian() {
+        List<Veterinarian> listOfAllAddedVeterinarian = new ArrayList<>();
+
+        Veterinarian otherVeterinarian = new Veterinarian();
+        otherVeterinarian.setVetID(0);
+        otherVeterinarian.setClinic("cincinella");
+        otherVeterinarian.setUser(new Customer());
+        otherVeterinarian.getUser().setUserID(0);
+        otherVeterinarian.getUser().setUserTypeID(new UserType(2));
+        otherVeterinarian.getUser().setName("Yakisikli");
+        otherVeterinarian.getUser().setSurname("Guvenlik");
+        otherVeterinarian.getUser().setEmail("Stella@Mtella.com");
+        otherVeterinarian.getUser().setPassword("akaryakit");
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(otherVeterinarian));
+
+        otherVeterinarian.setVetID(0);
+        otherVeterinarian.setClinic("Medico");
+        otherVeterinarian.setUser(new Customer());
+        otherVeterinarian.getUser().setUserID(0);
+        otherVeterinarian.getUser().setUserTypeID(new UserType(2));
+        otherVeterinarian.getUser().setName("Erkan");
+        otherVeterinarian.getUser().setSurname("Abe");
+        otherVeterinarian.getUser().setEmail("kamiller@gmail.com");
+        otherVeterinarian.getUser().setPassword("dogalgaz");
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(otherVeterinarian));
+
+        List<PetOwner> listOfAllAddedPetOwnersForVeterinarian = new ArrayList<>();
+        List<PetOwner> listOfAllAddedPetOwners = new ArrayList<>();
+        PetOwner returnedPetOwner;
+
+        testPetOwner.setPetOwnerID(0);
+        testPetOwner.getUser().setUserID(0);
+        testPetOwner.setVet(listOfAllAddedVeterinarian.get(0));
+        returnedPetOwner = testPetOwnerRepository.save(testPetOwner);
+        listOfAllAddedPetOwnersForVeterinarian.add(returnedPetOwner);
+        listOfAllAddedPetOwners.add(returnedPetOwner);
+
+        testPetOwner.setPetOwnerID(0);
+        testPetOwner.getUser().setUserID(0);
+        testPetOwner.setVet(listOfAllAddedVeterinarian.get(0));
+        returnedPetOwner = testPetOwnerRepository.save(testPetOwner);
+        listOfAllAddedPetOwnersForVeterinarian.addLast(returnedPetOwner);
+        listOfAllAddedPetOwners.add(returnedPetOwner);
+
+        testPetOwner.setPetOwnerID(0);
+        testPetOwner.getUser().setUserID(0);
+        testPetOwner.setVet(listOfAllAddedVeterinarian.get(1));
+        returnedPetOwner = testPetOwnerRepository.save(testPetOwner);
+        // listOfAllAddedPetOwnersForVeterinarian.addLast(returnedPetOwner);
+        listOfAllAddedPetOwners.add(returnedPetOwner);
+
+        Integer testVeterinarianId = listOfAllAddedVeterinarian.get(0).getVetID();
+        List<PetOwnerDTO> PetOwnerList = testPetOwnerService.getPetOwnersForVeterinarian(testVeterinarianId);
+
+        // we exlude seeded data before tests start. Because pet owner id of seededPetOwner data
+        // is not inside list of new added pet owner id.
+        assertThat(PetOwnerList.size()).isEqualTo(listOfAllAddedPetOwnersForVeterinarian.size());
+
+        // check if there is not seeded data's PetOwner id
+        assertThat(PetOwnerList.stream().map(
+                PetOwnerDTO::getPetOwnerID).toList().contains(1))
+                .isEqualTo(false);
+        for (PetOwner addedPetOwner : listOfAllAddedPetOwnersForVeterinarian) {
+            assertThat(PetOwnerList.stream().map(
+                    PetOwnerDTO::getPetOwnerID).toList().contains(addedPetOwner.getPetOwnerID()))
+                    .isEqualTo(true);
+        }
+
+        for (PetOwner addedPetOwner : listOfAllAddedPetOwners) {
+            testPetOwnerRepository.deleteById(addedPetOwner.getPetOwnerID());
+        }
+
+        for (Veterinarian addedVeterinarian : listOfAllAddedVeterinarian) {
+            testVeterinarianRepository.deleteById(addedVeterinarian.getVetID());
+        }
     }
 }
