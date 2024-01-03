@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -67,6 +68,17 @@ public class CustomerController {
                                                         @PathVariable String password){
         CustomerDTO response = customerService.customerLogin(email, password);
         if(response != null){
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/loginAdmin/{email}/{password}")
+    public ResponseEntity<CustomerDTO> getAdminLogin(@PathVariable String email,
+                                                        @PathVariable String password){
+        CustomerDTO response = customerService.customerLogin(email, password);
+        if(response != null&& Objects.equals(email, "admin@admin.com")){
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
