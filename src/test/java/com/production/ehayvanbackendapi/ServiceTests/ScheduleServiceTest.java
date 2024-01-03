@@ -57,7 +57,7 @@ public class ScheduleServiceTest {
     @Transactional
     public void onEachTestStart() {
         testSchedule = new Schedule();
-        testSchedule.setScheduleID(10);
+        testSchedule.setScheduleID(0);
         testSchedule.setDoseCount(12);
         testSchedule.setDoseFrequency(1000);
         testSchedule.setBeginningDate(LocalDate.of(1995, Month.APRIL, 30));

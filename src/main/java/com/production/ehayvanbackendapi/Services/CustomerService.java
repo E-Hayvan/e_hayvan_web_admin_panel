@@ -1,6 +1,8 @@
 package com.production.ehayvanbackendapi.Services;
 
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
+import com.production.ehayvanbackendapi.DTO.request.RegisterCustomerDTO;
 import com.production.ehayvanbackendapi.Entities.Customer;
 import com.production.ehayvanbackendapi.Mappers.CustomerMapper;
 import com.production.ehayvanbackendapi.Repositories.CustomerRepository;
@@ -45,6 +47,21 @@ public class CustomerService {
             customerDtoList.add(customerMapper.convertToDto(cust));
         }
         return customerDtoList;
+    }
+
+    public CustomerDTO registerCustomer(RegisterCustomerDTO customerDTO) {
+        // Check if the customer with the given email already exists
+        Optional<Customer> existingCustomer = customerRepository.findByEmail(customerDTO.getEmail());
+
+        if (existingCustomer.isPresent()) {
+            // Customer with the same email already exists
+            return null;
+        } else {
+            // Customer does not exist, proceed with registration
+            Customer customer = customerMapper.convertToEntity2(customerDTO);
+            Customer savedCustomer = customerRepository.save(customer);
+            return customerMapper.convertToDto(savedCustomer);
+        }
     }
 
     public CustomerDTO deleteCustomer(Integer id){

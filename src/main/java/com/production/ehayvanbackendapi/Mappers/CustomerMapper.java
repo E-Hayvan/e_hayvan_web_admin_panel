@@ -1,6 +1,7 @@
 package com.production.ehayvanbackendapi.Mappers;
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
+import com.production.ehayvanbackendapi.DTO.request.RegisterCustomerDTO;
 import com.production.ehayvanbackendapi.Entities.Customer;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,11 @@ public class CustomerMapper {
                     mapper.skip(Customer::setOwner);
                 }
         );
+        this.modelMapper.createTypeMap(RegisterCustomerDTO.class, Customer.class).addMappings(
+                mapper -> {
+                    mapper.skip(Customer::setOwner);
+                }
+        );
     }
 
     public CustomerDTO convertToDto(Customer customer) {
@@ -30,6 +36,9 @@ public class CustomerMapper {
     }
 
     public Customer convertToEntity(CustomerDTO customerDTO) {
+        return modelMapper.map(customerDTO, Customer.class);
+    }
+    public Customer convertToEntity2(RegisterCustomerDTO customerDTO) {
         return modelMapper.map(customerDTO, Customer.class);
     }
 }

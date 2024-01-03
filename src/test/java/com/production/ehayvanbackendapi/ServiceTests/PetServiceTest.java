@@ -50,6 +50,7 @@ public class PetServiceTest {
     @Transactional
     public void onEachTestStart() {
         testPet = new Pet();
+        testPet.setPetID(0);
         testPet.setPetName("Ingiliz Ati");
         testPet.setPetTypeID(new PetType());
         testPet.getPetTypeID().setPetTypeID(1);

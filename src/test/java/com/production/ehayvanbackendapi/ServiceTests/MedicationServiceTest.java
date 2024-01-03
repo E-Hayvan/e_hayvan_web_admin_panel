@@ -52,6 +52,7 @@ public class MedicationServiceTest {
     @Transactional
     public void onEachTestStart() {
         testMedication = new Medication();
+        testMedication.setMedicationID(0);
         testMedication.setMedicationName("Akyazi Sifasi");
         testMedication.setPetID(new Pet());
         testMedication.setScheduleID(new Schedule());
@@ -61,7 +62,6 @@ public class MedicationServiceTest {
         testMedication.getScheduleID().setDoseCount(1773);
         testMedication.setMedTypeID(new MedType());
         testMedication.getMedTypeID().setMedTypeID(1);
-        testMedication.setMedicationID(1);
 
         testCreateOrUpdateMedicationDTO = new CreateOrUpdateMedicationDTO(testMedicationMapper.convertToDto(testMedication));
     }

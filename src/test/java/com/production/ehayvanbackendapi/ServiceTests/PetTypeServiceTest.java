@@ -53,7 +53,7 @@ public class PetTypeServiceTest {
     @Transactional
     public void onEachTestStart() {
         testPetType = new PetType();
-        testPetType.setPetTypeID(17);
+        testPetType.setPetTypeID(0);
         testPetType.setPets(List.of());
         testPetType.setType("micky mouse");
     }
