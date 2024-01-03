@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 @Controller
 @RequestMapping("/api/veterinarians")
@@ -90,6 +92,25 @@ public class VeterinarianController {
     public String desktop(Model model) {
         List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
         model.addAttribute("veterinarians", veterinarians);
+        model.addAttribute("viewType", "default");
+        return "desktop";
+    }
+
+    @PostMapping("/desktop")
+    public String desktopFormSubmit(@RequestParam String clinicName, RedirectAttributes redirectAttributes) {
+        // Redirect to the URL with the user-provided clinicName
+        redirectAttributes.addAttribute("name", clinicName);
+        return "redirect:/api/veterinarians/desktop/{name}";
+    }
+
+    @GetMapping("/desktop/{name}")
+    public String desktop(@PathVariable String name, Model model) {
+        List<VeterinarianDTO> filteredVeterinarians = veterinarianService.getVeterinariansByClinic(name);
+        if(filteredVeterinarians==null){
+            return null;
+        }
+        model.addAttribute("filteredVeterinarians", filteredVeterinarians);
+        model.addAttribute("viewType", "filtered");
         return "desktop";
     }
 
