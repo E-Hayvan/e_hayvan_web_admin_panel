@@ -96,6 +96,32 @@ public class VeterinarianServiceTest {
 
     @Test
     @Transactional
+    public void testServiceGetVeterinariansByClinic() {
+        // be careful, it's searched by veterinarian name, not clinic name
+        testVeterinarian.setClinic("akyazi devlet astanesi");
+        testVeterinarian.getUser().setName("Abdulbaki");
+        Veterinarian returnedVeterinarian = testVeterinarianRepository.save(testVeterinarian);
+        List<VeterinarianDTO> returnedVeterinarianDTOList = testVeterinarianService.getVeterinariansByClinic(testVeterinarian.getUser().getName());
+
+        assertThat(returnedVeterinarianDTOList).isNotNull();
+        assertThat(returnedVeterinarianDTOList.getFirst().getVetID()).isEqualTo(returnedVeterinarian.getVetID());
+        assertThat(returnedVeterinarianDTOList.getFirst().getClinic()).isEqualTo(returnedVeterinarian.getClinic());
+        assertThat(returnedVeterinarianDTOList.getFirst().getUser().getPassword()).isEqualTo(returnedVeterinarian.getUser().getPassword());
+
+        testVeterinarianRepository.deleteById(returnedVeterinarian.getVetID());
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetVeterinariansByClinicWhichNoExists() {
+        // be careful, it's searched by veterinarian name, not clinic name
+        List<VeterinarianDTO> returnedVeterinarianDTOList = testVeterinarianService.getVeterinariansByClinic(testVeterinarian.getUser().getName());
+
+        assertThat(returnedVeterinarianDTOList).isNull();
+    }
+
+    @Test
+    @Transactional
     public void testServicePostVeterinarian() {
         VeterinarianDTO returnedVeterinarianDTO = testVeterinarianService.postVeterinarian(testCreateOrUpdateVeterinarianDTO);
 
