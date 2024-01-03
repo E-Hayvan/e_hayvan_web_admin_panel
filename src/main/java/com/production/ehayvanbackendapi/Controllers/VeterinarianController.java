@@ -1,4 +1,6 @@
 package com.production.ehayvanbackendapi.Controllers;
+import com.production.ehayvanbackendapi.Services.PetOwnerService;
+import com.production.ehayvanbackendapi.Services.PetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +19,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class VeterinarianController {
     private final VeterinarianService veterinarianService;
 
-    public VeterinarianController(VeterinarianService veterinarianService) {
+    private final PetService petService;
+    private final PetOwnerService petOwnerService;
+
+
+    public VeterinarianController(VeterinarianService veterinarianService, PetService petService, PetOwnerService petOwnerService) {
         this.veterinarianService = veterinarianService;
+        this.petService = petService;
+        this.petOwnerService = petOwnerService;
     }
 
     @GetMapping("/count")
@@ -115,6 +123,12 @@ public class VeterinarianController {
         List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
         model.addAttribute("veterinarians", veterinarians);
         model.addAttribute("viewType", "default");
+        Integer vetCount = veterinarianService.getAllVetsCount();
+        Integer petCount = petService.getAllPetsCount();
+        Integer petOwnerCount = petOwnerService.getAllPetOwnersCount();
+        model.addAttribute("vetCount", vetCount);
+        model.addAttribute("petCount", petCount);
+        model.addAttribute("petOwnerCount", petOwnerCount);
         return "desktop";
     }
 
@@ -128,6 +142,13 @@ public class VeterinarianController {
     @GetMapping("/desktop/{name}")
     public String desktop(@PathVariable String name, Model model) {
         List<VeterinarianDTO> filteredVeterinarians = veterinarianService.getVeterinariansByClinic(name);
+
+        Integer vetCount = veterinarianService.getAllVetsCount();
+        Integer petCount = petService.getAllPetsCount();
+        Integer petOwnerCount = petOwnerService.getAllPetOwnersCount();
+        model.addAttribute("vetCount", vetCount);
+        model.addAttribute("petCount", petCount);
+        model.addAttribute("petOwnerCount", petOwnerCount);
 
         if (filteredVeterinarians == null || filteredVeterinarians.isEmpty()) {
             // Handle the case where no veterinarians are found
