@@ -106,13 +106,18 @@ public class VeterinarianController {
     @GetMapping("/desktop/{name}")
     public String desktop(@PathVariable String name, Model model) {
         List<VeterinarianDTO> filteredVeterinarians = veterinarianService.getVeterinariansByClinic(name);
-        if(filteredVeterinarians==null){
-            return null;
+
+        if (filteredVeterinarians == null || filteredVeterinarians.isEmpty()) {
+            // Handle the case where no veterinarians are found
+            model.addAttribute("viewType", "noResults");
+            return "desktop";
         }
+
         model.addAttribute("filteredVeterinarians", filteredVeterinarians);
         model.addAttribute("viewType", "filtered");
         return "desktop";
     }
+
 
     // Other controller methods for updating, deleting veterinarians, etc.
 }
