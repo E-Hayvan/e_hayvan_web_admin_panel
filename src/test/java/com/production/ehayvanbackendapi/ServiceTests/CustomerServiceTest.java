@@ -137,7 +137,6 @@ public class CustomerServiceTest {
 
         // we include seeded data before tests start. So we expect that size of returned list
         // is added_items_size + 2. (Seeded Customer for PetOwner and Seeded Customer for Veterinarian)
-
         assertThat(customerList.size() - 2).isEqualTo(listOfAllAddedCustomers.size());
 
         // @TODO CihatAltiparmak : Find more chic solution, it's hard coded.
@@ -147,7 +146,7 @@ public class CustomerServiceTest {
                 .isEqualTo(true);
 
         assertThat(customerList.stream().map(
-                CustomerDTO::getUserID).toList().contains(1))
+                CustomerDTO::getUserID).toList().contains(2))
                 .isEqualTo(true);
 
         for (Customer addedCustomer : listOfAllAddedCustomers) {

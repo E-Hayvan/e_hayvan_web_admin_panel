@@ -1,9 +1,11 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
+import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdatePetDTO;
 import com.production.ehayvanbackendapi.Entities.*;
 import com.production.ehayvanbackendapi.Mappers.PetMapper;
+import com.production.ehayvanbackendapi.Repositories.PetOwnerRepository;
 import com.production.ehayvanbackendapi.Repositories.PetRepository;
 import com.production.ehayvanbackendapi.Services.PetService;
 import com.production.ehayvanbackendapi.TestUtils.DataSeed;
@@ -15,6 +17,8 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,6 +34,10 @@ public class PetServiceTest {
     @SpyBean
     @Autowired
     private PetRepository testPetRepository;
+
+    @SpyBean
+    @Autowired
+    private PetOwnerRepository testPetOwnerRepository;
 
     @Autowired
     DataSeed dataSeed;
@@ -144,5 +152,120 @@ public class PetServiceTest {
 
         searchedPet = testPetRepository.findById(returnedPet.getPetID());
         assertThat(searchedPet.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllPets() {
+        List<Pet> listOfAllAddedPets = new ArrayList<>();
+        Pet returnedPet;
+
+        testPet.setPetID(0);
+        testPet.setPetOwnerID(new PetOwner());
+        testPet.getPetOwnerID().setPetOwnerID(1);
+        returnedPet = testPetRepository.save(testPet);
+        listOfAllAddedPets.add(returnedPet);
+
+        testPet.setPetID(0);
+        testPet.setPetOwnerID(new PetOwner());
+        testPet.getPetOwnerID().setPetOwnerID(1);
+        returnedPet = testPetRepository.save(testPet);
+        listOfAllAddedPets.add(returnedPet);
+
+        testPet.setPetID(0);
+        testPet.setPetOwnerID(new PetOwner());
+        testPet.getPetOwnerID().setPetOwnerID(1);
+        returnedPet = testPetRepository.save(testPet);
+        listOfAllAddedPets.add(returnedPet);
+
+        List<PetDTO> petList = testPetService.getAllPets();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 1. "1" is seeded data in there.
+        assertThat(petList.size() - 1).isEqualTo(listOfAllAddedPets.size());
+
+        // check if there is seeded data's Pet id
+        assertThat(petList.stream().map(
+                PetDTO::getPetID).toList().contains(1))
+                .isEqualTo(true);
+        for (Pet addedPet : listOfAllAddedPets) {
+            assertThat(petList.stream().map(
+                    PetDTO::getPetID).toList().contains(addedPet.getPetID()))
+                    .isEqualTo(true);
+        }
+
+        for (Pet addedPet : listOfAllAddedPets) {
+            testPetRepository.deleteById(addedPet.getPetID());
+        }
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllPetsForPetOwner() {
+        List<PetOwner> listOfAllAddedPetOwner = new ArrayList<>();
+
+        PetOwner otherPetOwner = new PetOwner();
+        otherPetOwner.setPetOwnerID(0);
+        otherPetOwner.setUser(new Customer());
+        otherPetOwner.getUser().setEmail("damacana@gmail.com");
+        otherPetOwner.getUser().setPassword("Sopa");
+        otherPetOwner.getUser().setSurname("Geyik");
+        otherPetOwner.getUser().setName("Erdem");
+        listOfAllAddedPetOwner.add(testPetOwnerRepository.save(otherPetOwner));
+
+        otherPetOwner.setPetOwnerID(0);
+        otherPetOwner.setUser(new Customer());
+        otherPetOwner.getUser().setEmail("topcuyum@gmail.com");
+        otherPetOwner.getUser().setPassword("Gec bile kaldim");
+        otherPetOwner.getUser().setSurname("Maden");
+        otherPetOwner.getUser().setName("Muzaffer");
+        listOfAllAddedPetOwner.add(testPetOwnerRepository.save(otherPetOwner));
+
+        List<Pet> listOfAllAddedPetsForPetOwner = new ArrayList<>();
+        List<Pet> listOfAllAddedPets = new ArrayList<>();
+        Pet returnedPet;
+
+        testPet.setPetID(0);
+        testPet.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(0).getPetOwnerID());
+        returnedPet = testPetRepository.save(testPet);
+        listOfAllAddedPetsForPetOwner.add(returnedPet);
+        listOfAllAddedPets.add(returnedPet);
+
+        testPet.setPetID(0);
+        testPet.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(0).getPetOwnerID());
+        returnedPet = testPetRepository.save(testPet);
+        listOfAllAddedPetsForPetOwner.addLast(returnedPet);
+        listOfAllAddedPets.add(returnedPet);
+
+        testPet.setPetID(0);
+        testPet.getPetOwnerID().setPetOwnerID(listOfAllAddedPetOwner.get(1).getPetOwnerID());
+        returnedPet = testPetRepository.save(testPet);
+        // listOfAllAddedPetsForPetOwner.addLast(returnedPet);
+        listOfAllAddedPets.add(returnedPet);
+
+        Integer testPetOwnerId = listOfAllAddedPetOwner.get(0).getPetOwnerID();
+        List<PetDTO> PetList = testPetService.getAllPetsForPetOwner(testPetOwnerId);
+
+        // we exlude seeded data before tests start. Because pet owner id of seededPet data
+        // is not inside list of new added pet owner id.
+        assertThat(PetList.size()).isEqualTo(listOfAllAddedPetsForPetOwner.size());
+
+        // check if there is not seeded data's Pet id
+        assertThat(PetList.stream().map(
+                PetDTO::getPetID).toList().contains(1))
+                .isEqualTo(false);
+        for (Pet addedPet : listOfAllAddedPetsForPetOwner) {
+            assertThat(PetList.stream().map(
+                    PetDTO::getPetID).toList().contains(addedPet.getPetID()))
+                    .isEqualTo(true);
+        }
+
+        for (Pet addedPet : listOfAllAddedPets) {
+            testPetRepository.deleteById(addedPet.getPetID());
+        }
+
+        for (PetOwner addedPetOwner : listOfAllAddedPetOwner) {
+            testPetOwnerRepository.deleteById(addedPetOwner.getPetOwnerID());
+        }
     }
 }
