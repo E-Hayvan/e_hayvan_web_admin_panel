@@ -1,5 +1,6 @@
 package com.production.ehayvanbackendapi.ServiceTests;
 
+import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
 import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.DTO.ScheduleDTO;
@@ -27,6 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -62,7 +65,7 @@ public class CustomerServiceTest {
     @Transactional
     public void onEachTestStart() {
         testCustomer = new Customer();
-        testCustomer.setUserID(1);
+        testCustomer.setUserID(0);
         testCustomer.setName("Meth");
         testCustomer.setSurname("Fulled");
         testCustomer.setPassword("Finn");
@@ -114,5 +117,47 @@ public class CustomerServiceTest {
 
         searchedCustomer = testCustomerRepository.findById(returnedCustomer.getUserID());
         assertThat(searchedCustomer.isPresent()).isEqualTo(false);
+    }
+
+    @Test
+    @Transactional
+    public void testServiceGetAllCustomer() {
+        List<Customer> listOfAllAddedCustomers = new ArrayList<>();
+
+        testCustomer.setUserID(0);
+        listOfAllAddedCustomers.add(testCustomerRepository.save(testCustomer));
+
+        testCustomer.setUserID(0);
+        listOfAllAddedCustomers.add(testCustomerRepository.save(testCustomer));
+
+        testCustomer.setUserID(0);
+        listOfAllAddedCustomers.add(testCustomerRepository.save(testCustomer));
+
+        List<CustomerDTO> customerList = testCustomerService.getAllCustomers();
+
+        // we include seeded data before tests start. So we expect that size of returned list
+        // is added_items_size + 2. (Seeded Customer for PetOwner and Seeded Customer for Veterinarian)
+
+        assertThat(customerList.size() - 2).isEqualTo(listOfAllAddedCustomers.size());
+
+        // @TODO CihatAltiparmak : Find more chic solution, it's hard coded.
+        // check if there is seeded data's user id
+        assertThat(customerList.stream().map(
+                CustomerDTO::getUserID).toList().contains(1))
+                .isEqualTo(true);
+
+        assertThat(customerList.stream().map(
+                CustomerDTO::getUserID).toList().contains(1))
+                .isEqualTo(true);
+
+        for (Customer addedCustomer : listOfAllAddedCustomers) {
+            assertThat(customerList.stream().map(
+                    CustomerDTO::getUserID).toList().contains(addedCustomer.getUserID()))
+                    .isEqualTo(true);
+        }
+
+        for (Customer addedCustomer : listOfAllAddedCustomers) {
+            testCustomerRepository.deleteById(addedCustomer.getUserID());
+        }
     }
 }

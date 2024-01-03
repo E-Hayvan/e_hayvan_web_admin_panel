@@ -56,7 +56,7 @@ public class UserTypeServiceTest {
     @Transactional
     public void onEachTestStart() {
         testUserType = new UserType();
-        testUserType.setUserTypeID(13);
+        testUserType.setUserTypeID(0);
         testUserType.setType("Ingiliz Helvacisi");
         testUserType.setUsers(List.of());
     }
