@@ -2,6 +2,8 @@ package com.production.ehayvanbackendapi.Controllers;
 
 import com.production.ehayvanbackendapi.DTO.CustomerDTO;
 import com.production.ehayvanbackendapi.DTO.PetDTO;
+import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
+import com.production.ehayvanbackendapi.DTO.request.RegisterCustomerDTO;
 import com.production.ehayvanbackendapi.Services.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +47,18 @@ public class CustomerController {
         }
         else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<CustomerDTO> registerCustomer(@RequestBody RegisterCustomerDTO customerDTO) {
+        CustomerDTO registeredCustomer = customerService.registerCustomer(customerDTO);
+
+        if (registeredCustomer != null) {
+            return new ResponseEntity<>(registeredCustomer, HttpStatus.CREATED);
+        } else {
+            // Customer with the same email already exists
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
