@@ -1,5 +1,9 @@
 package com.production.ehayvanbackendapi.Controllers;
-
+import com.production.ehayvanbackendapi.Services.PetOwnerService;
+import com.production.ehayvanbackendapi.Services.PetService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateVeterinarianDTO;
 import com.production.ehayvanbackendapi.Services.VeterinarianService;
@@ -7,14 +11,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RestController
+
+@Controller
 @RequestMapping("/api/veterinarians")
 public class VeterinarianController {
     private final VeterinarianService veterinarianService;
 
-    public VeterinarianController(VeterinarianService veterinarianService) {
+    private final PetService petService;
+    private final PetOwnerService petOwnerService;
+
+
+    public VeterinarianController(VeterinarianService veterinarianService, PetService petService, PetOwnerService petOwnerService) {
         this.veterinarianService = veterinarianService;
+        this.petService = petService;
+        this.petOwnerService = petOwnerService;
     }
 
     @GetMapping("/count")
@@ -78,6 +90,23 @@ public class VeterinarianController {
         }
     }
 
+    @GetMapping("/delete/{id}")
+    public String getDeleteVeterinarian(@PathVariable Integer id, Model model) {
+        try{
+            VeterinarianDTO deletedVeterinarian = veterinarianService.deleteVeterinarian(id);
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+        finally {
+            List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
+            model.addAttribute("veterinarians", veterinarians);
+            model.addAttribute("viewType", "default");
+            return "redirect:/api/veterinarians/desktop";
+        }
+    }
+
+
     @GetMapping("/all")
     public ResponseEntity<List<VeterinarianDTO>> getAllVeterinarians() {
         List<VeterinarianDTO> response = veterinarianService.getAllVeterinarians();
@@ -88,6 +117,50 @@ public class VeterinarianController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/desktop")
+    public String desktop(Model model) {
+        List<VeterinarianDTO> veterinarians = veterinarianService.getAllVeterinarians();
+        model.addAttribute("veterinarians", veterinarians);
+        model.addAttribute("viewType", "default");
+        Integer vetCount = veterinarianService.getAllVetsCount();
+        Integer petCount = petService.getAllPetsCount();
+        Integer petOwnerCount = petOwnerService.getAllPetOwnersCount();
+        model.addAttribute("vetCount", vetCount);
+        model.addAttribute("petCount", petCount);
+        model.addAttribute("petOwnerCount", petOwnerCount);
+        return "desktop";
+    }
+
+    @PostMapping("/desktop")
+    public String desktopFormSubmit(@RequestParam String clinicName, RedirectAttributes redirectAttributes) {
+        // Redirect to the URL with the user-provided clinicName
+        redirectAttributes.addAttribute("name", clinicName);
+        return "redirect:/api/veterinarians/desktop/{name}";
+    }
+
+    @GetMapping("/desktop/{name}")
+    public String desktop(@PathVariable String name, Model model) {
+        List<VeterinarianDTO> filteredVeterinarians = veterinarianService.getVeterinariansByClinic(name);
+
+        Integer vetCount = veterinarianService.getAllVetsCount();
+        Integer petCount = petService.getAllPetsCount();
+        Integer petOwnerCount = petOwnerService.getAllPetOwnersCount();
+        model.addAttribute("vetCount", vetCount);
+        model.addAttribute("petCount", petCount);
+        model.addAttribute("petOwnerCount", petOwnerCount);
+
+        if (filteredVeterinarians == null || filteredVeterinarians.isEmpty()) {
+            // Handle the case where no veterinarians are found
+            model.addAttribute("viewType", "noResults");
+            return "desktop";
+        }
+
+        model.addAttribute("filteredVeterinarians", filteredVeterinarians);
+        model.addAttribute("viewType", "filtered");
+        return "desktop";
+    }
+
 
     // Other controller methods for updating, deleting veterinarians, etc.
 }
