@@ -121,6 +121,24 @@ public class MedicationControllerTest {
 
     @Test
     @Transactional
+    public void testUpdatingById() throws Exception {
+        Integer testMedicationId = 1;
+        when(testMedicationService.updateMedication(testMedicationId, testCreateOrUpdateMedicationDTO)).thenReturn(new MedicationDTO());
+
+        testCreateOrUpdateMedicationDTO.setMedicationName("Zula Mitingi");
+        this.mockMvc.perform(put("/api/medications/update/" + testMedicationId).with(httpBasic("test", "password"))
+                        .content(objectMapper.writeValueAsString(testCreateOrUpdateMedicationDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.medicationName").value(testCreateOrUpdateMedicationDTO.getMedicationName()));
+
+        // assert that the method updateMedication of testMedicationService is executed once
+        verify(testMedicationService, times(1)).updateMedication(anyInt(), any());
+    }
+
+    @Test
+    @Transactional
     public void testDeletingById() throws Exception {
         testCreateOrUpdateMedicationDTO.setMedicationName("Muzlu Oralet");
         testMedicationDTO = testMedicationService.postMedication(testCreateOrUpdateMedicationDTO);

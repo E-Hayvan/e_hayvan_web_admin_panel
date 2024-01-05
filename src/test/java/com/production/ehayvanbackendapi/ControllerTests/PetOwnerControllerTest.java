@@ -132,7 +132,7 @@ public class PetOwnerControllerTest {
 
     @Test
     @Transactional
-    public void testGetAllPetOwnerCout() throws Exception {
+    public void testGetAllPetOwnerCount() throws Exception {
         List<PetOwnerDTO> listOfAllAddedPetOwnerDTO = new ArrayList<>();
 
         testCreateOrUpdatePetOwnerDTO.getUser().setName("ITU");

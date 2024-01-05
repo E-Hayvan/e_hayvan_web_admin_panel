@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.ControllerTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateCustomerDTO;
 import com.production.ehayvanbackendapi.DTO.request.CreateOrUpdateVeterinarianDTO;
@@ -22,6 +23,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -127,6 +131,24 @@ public class VeterinarianControllerTest {
 
     @Test
     @Transactional
+    public void testUpdatingById() throws Exception {
+        Integer testVeterinarianId = 1;
+        when(testVeterinarianService.updateVeterinarian(testVeterinarianId, testCreateOrUpdateVeterinarianDTO)).thenReturn(new VeterinarianDTO());
+
+        testCreateOrUpdateVeterinarianDTO.setClinic("Zula Mitingi");
+        this.mockMvc.perform(put("/api/veterinarians/update/" + testVeterinarianId).with(httpBasic("test", "password"))
+                        .content(objectMapper.writeValueAsString(testCreateOrUpdateVeterinarianDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$.clinic").value(testCreateOrUpdateVeterinarianDTO.getClinic()));
+
+        // assert that the method updateVeterinarian of testVeterinarianService is executed once
+        verify(testVeterinarianService, times(1)).updateVeterinarian(anyInt(), any());
+    }
+
+    @Test
+    @Transactional
     public void testDeletingById() throws Exception {
         testCreateOrUpdateVeterinarianDTO.setClinic("Sabun yaparim");
         testVeterinarianDTO = testVeterinarianService.postVeterinarian(testCreateOrUpdateVeterinarianDTO);
@@ -169,6 +191,37 @@ public class VeterinarianControllerTest {
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$[1].clinic").value(listOfAllAddedVeterinarian.get(0).getClinic()))
                 .andExpect(jsonPath("$[2].clinic").value(listOfAllAddedVeterinarian.get(1).getClinic()));
+
+        for (Veterinarian addedVeterinarian : listOfAllAddedVeterinarian) {
+            testVeterinarianRepository.deleteById(addedVeterinarian.getVetID());
+        }
+    }
+
+    @Test
+    @Transactional
+    public void testGetAllVeterinariansByName() throws Exception {
+        List<Veterinarian> listOfAllAddedVeterinarian = new ArrayList<>();
+
+        testVeterinarian.getUser().setName("anka");
+        testVeterinarian.setVetID(0);
+        testVeterinarian.getUser().setUserID(0);
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(testVeterinarian));
+
+        testVeterinarian.getUser().setName("kanka");
+        testVeterinarian.setVetID(0);
+        testVeterinarian.getUser().setUserID(0);
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(testVeterinarian));
+
+        testVeterinarian.getUser().setName("afanka");
+        testVeterinarian.setVetID(0);
+        testVeterinarian.getUser().setUserID(0);
+        listOfAllAddedVeterinarian.add(testVeterinarianRepository.save(testVeterinarian));
+
+        this.mockMvc.perform(get("/api/veterinarians/search/" + listOfAllAddedVeterinarian.get(0).getUser().getName()).with(httpBasic("test", "password"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$[0].user.name").value(listOfAllAddedVeterinarian.get(0).getUser().getName()));
 
         for (Veterinarian addedVeterinarian : listOfAllAddedVeterinarian) {
             testVeterinarianRepository.deleteById(addedVeterinarian.getVetID());
