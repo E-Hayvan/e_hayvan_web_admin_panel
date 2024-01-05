@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.ControllerTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.production.ehayvanbackendapi.DTO.AppointmentDTO;
 import com.production.ehayvanbackendapi.DTO.MedicationDTO;
 import com.production.ehayvanbackendapi.DTO.ScheduleDTO;
 import com.production.ehayvanbackendapi.DTO.VeterinarianDTO;
@@ -24,7 +25,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
@@ -132,6 +137,30 @@ public class MedicationControllerTest {
 
         // assert that the method deleteMedication of testMedicationService is executed once.
         verify(testMedicationService, times(1)).deleteMedication(anyInt());
+    }
 
+    @Test
+    @Transactional
+    public void testGetAllMedications() throws Exception {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        List<MedicationDTO> listOfAllAddedMedicationDTO = new ArrayList<>();
+
+        testCreateOrUpdateMedicationDTO.setMedicationName("ITU");
+        listOfAllAddedMedicationDTO.add(testMedicationService.postMedication(testCreateOrUpdateMedicationDTO));
+
+        testCreateOrUpdateMedicationDTO.setMedicationName("MSU");
+        listOfAllAddedMedicationDTO.add(testMedicationService.postMedication(testCreateOrUpdateMedicationDTO));
+
+        this.mockMvc.perform(get("/api/medications/all").with(httpBasic("test", "password"))
+                        .content(objectMapper.writeValueAsString(testCreateOrUpdateMedicationDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$[1].medicationName").value(listOfAllAddedMedicationDTO.get(0).getMedicationName()))
+                .andExpect(jsonPath("$[2].medicationName").value(listOfAllAddedMedicationDTO.get(1).getMedicationName()));
+
+        for (MedicationDTO addedMedicationDTO : listOfAllAddedMedicationDTO) {
+            testMedicationService.deleteMedication(addedMedicationDTO.getMedicationID());
+        }
     }
 }

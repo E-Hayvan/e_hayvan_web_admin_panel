@@ -2,6 +2,7 @@ package com.production.ehayvanbackendapi.ControllerTests;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.production.ehayvanbackendapi.DTO.PetDTO;
 import com.production.ehayvanbackendapi.TestUtils.DataSeed;
 
 import com.production.ehayvanbackendapi.DTO.PetOwnerDTO;
@@ -19,6 +20,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -122,5 +128,28 @@ public class PetOwnerControllerTest {
 
         // assert that called in PetOwnerController.Controller class by delete-requesting
         verify(testPetOwnerService, times(1)).deletePetOwner(testPetOwnerDTO.getPetOwnerID());
+    }
+
+    @Test
+    @Transactional
+    public void testGetAllPetOwnerCout() throws Exception {
+        List<PetOwnerDTO> listOfAllAddedPetOwnerDTO = new ArrayList<>();
+
+        testCreateOrUpdatePetOwnerDTO.getUser().setName("ITU");
+        listOfAllAddedPetOwnerDTO.add(testPetOwnerService.postPetOwner(testCreateOrUpdatePetOwnerDTO));
+
+        testCreateOrUpdatePetOwnerDTO.getUser().setName("MSU");
+        listOfAllAddedPetOwnerDTO.add(testPetOwnerService.postPetOwner(testCreateOrUpdatePetOwnerDTO));
+
+        this.mockMvc.perform(get("/api/petowners/count").with(httpBasic("test", "password"))
+                        .content(objectMapper.writeValueAsString(testCreateOrUpdatePetOwnerDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$").value(3));
+
+        for (PetOwnerDTO addedPetOwnerDTO : listOfAllAddedPetOwnerDTO) {
+            testPetOwnerService.deletePetOwner(addedPetOwnerDTO.getPetOwnerID());
+        }
     }
 }
